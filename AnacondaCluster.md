@@ -10,7 +10,7 @@ The following runbook walks through the steps needed to install a basic Anaconda
 * **Compute nodes (3):** Where jobs are run. Managed by the head node.
 
 insert cluster graphic 
-![](https://www.lucidchart.com/documents/edit/ecbc54de-0787-4586-8ba7-8cc2afe948d3/2?callback=close&v=3295&s=612)
+![image](https://www.lucidchart.com/invitations/accept/5b346a22-976d-4d10-a683-0557fed0baa9)
 insert cluster graphic
 
 
@@ -195,7 +195,7 @@ An Anaconda Cluster consists of two primary pieces of information; the cluster p
 
 ####Define a Cluster Configuration
 
-We’re going to create a simple cluster configuration using the head node and 3 compute nodes we configured here. Create the ~admin/.acluster/profiles.d/demo-cluster.yaml with the following content:
+We’re going to create a simple cluster configuration using the head node and 3 compute nodes we configured previously. Create the ~admin/.acluster/profiles.d/demo-cluster.yaml with the following content:
 
 * **Air Gap Installation:**
 
@@ -244,7 +244,7 @@ We’re going to create a simple cluster configuration using the head node and 3
 		     conda_sh: false
 		     conda_acl: true
 		     
-**Note: ** More information about cluster profiles can be found here.
+**Note: ** More information about cluster profiles can be found [here](https://docs.continuum.io/anaconda-cluster/config-profile).
 
 
 ####Add the following to ~admin/.acluster/providers.yaml:
@@ -253,7 +253,7 @@ We’re going to create a simple cluster configuration using the head node and 3
   	  cloud_provider: none
   	  private_key: ~/.ssh/id_rsa
   	  
-More information about cluster providers can be found here.
+More information about cluster providers can be found [here](https://docs.continuum.io/anaconda-cluster/config-provider).
 
 
 ####Create the Cluster

@@ -10,7 +10,7 @@ The following runbook walks through the steps needed to install a basic Anaconda
 * **Compute nodes (3):** Where jobs are run. Managed by the head node.
 
 insert cluster graphic 
-![image](https://www.lucidchart.com/invitations/accept/5b346a22-976d-4d10-a683-0557fed0baa9)
+![image](https://www.lucidchart.com/publicSegments/view/6ba23457-ba13-4b3e-a868-ef815772d3e9/image.png)
 insert cluster graphic
 
 

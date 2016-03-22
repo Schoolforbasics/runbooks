@@ -255,7 +255,7 @@ Now that Anaconda Repo is installed, we want to mirror packages into our local r
 
     **1.** Create a mirror config file:
 
-        sudo vi /etc/binstar/mirrors/conda.yaml
+        vi /etc/binstar/mirrors/conda.yaml
 
      Add the following:
  
@@ -335,6 +335,7 @@ If the local Anaconda Repo will be used by Anaconda Cluster nodes (head or compu
 
 Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should have received from Continuum Support. 
 
+
 * **Air Gap Installation:**
 
     **1.** Create a mirror config file:
@@ -344,7 +345,7 @@ Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should have 
     **2.** Add the following:
 
         channels:
-          - file:///installer/anaconda-suite/pkgs
+          - file:///installer/anaconda-cluster/pkgs
 
     **3.** Mirror the Anaconda Cluster Management packages:
 

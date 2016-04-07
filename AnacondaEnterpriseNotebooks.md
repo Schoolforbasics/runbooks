@@ -280,15 +280,15 @@ The Wakari Gateway needs to register with the Wakari Server.  This needs to be a
 1. Login to the Wakari Server using Chrome or Firefox browser using the wakari user.
 2. Click the Admin link in the toolbar
 	
-![	##insert image##
-](images/admin-menu.png)	
+	![](images/admin-menu.png)	
+
 3. Click the Datacenters sub­section and then click your datacenter:
 	
-	##insert image##
+	![](images/datacenter-leftnav.png )
 	
 4. Verify that your datacenter is registered and looks like the following: status = ok.  
 	
-	##insert image##
+	![](images/datacenter.png )
 	
 		
 ## Install Wakari Compute

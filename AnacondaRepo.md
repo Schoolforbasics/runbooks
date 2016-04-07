@@ -22,7 +22,7 @@ This following runbook walks through the steps needed to install Anaconda Repo. 
 * Privileged (root) access or sudo capabilities
 * Ability to make (optional) iptables modifications
 
-**NOTE**: SELinux does not have to be disabled for Anaconda Repo operation 
+**NOTE**: SELinux does not have to be disabled for Anaconda Repo operation
 ### Network Requirements
 #### TCP Ports
 * Inbound TCP 8080 (Anaconda Repo)
@@ -35,7 +35,7 @@ This following runbook walks through the steps needed to install Anaconda Repo. 
 Assuming the above requirements are met, there are no additional dependencies necessary for Anaconda Repo.
 
 ### Air Gap vs. Regular Installation
-As stated previously, this document contains installation instructions for two audiences: those with internet access on the destination server(s) and those who have no access to internet resources. Many of the steps below have two sections: "**Air Gap Installation**" and "**Regular Installation**". Those without internet access should follow the **Air Gap Installation** instructions and those with internet access should follow **Regular Installation** instructions.
+As stated previously, this document contains installation instructions for two audiences: those with internet access on the destination server(s) and those who have no access to internet resources. Many of the steps below have two sections: **Air Gap Installation** and **Regular Installation**. Those without internet access should follow the **Air Gap Installation** instructions and those with internet access should follow **Regular Installation** instructions.
 
 ### Air Gap Media
 This document assumes that the Air Gap media is located at /installer on the server where the software is being installed.
@@ -78,7 +78,7 @@ The following sections detail the steps required to install Anaconda Repo.
 ##### **1.2.** Install MongoDB packages:
 
 * **Air Gap Installation:**
-    
+
         sudo yum install -y /installer/mongodb-org*
 
 * **Regular Installation:**
@@ -122,13 +122,13 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
     sudo chown -R binstar. /var/log/anaconda-server
     sudo chown -R binstar. /opt/anaconda-server/package-storage
     sudo chown -R binstar. /etc/binstar/mirrors
-    
+
 ### 5. Switch to the Anaconda Repo administrator account
 
     sudo su - binstar
 
 ### 6. Install Miniconda bootstrap version
-##### **6.1.** Fetch the download script using curl: 
+##### **6.1.** Fetch the download script using curl:
 
 * **Air Gap Installation:** Skip this step.
 
@@ -139,9 +139,9 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 ##### **6.2.** Run the Miniconda.sh installer script:
 
 * **Air Gap Installation:**
-        
+
         sh /installer/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
-        
+
 * **Regular Installation:**
 
         sh Miniconda.sh
@@ -158,7 +158,7 @@ Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 ```    
 Miniconda will now be installed into this location:
 /home/binstar/miniconda2  
--Press ENTER to confirm the location 
+-Press ENTER to confirm the location
 -Press CTRL-C to abort the installation
 -Or specify a different location below
  [/home/binstar/miniconda2] >>>" [Press ENTER]
@@ -226,11 +226,11 @@ Where **“TOKEN”** is the Anaconda Repo token you should have received from C
 This step:
 
 * creates the following entry in the binstar user’s crontab:
-	
+
 
     `@reboot /home/binstar/miniconda/bin/supervisord`
 
-	
+
 * generates the `/home/binstar/miniconda/etc/supervisord.conf` file
 
 ##### **9.2.** Verify the server is running:
@@ -243,7 +243,7 @@ This step:
 ### 10. Install Anaconda Repo License
 Visit **http://your.anaconda.server:8080**. Follow the onscreen instructions and upload your license file. Log in with the superuser user and password configured above. After submitting, you should see the login page.
 
-**NOTE:** Contact your sales representative or support representative if you cannot find or have questions about your license. 
+**NOTE:** Contact your sales representative or support representative if you cannot find or have questions about your license.
 
 
 ### 11. Mirror Anaconda Repo
@@ -258,7 +258,7 @@ Now that Anaconda Repo is installed, we want to mirror packages into our local r
         vi /etc/binstar/mirrors/conda.yaml
 
      Add the following:
- 
+
         channels:
           - file:///installer/anaconda-suite/pkgs
 
@@ -270,7 +270,7 @@ Now that Anaconda Repo is installed, we want to mirror packages into our local r
 
         anaconda-server-sync-conda
 
-**NOTE:** Depending on the type of installation, this process may take 30-90 minutes. 
+**NOTE:** Depending on the type of installation, this process may take 30-90 minutes.
 
 
 To verify the local Anaconda Repo repo has been populated, visit **http://your.anaconda.server:8080/anaconda** in a browser.
@@ -287,7 +287,7 @@ Miniconda installers can be served by Anaconda Repo via the **static** directory
         versions="Miniconda3-latest-Linux-x86_64.sh Miniconda3-latest-MacOSX-x86_64.sh Miniconda3-latest-Windows-x86.exe Miniconda3-latest-Windows-x86_64.exe Miniconda-latest-Linux-x86_64.sh Miniconda-latest-MacOSX-x86_64.sh Miniconda-latest-Windows-x86.exe Miniconda-latest-Windows-x86_64.exe
         "
         for installer in $versions
-        do 
+        do
             curl -O $URL$installer
         done
 		# Move installers into static directory
@@ -305,7 +305,7 @@ Miniconda installers can be served by Anaconda Repo via the **static** directory
         versions="Miniconda3-latest-Linux-x86_64.sh Miniconda3-latest-MacOSX-x86_64.sh Miniconda3-latest-Windows-x86.exe Miniconda3-latest-Windows-x86_64.exe Miniconda-latest-Linux-x86_64.sh Miniconda-latest-MacOSX-x86_64.sh Miniconda-latest-Windows-x86.exe Miniconda-latest-Windows-x86_64.exe
         "
         for installer in $versions
-        do 
+        do
             curl -O $URL$installer
         done
 		# Move installers into static directory
@@ -333,13 +333,13 @@ If the local Anaconda Repo will be used by Anaconda Cluster nodes (head or compu
 
 
 
-Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should have received from Continuum Support. 
+Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should have received from Continuum Support.
 
 
 * **Air Gap Installation:**
 
     **1.** Create a mirror config file:
-    
+
         vi /etc/binstar/mirrors/anaconda-cluster.yaml
 
     **2.** Add the following:
@@ -387,17 +387,17 @@ sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --commen
 sudo iptables -L -n
 Chain INPUT (policy ACCEPT)
 target     prot opt source               destination         
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 /* # Anaconda Repo # */ 
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */ 
-ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED 
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 /* # Anaconda Repo # */
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
 ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
 ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22 
-REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
 
 Chain FORWARD (policy ACCEPT)
 target     prot opt source               destination         
-REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited 
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
 
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination  
@@ -409,7 +409,7 @@ target     prot opt source               destination
 sudo iptables -L -n -t nat
 Chain PREROUTING (policy ACCEPT)
 target     prot opt source               destination         
-REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */ redir ports 8080 
+REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */ redir ports 8080
 
 Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination         
@@ -419,8 +419,7 @@ target     prot opt source               destination
 ```
 
 Write the running iptables configuration to /etc/sysconfig/iptables:
- 
+
 ```
 sudo service iptables save
 ```
-

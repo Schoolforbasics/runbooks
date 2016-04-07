@@ -98,6 +98,7 @@ wakari-gateway-0.10.0-Linux-x86_64.sh
 wakari-publisher-0.10.0-Linux-x86_64.sh
 nginx-1.6.2-1.el6.ngx.x86_64.rpm
 elasticsearch-1.7.2.noarch.rpm
+jre-8u65-linux-x64.rpm
 ```
 ## Download the Installers
 
@@ -151,12 +152,13 @@ The Wakari server is the administrative front­end to the system. This is where 
 		curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm 
 		curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 		curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
+		curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 
 
 #### Install Prerequisite RPMs
 
 
-	sudo rpm -i *.rpm
+	sudo yum install -y *.rpm
 	sudo /etc/init.d/mongod start
 	sudo /etc/init.d/elasticsearch start
 	sudo chkconfig --add elasticsearch
@@ -250,7 +252,7 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 		...
 		...
 		Checking server name
-		Please restart the Gateway  after running the following command to connect this Gateway to the Wakari Server
+		Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
 		
 		PATH=/opt/wakari/wakari-gateway/bin:$PATH /opt/wakari/wakari-gateway/bin/wk-gateway-configure --server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway --protocol http --summary Gateway --username wakari --password password
 		
@@ -259,10 +261,10 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 
 #### Register the Wakari Gateway
 
-The Wakari Gateway needs to register with the Wakari Server.  This needs to be authenticated, so the wakari user’s credentials created during the Wakari Server install need to be used.  This needs to be run as root to write the configuration file: `/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json`
+The Wakari Gateway needs to register with the Wakari Server.  This needs to be authenticated, so the wakari user’s credentials created during the Wakari Server install need to be used.  **This needs to be run as root** to write the configuration file: `/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json`
 
 
-	sudo PATH=/opt/wakari/wakari-gateway/bin:$PATH /opt/wakari/wakari-gateway/bin/wk-gateway-configure --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http --summary Gateway --username wakari --password '<USE PASSWORD SET ABOVE>' || echo "You forgot to use the password or another failure happened"
+	PATH=/opt/wakari/wakari-gateway/bin:$PATH /opt/wakari/wakari-gateway/bin/wk-gateway-configure --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http --summary Gateway --username wakari --password '<USE PASSWORD SET ABOVE>' || echo "You forgot to use the password or another failure happened"
 
 	# Make wakari own the config file
 	sudo chown wakari /opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json
@@ -329,7 +331,7 @@ Once installed, you need to configure the Compute Launcher on Wakari Server.
 6. Select the correct (probably the only) Data Center to associate this Compute Node with
 7. For URL, enter **http://$WAKARI_COMPUTE:5002**. 
 		
-	**NOTE:** If the Compute Launcher is located on the same box as the Gateway, we recommend using **http://localhost:5002 ** for the URL value.
+	**NOTE:** If the Compute Launcher is located on the same box as the Gateway, we recommend using **http://localhost:5002** for the URL value.
 
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes. 

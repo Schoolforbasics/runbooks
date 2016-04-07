@@ -286,14 +286,14 @@ The Wakari Gateway needs to register with the Wakari Server.  This needs to be a
 	
 	![](images/datacenter-leftnav.png )
 	
-4. Verify that your datacenter is registered and looks like the following: status = ok.  
+4. Verify that your datacenter is registered and status is `{"status": "ok", "messages": []}`  
 	
 	![](images/datacenter.png )
 	
 		
 ## Install Wakari Compute
 
-This is where projects are stored and run.  Adding multiple Wakari Compute machines allows one to scale-out horizontally to increase capacity.   Projects can be created on individual compute nodes to spread the load.
+This is where projects are stored and run. Adding multiple Wakari Compute machines allows one to scale-out horizontally to increase capacity. Projects can be created on individual compute nodes to spread the load.
 
 #### Set Variables and Change Permissions
 

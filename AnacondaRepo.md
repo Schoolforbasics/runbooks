@@ -178,20 +178,21 @@ source ~/.bashrc
 
 ### 7. Install Anaconda Repo Enterprise Packages
 
-##### **7.1.** Install the Anaconda Repo channel:
+##### **7.1.** Add the Binstar and Anaconda-Server Repo channels to Conda:
 
-* **Air Gap Installation:** Install the Anaconda Repo channel from local files.
+* **Air Gap Installation:** Add the channels from local files.
 
         conda config --add channels  file:///installer/anaconda-suite/pkgs/
         conda config --remove channels defaults --force
 
-* **Regular Installation:**  Install the Anaconda Repo channel from Anaconda Cloud.
+* **Regular Installation:**  Add the channels from Anaconda Cloud.
 
-        export TOKEN=<your Anaconda Cloud token>
-        conda config --add channels https://conda.anaconda.org/t/$TOKEN/binstar/
-        conda config --add channels https://conda.anaconda.org/t/$TOKEN/anaconda-server/
+        export BINSTAR_TOKEN=<your binstar token>
+        export ANACONDA_TOKEN=<your anaconda-server token>
+        conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
+        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
-Where **“TOKEN”** is the Anaconda Repo token you should have received from Continuum Support. This adds the correct channels to conda by updating the `/home/binstar/.condarc` file.
+Note: You should have received two tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. The channels will be added to Conda by updating the `/home/binstar/.condarc` file. No tokens are required for Air Gap installs.
 
 
 ##### **7.2.** Install the Anaconda Repo packages via conda:

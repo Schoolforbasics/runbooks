@@ -9,8 +9,7 @@ The following runbook walks through the steps needed to install a basic Anaconda
 * **Head node (1):** Controls the software, file/folder and environment state of compute nodes
 * **Compute nodes (3):** Where jobs are run. Managed by the head node.
 
-![image](https://www.lucidchart.com/publicSegments/view/49892cae-f0ad-46f7-b2e5-9a096f7feba6/image.png)
-
+![image](images/cluster.png)
 
 ## Requirements
 ### Hardware Requirements

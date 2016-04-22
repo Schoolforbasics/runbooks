@@ -12,7 +12,7 @@ There are a dozen ways to convert Markdown docs to PDFs, but to stay consistent 
 
 3. Convert an HTML doc to PDF:
 
-		wkhtmltopdf filename.md --export filename.pdf
+		wkhtmltopdf filename.html pdfs/filename.pdf
 		
 ###Batch convert all Markdown pages to PDF
 

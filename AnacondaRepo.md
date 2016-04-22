@@ -140,11 +140,11 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 * **Air Gap Installation:**
 
-        sh /installer/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
+        bash /installer/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
 
 * **Regular Installation:**
 
-        sh Miniconda.sh
+        bash Miniconda.sh
 
 ##### **6.3.** Review and accept the license terms:
 

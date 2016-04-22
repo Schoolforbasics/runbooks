@@ -21,4 +21,4 @@ Alternatively, we can batch convert all docs from MD -> HTML -> PDF:
 
 		for i in *.md; do grip $i --export $(echo $i |sed 's/\.md//g').html --title=; done
 	
-		for i in *.html; do wkhtmltopdf $i $(echo $i |sed 's/\.html//g').pdf; done
+		for i in *.html; do wkhtmltopdf $i pdfs/$(echo $i |sed 's/\.html//g').pdf; done

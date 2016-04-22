@@ -192,7 +192,7 @@ source ~/.bashrc
         conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
         conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
-Note: You should have received two tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. The channels will be added to Conda by updating the `/home/binstar/.condarc` file. No tokens are required for Air Gap installs.
+**Note:** You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
 
 ##### **7.2.** Install the Anaconda Repo packages via conda:

@@ -92,16 +92,16 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
     sudo su - binstar
 
-### 6. Install Anaconda Repo
+### 6. Install Anaconda Enterprise Repository
 ##### **6.1.** Fetch the download script using curl:
 
 * **Air Gap Installation:** 
 
-	Download http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh on a machie with internet access and copy the install file to your server.
+	(Assumed) http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh has been downloaded to a machie with internet access and copied to the server.
 
 * **Regular Installation:**
 
-        curl 'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > Miniconda.sh
+        curl -O 'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > Miniconda.sh
 
 ##### **6.2.** Run the Miniconda.sh installer script:
 
@@ -116,14 +116,15 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 ##### **6.3.** Review and accept the license terms:
 
 ```
-Welcome to Miniconda (by Continuum Analytics, Inc.)
+Welcome to anaconda-repository
+
 In order to continue the installation process, please review the license agreement.  
 Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 ```
 ##### **6.4.** Accept the default location or specify an alternative:
 
 ```    
-Miniconda will now be installed into this location:
+anaconda-repository will now be installed into this location:
 /home/binstar/miniconda2  
 -Press ENTER to confirm the location
 -Press CTRL-C to abort the installation
@@ -143,51 +144,28 @@ Do you wish the installer to prepend the Miniconda install location to PATH in y
 source ~/.bashrc
 ```
 
-### 7. Install Anaconda Repo Enterprise Packages
-
-##### **7.1.** Add the Binstar and Anaconda-Server Repo channels to Conda:
-
-* **Air Gap Installation:** Add the channels from local files.
-
-        conda config --add channels  file:///installer/anaconda-suite/pkgs/
-        conda config --remove channels defaults --force
-
-* **Regular Installation:**  Add the channels from Anaconda Cloud.
-
-        export BINSTAR_TOKEN=<your binstar token>
-        export ANACONDA_TOKEN=<your anaconda-server token>
-        conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
-        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
-
-**Note:** You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
-
-
-##### **7.2.** Install the Anaconda Repo packages via conda:
-
-    conda install anaconda-client binstar-server binstar-static cas-mirror
-
-### 8.Configure Anaconda Repo
-##### **8.1.** Initialize the web server for Anaconda Repo:
+### 7.Configure Anaconda Repo
+##### **7.1.** Initialize the web server for Anaconda Repo:
 
     anaconda-server-config --init
 
-##### **8.2.** Set the Anaconda Repo package storage location:
+##### **7.2.** Set the Anaconda Repo package storage location:
 
     anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage
 
-##### **8.3.** Create an initial “superuser” account for Anaconda Repo:
+##### **7.3.** Create an initial “superuser” account for Anaconda Repo:
 
     anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
-##### **8.4.** Initialize the Anaconda Repo database:
+##### **7.4.** Initialize the Anaconda Repo database:
 
     anaconda-server-db-setup --execute
 
-### 9. Set up automatic restart on reboot, fail or error
+### 8. Set up automatic restart on reboot, fail or error
 
-##### **9.1.** Configure Supervisord:
+##### **8.1.** Configure Supervisord:
 
     anaconda-server-install-supervisord-config.sh
 
@@ -201,14 +179,14 @@ This step:
 
 * generates the `/home/binstar/miniconda/etc/supervisord.conf` file
 
-##### **9.2.** Verify the server is running:
+##### **8.2.** Verify the server is running:
 
     supervisorctl status
 
     binstar-server RUNNING   pid 10831, uptime 0:00:05
     binstar-worker RUNNING   pid 2784, uptime 0:00:04
 
-### 10. Install Anaconda Repo License
+### 9. Install Anaconda Repo License
 Visit **http://your.anaconda.server:8080**. Follow the onscreen instructions and upload your license file. Log in with the superuser user and password configured above. After submitting, you should see the login page.
 
 **NOTE:** Contact your sales representative or support representative if you cannot find or have questions about your license.

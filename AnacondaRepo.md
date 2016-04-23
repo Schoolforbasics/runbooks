@@ -48,9 +48,10 @@ This document also assumes that you will be installing your own build of MongoDB
 ## Anaconda Repo Installation
 The following sections detail the steps required to install Anaconda Repo.
 
-Note: If you plan to install your own MongoDB build on the server, skip to step #2
 ### 1.  MongoDB
 ##### 1.1. Install MongoDB
+
+	Using your standard process
 
 ##### **1.2.** Start mongodb:
 

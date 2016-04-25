@@ -76,7 +76,7 @@ The following sections detail the steps required to install Anaconda Repo.
 
 
 ##### **1.2.** Install MongoDB packages:
-
+I
 * **Air Gap Installation:**
 
         sudo yum install -y /installer/mongodb-org*
@@ -99,7 +99,7 @@ The following sections detail the steps required to install Anaconda Repo.
     mongod (pid 1234) is running...
 
 
-**NOTE:** Additional mongodb installation information can be found here.
+**NOTE:** Additional mongodb installation information can be found [here](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/).
 
 ### 2. Create Anaconda Repo administrator account
 

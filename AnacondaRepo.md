@@ -167,11 +167,14 @@ Miniconda will now be installed into this location:
 
 ##### **6.5.** Update the binstar user's path:
 
+
+Do you wish the installer to prepend the Miniconda install location to PATH in your /home/binstar/.bashrc ? 	
 ```
-Do you wish the installer to prepend the Miniconda install location to PATH in your /home/binstar/.bashrc ? [yes|no] yes
+[yes|no] yes
 ```
 
 ##### **6.6.** For the new path changes to take effect, “source” your .bashrc:
+
 ```
 source ~/.bashrc
 ```
@@ -210,7 +213,8 @@ source ~/.bashrc
 
 ##### **8.3.** Create an initial “superuser” account for Anaconda Repo:
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" --email \
+    "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
@@ -285,12 +289,20 @@ Miniconda installers can be served by Anaconda Repo via the **static** directory
         mkdir -p /tmp/extras
         pushd /tmp/extras
         URL="file:///installer/anaconda-suite/miniconda/"
-        versions="Miniconda3-latest-Linux-x86_64.sh Miniconda3-latest-MacOSX-x86_64.sh Miniconda3-latest-Windows-x86.exe Miniconda3-latest-Windows-x86_64.exe Miniconda-latest-Linux-x86_64.sh Miniconda-latest-MacOSX-x86_64.sh Miniconda-latest-Windows-x86.exe Miniconda-latest-Windows-x86_64.exe
-        "
+        versions="Miniconda3-latest-Linux-x86_64.sh \
+        Miniconda3-latest-MacOSX-x86_64.sh \
+        Miniconda3-latest-Windows-x86.exe \
+        Miniconda3-latest-Windows-x86_64.exe \
+        Miniconda-latest-Linux-x86_64.sh \
+        Miniconda-latest-MacOSX-x86_64.sh \
+        Miniconda-latest-Windows-x86.exe \
+        Miniconda-latest-Windows-x86_64.exe"
+        
         for installer in $versions
-        do
-            curl -O $URL$installer
+         do
+          curl -O $URL$installer
         done
+		
 		# Move installers into static directory
 		popd
 		cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
@@ -303,12 +315,20 @@ Miniconda installers can be served by Anaconda Repo via the **static** directory
         mkdir -p /tmp/extras
         pushd /tmp/extras
         URL="https://repo.continuum.io/miniconda/"
-        versions="Miniconda3-latest-Linux-x86_64.sh Miniconda3-latest-MacOSX-x86_64.sh Miniconda3-latest-Windows-x86.exe Miniconda3-latest-Windows-x86_64.exe Miniconda-latest-Linux-x86_64.sh Miniconda-latest-MacOSX-x86_64.sh Miniconda-latest-Windows-x86.exe Miniconda-latest-Windows-x86_64.exe
-        "
+        versions="Miniconda3-latest-Linux-x86_64.sh \
+        Miniconda3-latest-MacOSX-x86_64.sh \
+        Miniconda3-latest-Windows-x86.exe \
+        Miniconda3-latest-Windows-x86_64.exe \
+        Miniconda-latest-Linux-x86_64.sh \
+        Miniconda-latest-MacOSX-x86_64.sh \
+        Miniconda-latest-Windows-x86.exe \
+        Miniconda-latest-Windows-x86_64.exe"
+        
         for installer in $versions
-        do
-            curl -O $URL$installer
+         do
+          curl -O $URL$installer
         done
+		
 		# Move installers into static directory
 		popd
 		cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
@@ -330,7 +350,8 @@ If the local Anaconda Repo will be used by Anaconda Cluster nodes (head or compu
 
     **3.** Mirror the Anaconda Cluster Management packages:
 
-        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
+        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
+        --account=anaconda-cluster
 
 
 
@@ -350,7 +371,8 @@ Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should have 
 
     **3.** Mirror the Anaconda Cluster Management packages:
 
-        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
+        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
+        --account=anaconda-cluster
 
 
 **NOTE:**Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found here.
@@ -367,19 +389,22 @@ The easiest way to enable clients to access an Anaconda Repo on standard ports i
 **Allow inbound access to tcp port 80:**
 
 ```
-sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
+-j ACCEPT
 ```
 
 **Allow inbound access to tcp port 8080:**
 
 ```
-sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" \
+-j ACCEPT
 ```
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ```
-sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
+-j REDIRECT --to-port 8080
 ```
 
 **Display the current iptables rules:**

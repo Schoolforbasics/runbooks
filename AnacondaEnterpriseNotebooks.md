@@ -1,10 +1,10 @@
-# Wakari Enterprise Runbook
+# Anaconda Enterprise Notebook Runbook
 
-Wakari is a Python data analysis environment from Continuum Analytics. Accessed through a browser, Wakari is a ready-to-use, powerful, fully-configured Python analytics environment. We believe that programmers, scientists, and analysts should spend their time analyzing data, not working to set up a system. Data should be shareable, and analysis should be repeatable. Reproducibility should extend beyond just code to include the runtime environment, configuration, and input data.
+Anaconda Enterprise Notebook is a Python data analysis environment from Continuum Analytics. Accessed through a browser, Anaconda Enterprise Notebook is a ready-to-use, powerful, fully-configured Python analytics environment. We believe that programmers, scientists, and analysts should spend their time analyzing data, not working to set up a system. Data should be shareable, and analysis should be repeatable. Reproducibility should extend beyond just code to include the runtime environment, configuration, and input data.
 
-Wakari makes it easy to start your analysis immediately.
+Anaconda Enterprise Notebook makes it easy to start your analysis immediately.
 
-This runbook walks through the steps needed to install a basic Wakari system comprised of the front-end server, gateway, and two compute machines. The runbook is designed for two audiences: those who have direct access to the internet for installation and those where such access is not available or restricted for security reasons. For these restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
+This runbook walks through the steps needed to install a basic Anaconda Enterprise Notebook system comprised of the front-end server, gateway, and two compute machines. The runbook is designed for two audiences: those who have direct access to the internet for installation and those where such access is not available or restricted for security reasons. For these restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
 
 
 **Wakari Server:** The administrative front-end to the system.  This is where users login to the system, where user accounts are stored, and where admins can manage the system.
@@ -48,8 +48,8 @@ Configure to meet the needs of the projects.  At least:
 
 **Wakari Server**
 
-* Mongo Version:  >= 2.6.8 and < 3.0
-* Nginx version: >=1.4.0
+* Mongo Version: >= 2.6.8 and < 3.0
+* Nginx version: >= 1.4.0
 * ElasticSearch
 * Oracle JRE 8
 
@@ -108,10 +108,11 @@ Download the installers and copy them to the corresponding servers. The Publishe
 
 * **Regular Installation:**
 
-		curl -O https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com/wakari-server-0.10.0-Linux-x86_64.sh
-		curl -O https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com/wakari-gateway-0.10.0-Linux-x86_64.sh
-		curl -O https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com/wakari-compute-0.10.0-Linux-x86_64.sh
-		curl -O https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com/wakari-publisher-0.10.0-Linux-x86_64.sh
+		RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+		curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
+		curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
+		curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
+		curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
 
 
 ## Gather IP addresses or FQDNs
@@ -254,25 +255,38 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 		Checking server name
 		Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
 		
-		PATH=/opt/wakari/wakari-gateway/bin:$PATH /opt/wakari/wakari-gateway/bin/wk-gateway-configure --server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway --protocol http --summary Gateway --username wakari --password password
+		PATH=/opt/wakari/wakari-gateway/bin:$PATH \
+		/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+		--server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
+		--protocol http --summary Gateway --username wakari --password password
 		
-		(replace 'password' with the password of the wakari user that was generated during server installation)
-		Then start the Wakari-gateway using: sudo service wakari-gateway start
+**NOTE:** replace **password** with the password of the wakari user that was generated during server installation.
+
+#### Start the Wakari Gateway
+		
+		sudo service wakari-gateway start
 
 #### Register the Wakari Gateway
 
 The Wakari Gateway needs to register with the Wakari Server.  This needs to be authenticated, so the wakari user’s credentials created during the Wakari Server install need to be used.  **This needs to be run as root** to write the configuration file: `/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json`
 
 
-	PATH=/opt/wakari/wakari-gateway/bin:$PATH /opt/wakari/wakari-gateway/bin/wk-gateway-configure --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http --summary Gateway --username wakari --password '<USE PASSWORD SET ABOVE>' || echo "You forgot to use the password or another failure happened"
+	PATH=/opt/wakari/wakari-gateway/bin:$PATH \
+	/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+	--server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
+	--port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \
+	--summary Gateway --username wakari \
+	--password '<USE PASSWORD SET ABOVE>'	
 
-	# Make wakari own the config file
+#### Ensure Proper Permissions
+
 	sudo chown wakari /opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json
 
-	# Restart the gateway to load the new configuration file
+#### Restart the gateway to load the new configuration file
+	
 	sudo service wakari-gateway restart
 
-	# Ignore any errors about missing /lib/lsb/init-functions
+**NOTE:** Ignore any errors about missing /lib/lsb/init-functions
 	
 
 #### Verify the Wakari Gateway has Registered
@@ -336,6 +350,6 @@ Once installed, you need to configure the Compute Launcher on Wakari Server.
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes. 
 
-**Congratulations!** You've now successfully installed and configured Wakari Enterprise.
+**Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
 		
 

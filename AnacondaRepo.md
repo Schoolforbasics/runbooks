@@ -98,12 +98,11 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 * **Air Gap Installation:** 
 
-	(Assumed) http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh has been downloaded to a machie with internet access and copied to the server.
+	(Assumed) http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh has been downloaded to a machine with internet access and copied to the server.
 
 * **Regular Installation:**
 
-        curl -O \
-        'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > \
+        curl -O 'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > \
         Miniconda.sh
 
 ##### **6.2.** Run the Miniconda.sh installer script:
@@ -159,8 +158,8 @@ source ~/.bashrc
 
 ##### **7.3.** Create an initial “superuser” account for Anaconda Repo:
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" \
-    --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" --email \
+    "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 

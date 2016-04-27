@@ -102,7 +102,9 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 * **Regular Installation:**
 
-        curl -O 'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > Miniconda.sh
+        curl -O \
+        'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > \
+        Miniconda.sh
 
 ##### **6.2.** Run the Miniconda.sh installer script:
 
@@ -136,8 +138,9 @@ anaconda-repository will now be installed into this location:
 
 ##### **6.5.** Update the binstar user's path:
 
+Do you wish the installer to prepend the Miniconda install location to PATH in your /home/binstar/.bashrc ? 	
 ```
-Do you wish the installer to prepend the Miniconda install location to PATH in your /home/binstar/.bashrc ? [yes|no] yes
+[yes|no] yes
 ```
 
 ##### **6.6.** For the new path changes to take effect, “source” your .bashrc:
@@ -156,7 +159,8 @@ source ~/.bashrc
 
 ##### **7.3.** Create an initial “superuser” account for Anaconda Repo:
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" \
+    --email "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
@@ -206,19 +210,22 @@ The easiest way to enable clients to access an Anaconda Repo on standard ports i
 **Allow inbound access to tcp port 80:**
 
 ```
-sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment \
+"# Anaconda Repo #" -j ACCEPT
 ```
 
 **Allow inbound access to tcp port 8080:**
 
 ```
-sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment \
+"# Anaconda Repo #" -j ACCEPT
 ```
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ```
-sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment \
+"# Anaconda Repo #" -j REDIRECT --to-port 8080
 ```
 
 **Display the current iptables rules:**

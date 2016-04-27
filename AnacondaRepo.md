@@ -102,8 +102,7 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 * **Regular Installation:**
 
-        curl -O 'http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh' > \
-        Miniconda.sh
+        curl -O http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh
 
 ##### **6.2.** Run the Miniconda.sh installer script:
 
@@ -113,7 +112,7 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 * **Regular Installation:**
 
-        bash Miniconda.sh
+        bash anaconda-repository-2.16.9-Linux-x86_64.sh
 
 ##### **6.3.** Review and accept the license terms:
 

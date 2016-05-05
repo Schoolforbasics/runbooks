@@ -13,7 +13,7 @@ environments are noted. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
-.. image:: https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png
+.. image:: _static/repo.png
 
 
 Requirements
@@ -623,5 +623,3 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
-
-.. |image0| image:: https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png

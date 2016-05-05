@@ -123,7 +123,7 @@ html_theme_options = {
     # 'navbar_title': "Demo",
 
     # # Tab name for entire site. (Default: "Site")
-    'navbar_site_name': "Products",
+    'navbar_site_name': "Installations",
 
     # # A list of tuples containing pages or urls to link to.
     # # Valid tuples should be in the following forms:

@@ -17,7 +17,7 @@ Support team, if applicable, for additional assistance.
 
 
 Requirements
-============
+------------
 
 Hardware Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -84,8 +84,8 @@ Air Gap Media
 This document assumes that the Air Gap media is located at /installer on
 the server where the software is being installed.
 
-Air Gap media contents:
-------------------------
+Air Gap media contents
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -100,7 +100,7 @@ Air Gap media contents:
 
 
 Anaconda Repo Installation
-==========================
+--------------------------
 
 
 The following sections detail the steps required to install Anaconda
@@ -109,8 +109,8 @@ Repo.
 Install MongoDB
 ~~~~~~~~~~~~~~~~~~
 
-Download MongoDB packages:
---------------------------
+Download MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Skip this step.
 
@@ -125,8 +125,8 @@ Download MongoDB packages:
    curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
    curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 
-Install MongoDB packages:
--------------------------
+Install MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 - **Air Gap Installation:**
 
@@ -141,15 +141,15 @@ Install MongoDB packages:
     sudo yum install -y mongodb-org*
 
 
-Start mongodb:
---------------
+Start mongodb
+~~~~~~~~~~~~~
 
 ::
 
     sudo service mongod start
 
-Verify mongod is running:
--------------------------
+Verify mongod is running
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -158,6 +158,9 @@ Verify mongod is running:
 
 **NOTE:** Additional mongodb installation information can be found
 `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
+
+Configure Anaconda Repo
+-----------------------
 
 Create Anaconda Repo administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +186,7 @@ Create Anaconda Repo directories
     sudo mkdir -m 0770 -p /opt/anaconda-server/package-storage
     sudo mkdir -m 0770 /etc/binstar/mirrors
 
-Give the binstar user ownership of directories:
+Give the binstar user ownership of directories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -201,10 +204,10 @@ Switch to the Anaconda Repo administrator account
     sudo su - binstar
 
 Install Miniconda bootstrap version
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
-Fetch the download script using curl:
--------------------------------------
+Fetch the download script using curl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Skip this step.
 
@@ -214,9 +217,8 @@ Fetch the download script using curl:
 
     curl 'http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
-Run the Miniconda.sh installer script:
---------------------------------------
-
+Run the Miniconda.sh installer script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -  **Air Gap Installation:**
 
 ::
@@ -229,8 +231,8 @@ Run the Miniconda.sh installer script:
 
    bash Miniconda.sh
 
-Review and accept the license terms:
-------------------------------------
+Review and accept the license terms
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -239,7 +241,7 @@ Review and accept the license terms:
     Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 
 Accept the default location or specify an alternative:
-------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -251,8 +253,8 @@ Accept the default location or specify an alternative:
      [/home/binstar/miniconda2] >>>" [Press ENTER]
      PREFIX=/home/binstar/miniconda2
 
-Update the binstar user's path:
--------------------------------
+Update the binstar user's path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Do you wish the installer to prepend the Miniconda install location to
 PATH in your /home/binstar/.bashrc ?
@@ -261,18 +263,19 @@ PATH in your /home/binstar/.bashrc ?
 
     [yes|no] yes
 
-For the new path changes to take effect, “source” your .bashrc:
----------------------------------------------------------------
+For the new path changes to take effect, “source” your .bashrc
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     source ~/.bashrc
 
 Install Anaconda Repo Enterprise Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
-Add the Binstar and Anaconda-Server Repo channels to Conda:
------------------------------------------------------------
+
+Add the Binstar and Anaconda-Server Repo channels to conda:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Add the channels from local files.
 
@@ -301,25 +304,25 @@ Install the Anaconda Repo packages via conda:
 
     conda install anaconda-client binstar-server binstar-static cas-mirror
 
-Configure Anaconda Repo
-~~~~~~~~~~~~~~~~~~~~~~~
+Configure Anaconda Repo Server
+------------------------------
 
 Initialize the web server for Anaconda Repo:
---------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-config --init
 
 Set the Anaconda Repo package storage location:
------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage
 
 Create an initial “superuser” account for Anaconda Repo:
---------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -332,17 +335,17 @@ upper case letters and numbers, with no punctuation. After setup the
 password can be changed with the web interface.
 
 Initialize the Anaconda Repo database:
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-db-setup --execute
 
 Set up automatic restart on reboot, fail or error
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------------------
 
 Configure Supervisord
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -357,7 +360,7 @@ This step:
 -  generates the ``/home/binstar/miniconda/etc/supervisord.conf`` file
 
 Verify the server is running:
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -430,6 +433,9 @@ directory located at
 This is **required** for Anaconda Cluster integration. To serve up the
 latest Miniconda installers for each platform, download them and copy
 them to the **extras** directory:
+
+.. note::
+
 
 -  **Air Gap Installation:**
 

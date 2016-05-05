@@ -2,6 +2,9 @@
 Anaconda Cluster Runbook
 ========================
 
+.. important::
+   Beware killer rabbits!
+
 Anaconda Cluster is a resource management tool for Anaconda that allows
 users to easily create, provision, and manage bare-metal or cloud-based
 clusters. It enables management of Conda environments on clusters and
@@ -81,7 +84,7 @@ TCP Ports
    -  from client machine to all nodes
    -  from Head node to Compute nodes
 
--  Outbound TCP 443 from all machines to Anaconda Cloud or local
+*  Outbound TCP 443 from all machines to Anaconda Cloud or local
    Anaconda Server
 
 Other Requirements
@@ -115,7 +118,7 @@ the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
 Prepare the Client Machine
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 Anaconda Cluster is managed by one or more client machines with the
 anaconda-cluster packages installed, along with the cluster
@@ -152,7 +155,7 @@ nodes. # # ####Create an SSH keypair as the admin user
 **NOTE:** Save the contents of ~admin/.ssh/id\_rsa.pub to a text file.
 
 Download Miniconda
-^^^^^^^^^^^^^^^^^^
+------------------
 
 -  **Air Gap Installation:**
 
@@ -167,14 +170,14 @@ Download Miniconda
   curl 'http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 Install Miniconda
-^^^^^^^^^^^^^^^^^
+-----------------
 
 ::
 
   bash Miniconda.sh
 
 Review and accept the license terms:
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -182,7 +185,7 @@ Review and accept the license terms:
         In order to continue the installation process, please review the license agreement. Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 
 Accept the default location or specify an alternative:
-------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -198,24 +201,24 @@ Accept the default location or specify an alternative:
         creating default environment... installation finished.
 
 Update the admin user's path (prepending **/home/admin/miniconda2**):
----------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
         Do you wish the installer to prepend the Miniconda install location to PATH in your /home/admin/.bashrc ? [yes|no] yes
 
 For the new path changes to take effect, “source” your .bashrc or start a new bash shell:
------------------------------------------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
         source ~/.bashrc
 
 Use conda to download and install Anaconda Cluster
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------
 
 Add the anaconda-cluster and anaconda channels:
------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
 
 -  **Air Gap Installation:** Install the Anaconda Cluster channel from
    the local Anaconda Repo server.
@@ -240,8 +243,8 @@ Install the anaconda-cluster packages:
 
         conda install anaconda-cluster
 
-Run the **acluster** command to initialize Anaconda Cluster:
-------------------------------------------------------------
+Initialize Anaconda Cluster:
+----------------------------
 
 ::
 
@@ -250,7 +253,7 @@ Run the **acluster** command to initialize Anaconda Cluster:
 **NOTE:** this command creates the **~/.acluster** directory
 
 Prepare Head and Compute Nodes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 In order to communicate with the Head and Compute nodes, the admin user
 needs to be able to SSH to each node without being prompted for a
@@ -262,7 +265,7 @@ NOTE: The steps below should be repeated on the Head node and all
 Compute nodes.
 
 Import SSH public key
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 Using your editor of choice, copy the contents of
 **~admin/.ssh/id\_rsa.pub** (from step XYZ above) from the Client
@@ -282,7 +285,7 @@ Make sure ~/admin/.ssh/authorized\_keys has the proper permissions:
     chmod 600 ~admin/.ssh/authorized_keys
 
 Enable passwordless sudo
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add the following line to the bottom of /etc/sudoers to allow the admin
 user to run commands via sudo without entering a password:
@@ -292,7 +295,7 @@ user to run commands via sudo without entering a password:
     admin ALL = (ALL) NOPASSWD: ALL
 
 Configure the Cluster
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 An Anaconda Cluster consists of two primary pieces of information; the
 cluster profile and the cluster provider. Both of these live within the
@@ -303,7 +306,7 @@ with, conda channels, plugins to install, etc. The provider describes
 bare-metal.
 
 Define a Cluster Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We’re going to create a simple cluster configuration using the head node
 and 3 compute nodes we configured previously. Create the
@@ -361,11 +364,11 @@ content:
             conda_sh: false
             conda_acl: true
 
-**Note: ** More information about cluster profiles can be found
+**Note:** More information about cluster profiles can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-profile>`__.
 
 Add the following to ~admin/.acluster/providers.yaml:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -378,7 +381,7 @@ More information about cluster providers can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-provider>`__.
 
 Create the Cluster
-^^^^^^^^^^^^^^^^^^
+------------------
 
 Now that the cluster has been defined, we’re ready to create it. Use the
 acluster create command to start the cluster. “demo” is the name of the

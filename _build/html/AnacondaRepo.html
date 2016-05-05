@@ -30,7 +30,7 @@
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Continuum Runbooks 1.1 documentation" href="index.html" />
     <link rel="next" title="Anaconda Cluster Runbook" href="AnacondaCluster.html" />
-    <link rel="prev" title="Continuum Analytics’ Runbooks Documentation" href="index.html" />
+    <link rel="prev" title="Continuum Analytics’ Implementation Runbooks" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -62,24 +62,32 @@
      id="dLabelGlobalToc"
      data-toggle="dropdown"
      data-target="#"
-     href="index.html">Products <b class="caret"></b></a>
+     href="index.html">Installations <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Repo Runbook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#anaconda-repo-installation">Anaconda Repo Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-anaconda-repo">Configure Anaconda Repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-anaconda-repo-server">Configure Anaconda Repo Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AnacondaCluster.html">Anaconda Cluster Runbook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#review-and-accept-the-license-terms">Review and accept the license terms:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#update-the-admin-user-s-path-prepending-home-admin-miniconda2">Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">For the new path changes to take effect, “source” your .bashrc or start a new bash shell:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#add-the-anaconda-cluster-and-anaconda-channels">Add the anaconda-cluster and anaconda channels:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-the-client-machine">Prepare the Client Machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#download-miniconda">Download Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-miniconda">Install Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#run-the-acluster-command-to-initialize-anaconda-cluster">Run the <strong>acluster</strong> command to initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#configure-the-cluster">Configure the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#create-the-cluster">Create the Cluster</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html">Anaconda Enterprise Notebook Runbook</a><ul>
@@ -112,39 +120,40 @@
 <li><a class="reference internal" href="#network-requirements">Network Requirements</a></li>
 <li><a class="reference internal" href="#other-requirements">Other Requirements</a></li>
 <li><a class="reference internal" href="#air-gap-vs-regular-installation">Air Gap vs. Regular Installation</a></li>
-<li><a class="reference internal" href="#air-gap-media">Air Gap Media</a><ul>
-<li><a class="reference internal" href="#air-gap-media-contents">Air Gap media contents:</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#air-gap-media">Air Gap Media</a></li>
+<li><a class="reference internal" href="#air-gap-media-contents">Air Gap media contents</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#anaconda-repo-installation">Anaconda Repo Installation</a><ul>
-<li><a class="reference internal" href="#install-mongodb">Install MongoDB</a><ul>
-<li><a class="reference internal" href="#download-mongodb-packages">Download MongoDB packages:</a></li>
-<li><a class="reference internal" href="#install-mongodb-packages">Install MongoDB packages:</a></li>
-<li><a class="reference internal" href="#start-mongodb">Start mongodb:</a></li>
-<li><a class="reference internal" href="#verify-mongod-is-running">Verify mongod is running:</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#create-anaconda-repo-administrator-account">Create Anaconda Repo administrator account</a></li>
-<li><a class="reference internal" href="#create-anaconda-repo-directories">Create Anaconda Repo directories</a></li>
-<li><a class="reference internal" href="#give-the-binstar-user-ownership-of-directories">Give the binstar user ownership of directories:</a></li>
-<li><a class="reference internal" href="#switch-to-the-anaconda-repo-administrator-account">Switch to the Anaconda Repo administrator account</a></li>
-<li><a class="reference internal" href="#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a><ul>
-<li><a class="reference internal" href="#fetch-the-download-script-using-curl">Fetch the download script using curl:</a></li>
-<li><a class="reference internal" href="#run-the-miniconda-sh-installer-script">Run the Miniconda.sh installer script:</a></li>
-<li><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms:</a></li>
-<li><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
-<li><a class="reference internal" href="#update-the-binstar-user-s-path">Update the binstar user&#8217;s path:</a></li>
-<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc">For the new path changes to take effect, “source” your .bashrc:</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a><ul>
-<li><a class="reference internal" href="#add-the-binstar-and-anaconda-server-repo-channels-to-conda">Add the Binstar and Anaconda-Server Repo channels to Conda:</a></li>
-<li><a class="reference internal" href="#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
+<li><a class="reference internal" href="#install-mongodb">Install MongoDB</a></li>
+<li><a class="reference internal" href="#download-mongodb-packages">Download MongoDB packages</a></li>
+<li><a class="reference internal" href="#install-mongodb-packages">Install MongoDB packages</a></li>
+<li><a class="reference internal" href="#start-mongodb">Start mongodb</a></li>
+<li><a class="reference internal" href="#verify-mongod-is-running">Verify mongod is running</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#configure-anaconda-repo">Configure Anaconda Repo</a><ul>
+<li><a class="reference internal" href="#create-anaconda-repo-administrator-account">Create Anaconda Repo administrator account</a></li>
+<li><a class="reference internal" href="#create-anaconda-repo-directories">Create Anaconda Repo directories</a></li>
+<li><a class="reference internal" href="#give-the-binstar-user-ownership-of-directories">Give the binstar user ownership of directories</a></li>
+<li><a class="reference internal" href="#switch-to-the-anaconda-repo-administrator-account">Switch to the Anaconda Repo administrator account</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a><ul>
+<li><a class="reference internal" href="#fetch-the-download-script-using-curl">Fetch the download script using curl</a></li>
+<li><a class="reference internal" href="#run-the-miniconda-sh-installer-script">Run the Miniconda.sh installer script</a></li>
+<li><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms</a></li>
+<li><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
+<li><a class="reference internal" href="#update-the-binstar-user-s-path">Update the binstar user&#8217;s path</a></li>
+<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc">For the new path changes to take effect, “source” your .bashrc</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a><ul>
+<li><a class="reference internal" href="#add-the-binstar-and-anaconda-server-repo-channels-to-conda">Add the Binstar and Anaconda-Server Repo channels to conda:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
+<li><a class="reference internal" href="#configure-anaconda-repo-server">Configure Anaconda Repo Server</a><ul>
 <li><a class="reference internal" href="#initialize-the-web-server-for-anaconda-repo">Initialize the web server for Anaconda Repo:</a></li>
 <li><a class="reference internal" href="#set-the-anaconda-repo-package-storage-location">Set the Anaconda Repo package storage location:</a></li>
 <li><a class="reference internal" href="#create-an-initial-superuser-account-for-anaconda-repo">Create an initial “superuser” account for Anaconda Repo:</a></li>
@@ -154,8 +163,6 @@
 <li><a class="reference internal" href="#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a><ul>
 <li><a class="reference internal" href="#configure-supervisord">Configure Supervisord</a></li>
 <li><a class="reference internal" href="#verify-the-server-is-running">Verify the server is running:</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#install-anaconda-repo-license">Install Anaconda Repo License</a></li>
 <li><a class="reference internal" href="#mirror-anaconda-repo">Mirror Anaconda Repo</a></li>
 <li><a class="reference internal" href="#mirror-installers-for-miniconda">Mirror Installers for Miniconda</a></li>
@@ -278,8 +285,9 @@ should follow <strong>Regular Installation</strong> instructions.</p>
 <h3>Air Gap Media<a class="headerlink" href="#air-gap-media" title="Permalink to this headline">¶</a></h3>
 <p>This document assumes that the Air Gap media is located at /installer on
 the server where the software is being installed.</p>
+</div>
 <div class="section" id="air-gap-media-contents">
-<h4>Air Gap media contents:<a class="headerlink" href="#air-gap-media-contents" title="Permalink to this headline">¶</a></h4>
+<h3>Air Gap media contents<a class="headerlink" href="#air-gap-media-contents" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>/installer
 ___ anaconda-suite
     ___ pkgs
@@ -292,15 +300,15 @@ mongodb-org-2.6.8-1.x86_64.rpm
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="anaconda-repo-installation">
 <h2>Anaconda Repo Installation<a class="headerlink" href="#anaconda-repo-installation" title="Permalink to this headline">¶</a></h2>
 <p>The following sections detail the steps required to install Anaconda
 Repo.</p>
 <div class="section" id="install-mongodb">
 <h3>Install MongoDB<a class="headerlink" href="#install-mongodb" title="Permalink to this headline">¶</a></h3>
+</div>
 <div class="section" id="download-mongodb-packages">
-<h4>Download MongoDB packages:<a class="headerlink" href="#download-mongodb-packages" title="Permalink to this headline">¶</a></h4>
+<h3>Download MongoDB packages<a class="headerlink" href="#download-mongodb-packages" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Skip this step.</li>
 <li><strong>Regular Installation:</strong></li>
@@ -315,7 +323,7 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 </div>
 </div>
 <div class="section" id="install-mongodb-packages">
-<h4>Install MongoDB packages:<a class="headerlink" href="#install-mongodb-packages" title="Permalink to this headline">¶</a></h4>
+<h3>Install MongoDB packages<a class="headerlink" href="#install-mongodb-packages" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong></li>
 </ul>
@@ -330,13 +338,13 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 </div>
 </div>
 <div class="section" id="start-mongodb">
-<h4>Start mongodb:<a class="headerlink" href="#start-mongodb" title="Permalink to this headline">¶</a></h4>
+<h3>Start mongodb<a class="headerlink" href="#start-mongodb" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">start</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="verify-mongod-is-running">
-<h4>Verify mongod is running:<a class="headerlink" href="#verify-mongod-is-running" title="Permalink to this headline">¶</a></h4>
+<h3>Verify mongod is running<a class="headerlink" href="#verify-mongod-is-running" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">status</span>
 <span class="n">mongod</span> <span class="p">(</span><span class="n">pid</span> <span class="mi">1234</span><span class="p">)</span> <span class="ow">is</span> <span class="n">running</span><span class="o">...</span>
 </pre></div>
@@ -345,6 +353,8 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 <a class="reference external" href="https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/">here</a>.</p>
 </div>
 </div>
+<div class="section" id="configure-anaconda-repo">
+<h2>Configure Anaconda Repo<a class="headerlink" href="#configure-anaconda-repo" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="create-anaconda-repo-administrator-account">
 <h3>Create Anaconda Repo administrator account<a class="headerlink" href="#create-anaconda-repo-administrator-account" title="Permalink to this headline">¶</a></h3>
 <p>In a terminal window, create a new user account for Anaconda Repo named
@@ -366,7 +376,7 @@ discouraged.</p>
 </div>
 </div>
 <div class="section" id="give-the-binstar-user-ownership-of-directories">
-<h3>Give the binstar user ownership of directories:<a class="headerlink" href="#give-the-binstar-user-ownership-of-directories" title="Permalink to this headline">¶</a></h3>
+<h3>Give the binstar user ownership of directories<a class="headerlink" href="#give-the-binstar-user-ownership-of-directories" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span>
 <span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
 <span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
@@ -380,10 +390,11 @@ discouraged.</p>
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="install-miniconda-bootstrap-version">
-<h3>Install Miniconda bootstrap version<a class="headerlink" href="#install-miniconda-bootstrap-version" title="Permalink to this headline">¶</a></h3>
+<h2>Install Miniconda bootstrap version<a class="headerlink" href="#install-miniconda-bootstrap-version" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="fetch-the-download-script-using-curl">
-<h4>Fetch the download script using curl:<a class="headerlink" href="#fetch-the-download-script-using-curl" title="Permalink to this headline">¶</a></h4>
+<h3>Fetch the download script using curl<a class="headerlink" href="#fetch-the-download-script-using-curl" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Skip this step.</li>
 <li><strong>Regular Installation:</strong></li>
@@ -393,7 +404,7 @@ discouraged.</p>
 </div>
 </div>
 <div class="section" id="run-the-miniconda-sh-installer-script">
-<h4>Run the Miniconda.sh installer script:<a class="headerlink" href="#run-the-miniconda-sh-installer-script" title="Permalink to this headline">¶</a></h4>
+<h3>Run the Miniconda.sh installer script<a class="headerlink" href="#run-the-miniconda-sh-installer-script" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong></li>
 </ul>
@@ -408,7 +419,7 @@ discouraged.</p>
 </div>
 </div>
 <div class="section" id="review-and-accept-the-license-terms">
-<h4>Review and accept the license terms:<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h4>
+<h3>Review and accept the license terms<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Welcome to Miniconda (by Continuum Analytics, Inc.)
 In order to continue the installation process, please review the license agreement.
 Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
@@ -416,7 +427,7 @@ Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 </div>
 </div>
 <div class="section" id="accept-the-default-location-or-specify-an-alternative">
-<h4>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h4>
+<h3>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Miniconda</span> <span class="n">will</span> <span class="n">now</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">into</span> <span class="n">this</span> <span class="n">location</span><span class="p">:</span>
 <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">miniconda2</span>
 <span class="o">-</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="n">to</span> <span class="n">confirm</span> <span class="n">the</span> <span class="n">location</span>
@@ -428,7 +439,7 @@ Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 </div>
 </div>
 <div class="section" id="update-the-binstar-user-s-path">
-<h4>Update the binstar user&#8217;s path:<a class="headerlink" href="#update-the-binstar-user-s-path" title="Permalink to this headline">¶</a></h4>
+<h3>Update the binstar user&#8217;s path<a class="headerlink" href="#update-the-binstar-user-s-path" title="Permalink to this headline">¶</a></h3>
 <p>Do you wish the installer to prepend the Miniconda install location to
 PATH in your /home/binstar/.bashrc ?</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">yes</span><span class="o">|</span><span class="n">no</span><span class="p">]</span> <span class="n">yes</span>
@@ -436,16 +447,16 @@ PATH in your /home/binstar/.bashrc ?</p>
 </div>
 </div>
 <div class="section" id="for-the-new-path-changes-to-take-effect-source-your-bashrc">
-<h4>For the new path changes to take effect, “source” your .bashrc:<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc" title="Permalink to this headline">¶</a></h4>
+<h3>For the new path changes to take effect, “source” your .bashrc<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="install-anaconda-repo-enterprise-packages">
-<h3>Install Anaconda Repo Enterprise Packages<a class="headerlink" href="#install-anaconda-repo-enterprise-packages" title="Permalink to this headline">¶</a></h3>
+<h2>Install Anaconda Repo Enterprise Packages<a class="headerlink" href="#install-anaconda-repo-enterprise-packages" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="add-the-binstar-and-anaconda-server-repo-channels-to-conda">
-<h4>Add the Binstar and Anaconda-Server Repo channels to Conda:<a class="headerlink" href="#add-the-binstar-and-anaconda-server-repo-channels-to-conda" title="Permalink to this headline">¶</a></h4>
+<h3>Add the Binstar and Anaconda-Server Repo channels to conda:<a class="headerlink" href="#add-the-binstar-and-anaconda-server-repo-channels-to-conda" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Add the channels from local files.</li>
 </ul>
@@ -466,29 +477,29 @@ conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anacond
 Support, one for each channel. If you haven&#8217;t, please contact
 <a class="reference external" href="mailto:support&#37;&#52;&#48;continuum&#46;io">support<span>&#64;</span>continuum<span>&#46;</span>io</a>. Tokens are not required for Air Gap installs.</p>
 </div>
+</div>
 <div class="section" id="install-the-anaconda-repo-packages-via-conda">
-<h4>Install the Anaconda Repo packages via conda:<a class="headerlink" href="#install-the-anaconda-repo-packages-via-conda" title="Permalink to this headline">¶</a></h4>
+<h2>Install the Anaconda Repo packages via conda:<a class="headerlink" href="#install-the-anaconda-repo-packages-via-conda" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">client</span> <span class="n">binstar</span><span class="o">-</span><span class="n">server</span> <span class="n">binstar</span><span class="o">-</span><span class="n">static</span> <span class="n">cas</span><span class="o">-</span><span class="n">mirror</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="configure-anaconda-repo">
-<h3>Configure Anaconda Repo<a class="headerlink" href="#configure-anaconda-repo" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="configure-anaconda-repo-server">
+<h2>Configure Anaconda Repo Server<a class="headerlink" href="#configure-anaconda-repo-server" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="initialize-the-web-server-for-anaconda-repo">
-<h4>Initialize the web server for Anaconda Repo:<a class="headerlink" href="#initialize-the-web-server-for-anaconda-repo" title="Permalink to this headline">¶</a></h4>
+<h3>Initialize the web server for Anaconda Repo:<a class="headerlink" href="#initialize-the-web-server-for-anaconda-repo" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="n">init</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="set-the-anaconda-repo-package-storage-location">
-<h4>Set the Anaconda Repo package storage location:<a class="headerlink" href="#set-the-anaconda-repo-package-storage-location" title="Permalink to this headline">¶</a></h4>
+<h3>Set the Anaconda Repo package storage location:<a class="headerlink" href="#set-the-anaconda-repo-package-storage-location" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">fs_storage_root</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-an-initial-superuser-account-for-anaconda-repo">
-<h4>Create an initial “superuser” account for Anaconda Repo:<a class="headerlink" href="#create-an-initial-superuser-account-for-anaconda-repo" title="Permalink to this headline">¶</a></h4>
+<h3>Create an initial “superuser” account for Anaconda Repo:<a class="headerlink" href="#create-an-initial-superuser-account-for-anaconda-repo" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">create</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">username</span> <span class="s2">&quot;superuser&quot;</span> <span class="o">--</span><span class="n">password</span> <span class="s2">&quot;yourpassword&quot;</span> \\
 <span class="o">--</span><span class="n">email</span> <span class="s2">&quot;your@email.com&quot;</span> <span class="o">--</span><span class="n">superuser</span>
 </pre></div>
@@ -499,16 +510,16 @@ upper case letters and numbers, with no punctuation. After setup the
 password can be changed with the web interface.</p>
 </div>
 <div class="section" id="initialize-the-anaconda-repo-database">
-<h4>Initialize the Anaconda Repo database:<a class="headerlink" href="#initialize-the-anaconda-repo-database" title="Permalink to this headline">¶</a></h4>
+<h3>Initialize the Anaconda Repo database:<a class="headerlink" href="#initialize-the-anaconda-repo-database" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="n">setup</span> <span class="o">--</span><span class="n">execute</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="set-up-automatic-restart-on-reboot-fail-or-error">
-<h3>Set up automatic restart on reboot, fail or error<a class="headerlink" href="#set-up-automatic-restart-on-reboot-fail-or-error" title="Permalink to this headline">¶</a></h3>
+<h2>Set up automatic restart on reboot, fail or error<a class="headerlink" href="#set-up-automatic-restart-on-reboot-fail-or-error" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="configure-supervisord">
-<h4>Configure Supervisord<a class="headerlink" href="#configure-supervisord" title="Permalink to this headline">¶</a></h4>
+<h3>Configure Supervisord<a class="headerlink" href="#configure-supervisord" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">supervisord</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
@@ -522,13 +533,12 @@ password can be changed with the web interface.</p>
 </ul>
 </div>
 <div class="section" id="verify-the-server-is-running">
-<h4>Verify the server is running:<a class="headerlink" href="#verify-the-server-is-running" title="Permalink to this headline">¶</a></h4>
+<h3>Verify the server is running:<a class="headerlink" href="#verify-the-server-is-running" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">supervisorctl</span> <span class="n">status</span>
 
 <span class="n">binstar</span><span class="o">-</span><span class="n">server</span> <span class="n">RUNNING</span>   <span class="n">pid</span> <span class="mi">10831</span><span class="p">,</span> <span class="n">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">05</span>
 <span class="n">binstar</span><span class="o">-</span><span class="n">worker</span> <span class="n">RUNNING</span>   <span class="n">pid</span> <span class="mi">2784</span><span class="p">,</span> <span class="n">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">04</span>
 </pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="install-anaconda-repo-license">

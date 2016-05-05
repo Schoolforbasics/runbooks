@@ -62,7 +62,7 @@
      id="dLabelGlobalToc"
      data-toggle="dropdown"
      data-target="#"
-     href="index.html">Products <b class="caret"></b></a>
+     href="index.html">Installations <b class="caret"></b></a>
   <ul class="dropdown-menu globaltoc"
       role="menu"
       aria-labelledby="dLabelGlobalToc"><ul class="current">
@@ -73,13 +73,15 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Cluster Runbook</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2">Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">For the new path changes to take effect, “source” your .bashrc or start a new bash shell:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#add-the-anaconda-cluster-and-anaconda-channels">Add the anaconda-cluster and anaconda channels:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-the-client-machine">Prepare the Client Machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-miniconda">Download Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-miniconda">Install Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run-the-acluster-command-to-initialize-anaconda-cluster">Run the <strong>acluster</strong> command to initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-the-cluster">Configure the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-cluster">Create the Cluster</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html">Anaconda Enterprise Notebook Runbook</a><ul>
@@ -116,23 +118,20 @@
 <li><a class="reference internal" href="#other-requirements">Other Requirements</a></li>
 <li><a class="reference internal" href="#assumptions">Assumptions</a></li>
 <li><a class="reference internal" href="#air-gap-vs-regular-installation">Air Gap vs. Regular Installation</a></li>
-<li><a class="reference internal" href="#prepare-the-client-machine">Prepare the Client Machine</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#prepare-the-client-machine">Prepare the Client Machine</a></li>
 <li><a class="reference internal" href="#download-miniconda">Download Miniconda</a></li>
-<li><a class="reference internal" href="#install-miniconda">Install Miniconda</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#install-miniconda">Install Miniconda</a><ul>
 <li><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms:</a></li>
 <li><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
 <li><a class="reference internal" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2">Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):</a></li>
-<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">For the new path changes to take effect, “source” your .bashrc or start a new bash shell:</a><ul>
-<li><a class="reference internal" href="#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
+<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">For the new path changes to take effect, “source” your .bashrc or start a new bash shell:</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#add-the-anaconda-cluster-and-anaconda-channels">Add the anaconda-cluster and anaconda channels:</a></li>
+<li><a class="reference internal" href="#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
 <li><a class="reference internal" href="#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
-<li><a class="reference internal" href="#run-the-acluster-command-to-initialize-anaconda-cluster">Run the <strong>acluster</strong> command to initialize Anaconda Cluster:</a><ul>
+<li><a class="reference internal" href="#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
 <li><a class="reference internal" href="#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a><ul>
 <li><a class="reference internal" href="#import-ssh-public-key">Import SSH public key</a></li>
 <li><a class="reference internal" href="#enable-passwordless-sudo">Enable passwordless sudo</a></li>
@@ -141,11 +140,9 @@
 <li><a class="reference internal" href="#configure-the-cluster">Configure the Cluster</a><ul>
 <li><a class="reference internal" href="#define-a-cluster-configuration">Define a Cluster Configuration</a></li>
 <li><a class="reference internal" href="#add-the-following-to-admin-acluster-providers-yaml">Add the following to ~admin/.acluster/providers.yaml:</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#create-the-cluster">Create the Cluster</a></li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -185,6 +182,10 @@
       
   <div class="section" id="anaconda-cluster-runbook">
 <h1>Anaconda Cluster Runbook<a class="headerlink" href="#anaconda-cluster-runbook" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Beware killer rabbits!</p>
+</div>
 <p>Anaconda Cluster is a resource management tool for Anaconda that allows
 users to easily create, provision, and manage bare-metal or cloud-based
 clusters. It enables management of Conda environments on clusters and
@@ -264,8 +265,6 @@ enabled</li>
 <li>from Head node to Compute nodes</li>
 </ul>
 </li>
-</ul>
-<ul class="simple">
 <li>Outbound TCP 443 from all machines to Anaconda Cloud or local
 Anaconda Server</li>
 </ul>
@@ -300,8 +299,9 @@ the steps below have two sections: &#8220;<strong>Air Gap Installation</strong>&
 the <strong>Air Gap Installation</strong> instructions and those with internet access
 should follow <strong>Regular Installation</strong> instructions.</p>
 </div>
+</div>
 <div class="section" id="prepare-the-client-machine">
-<h3>Prepare the Client Machine<a class="headerlink" href="#prepare-the-client-machine" title="Permalink to this headline">¶</a></h3>
+<h2>Prepare the Client Machine<a class="headerlink" href="#prepare-the-client-machine" title="Permalink to this headline">¶</a></h2>
 <p>Anaconda Cluster is managed by one or more client machines with the
 anaconda-cluster packages installed, along with the cluster
 configuration information. The client machine orchestrates the head node
@@ -333,8 +333,9 @@ The key&#39;s randomart image is:
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> Save the contents of ~admin/.ssh/id_rsa.pub to a text file.</p>
+</div>
 <div class="section" id="download-miniconda">
-<h4>Download Miniconda<a class="headerlink" href="#download-miniconda" title="Permalink to this headline">¶</a></h4>
+<h2>Download Miniconda<a class="headerlink" href="#download-miniconda" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong></li>
 </ul>
@@ -349,22 +350,19 @@ The key&#39;s randomart image is:
 </div>
 </div>
 <div class="section" id="install-miniconda">
-<h4>Install Miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h4>
+<h2>Install Miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bash</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
 <div class="section" id="review-and-accept-the-license-terms">
-<h2>Review and accept the license terms:<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h2>
+<h3>Review and accept the license terms:<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Welcome to Miniconda 3.19.3 (by Continuum Analytics, Inc.)
 In order to continue the installation process, please review the license agreement. Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 </pre></div>
 </div>
 </div>
 <div class="section" id="accept-the-default-location-or-specify-an-alternative">
-<h2>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h2>
+<h3>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Miniconda</span> <span class="n">will</span> <span class="n">now</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">into</span> <span class="n">this</span> <span class="n">location</span><span class="p">:</span>
 <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">miniconda2</span>  <span class="o">-</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="n">to</span> <span class="n">confirm</span> <span class="n">the</span> <span class="n">location</span>
 <span class="o">-</span><span class="n">Press</span> <span class="n">CTRL</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">abort</span> <span class="n">the</span> <span class="n">installation</span>
@@ -379,22 +377,22 @@ In order to continue the installation process, please review the license agreeme
 </div>
 </div>
 <div class="section" id="update-the-admin-user-s-path-prepending-home-admin-miniconda2">
-<h2>Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):<a class="headerlink" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2" title="Permalink to this headline">¶</a></h2>
+<h3>Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):<a class="headerlink" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Do you wish the installer to prepend the Miniconda install location to PATH in your /home/admin/.bashrc ? [yes|no] yes
 </pre></div>
 </div>
 </div>
 <div class="section" id="for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">
-<h2>For the new path changes to take effect, “source” your .bashrc or start a new bash shell:<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell" title="Permalink to this headline">¶</a></h2>
+<h3>For the new path changes to take effect, “source” your .bashrc or start a new bash shell:<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
 </pre></div>
 </div>
+</div>
+</div>
 <div class="section" id="use-conda-to-download-and-install-anaconda-cluster">
-<h3>Use conda to download and install Anaconda Cluster<a class="headerlink" href="#use-conda-to-download-and-install-anaconda-cluster" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="add-the-anaconda-cluster-and-anaconda-channels">
-<h2>Add the anaconda-cluster and anaconda channels:<a class="headerlink" href="#add-the-anaconda-cluster-and-anaconda-channels" title="Permalink to this headline">¶</a></h2>
+<h2>Use conda to download and install Anaconda Cluster<a class="headerlink" href="#use-conda-to-download-and-install-anaconda-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Add the anaconda-cluster and anaconda channels:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^</p>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Install the Anaconda Cluster channel from
 the local Anaconda Repo server.</li>
@@ -418,14 +416,15 @@ conda config --add channels http://conda.anaconda.org/t/$TOKEN/anaconda-cluster
 </pre></div>
 </div>
 </div>
-<div class="section" id="run-the-acluster-command-to-initialize-anaconda-cluster">
-<h2>Run the <strong>acluster</strong> command to initialize Anaconda Cluster:<a class="headerlink" href="#run-the-acluster-command-to-initialize-anaconda-cluster" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="initialize-anaconda-cluster">
+<h2>Initialize Anaconda Cluster:<a class="headerlink" href="#initialize-anaconda-cluster" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">acluster</span>
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> this command creates the <strong>~/.acluster</strong> directory</p>
+</div>
 <div class="section" id="prepare-head-and-compute-nodes">
-<h3>Prepare Head and Compute Nodes<a class="headerlink" href="#prepare-head-and-compute-nodes" title="Permalink to this headline">¶</a></h3>
+<h2>Prepare Head and Compute Nodes<a class="headerlink" href="#prepare-head-and-compute-nodes" title="Permalink to this headline">¶</a></h2>
 <p>In order to communicate with the Head and Compute nodes, the admin user
 needs to be able to SSH to each node without being prompted for a
 password. To allow this but still maintain a level of security, we’ll
@@ -435,7 +434,7 @@ via sudo, in order to install system packages, update system files, etc.
 NOTE: The steps below should be repeated on the Head node and all
 Compute nodes.</p>
 <div class="section" id="import-ssh-public-key">
-<h4>Import SSH public key<a class="headerlink" href="#import-ssh-public-key" title="Permalink to this headline">¶</a></h4>
+<h3>Import SSH public key<a class="headerlink" href="#import-ssh-public-key" title="Permalink to this headline">¶</a></h3>
 <p>Using your editor of choice, copy the contents of
 <strong>~admin/.ssh/id_rsa.pub</strong> (from step XYZ above) from the Client
 machine to <strong>~/admin/.ssh/authorized_keys</strong></p>
@@ -450,7 +449,7 @@ machine to <strong>~/admin/.ssh/authorized_keys</strong></p>
 </div>
 </div>
 <div class="section" id="enable-passwordless-sudo">
-<h4>Enable passwordless sudo<a class="headerlink" href="#enable-passwordless-sudo" title="Permalink to this headline">¶</a></h4>
+<h3>Enable passwordless sudo<a class="headerlink" href="#enable-passwordless-sudo" title="Permalink to this headline">¶</a></h3>
 <p>Add the following line to the bottom of /etc/sudoers to allow the admin
 user to run commands via sudo without entering a password:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">admin</span> <span class="n">ALL</span> <span class="o">=</span> <span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="n">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
@@ -459,7 +458,7 @@ user to run commands via sudo without entering a password:</p>
 </div>
 </div>
 <div class="section" id="configure-the-cluster">
-<h3>Configure the Cluster<a class="headerlink" href="#configure-the-cluster" title="Permalink to this headline">¶</a></h3>
+<h2>Configure the Cluster<a class="headerlink" href="#configure-the-cluster" title="Permalink to this headline">¶</a></h2>
 <p>An Anaconda Cluster consists of two primary pieces of information; the
 cluster profile and the cluster provider. Both of these live within the
 ~/admin/.acluster directory structure. In a nutshell, the profile
@@ -468,7 +467,7 @@ with, conda channels, plugins to install, etc. The provider describes
 <em>how</em> the cluster is provisioned and built; most importantly, cloud vs.
 bare-metal.</p>
 <div class="section" id="define-a-cluster-configuration">
-<h4>Define a Cluster Configuration<a class="headerlink" href="#define-a-cluster-configuration" title="Permalink to this headline">¶</a></h4>
+<h3>Define a Cluster Configuration<a class="headerlink" href="#define-a-cluster-configuration" title="Permalink to this headline">¶</a></h3>
 <p>We’re going to create a simple cluster configuration using the head node
 and 3 compute nodes we configured previously. Create the
 ~admin/.acluster/profiles.d/demo-cluster.yaml with the following
@@ -524,11 +523,11 @@ content:</p>
      <span class="n">conda_acl</span><span class="p">:</span> <span class="n">true</span>
 </pre></div>
 </div>
-<p><a href="#id1"><span class="problematic" id="id2">**</span></a>Note: ** More information about cluster profiles can be found
+<p><strong>Note:</strong> More information about cluster profiles can be found
 <a class="reference external" href="https://docs.continuum.io/anaconda-cluster/config-profile">here</a>.</p>
 </div>
 <div class="section" id="add-the-following-to-admin-acluster-providers-yaml">
-<h4>Add the following to ~admin/.acluster/providers.yaml:<a class="headerlink" href="#add-the-following-to-admin-acluster-providers-yaml" title="Permalink to this headline">¶</a></h4>
+<h3>Add the following to ~admin/.acluster/providers.yaml:<a class="headerlink" href="#add-the-following-to-admin-acluster-providers-yaml" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bare_metal</span><span class="p">:</span>
   <span class="n">cloud_provider</span><span class="p">:</span> <span class="n">none</span>
   <span class="n">private_key</span><span class="p">:</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
@@ -537,8 +536,9 @@ content:</p>
 <p>More information about cluster providers can be found
 <a class="reference external" href="https://docs.continuum.io/anaconda-cluster/config-provider">here</a>.</p>
 </div>
+</div>
 <div class="section" id="create-the-cluster">
-<h4>Create the Cluster<a class="headerlink" href="#create-the-cluster" title="Permalink to this headline">¶</a></h4>
+<h2>Create the Cluster<a class="headerlink" href="#create-the-cluster" title="Permalink to this headline">¶</a></h2>
 <p>Now that the cluster has been defined, we’re ready to create it. Use the
 acluster create command to start the cluster. “demo” is the name of the
 new cluster and “demo-cluster” is the name of the cluster profile (from
@@ -582,8 +582,6 @@ new cluster and “demo-cluster” is the name of the cluster profile (from
 <span class="n">Disconnecting</span> <span class="kn">from</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.78</span><span class="o">...</span> <span class="n">done</span><span class="o">.</span>
 <span class="n">Done</span>
 </pre></div>
-</div>
-</div>
 </div>
 </div>
 </div>

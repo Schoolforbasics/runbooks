@@ -30,7 +30,7 @@ import sphinx_bootstrap_theme
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.githubpages',
+#   'sphinx.ext.githubpages',
     'rst2pdf.pdfbuilder'
 ]
 
@@ -181,16 +181,6 @@ html_theme_options = {
     # Values: "3" (default) or "2" (in quotes)
     #'bootstrap_version': "3",
 }
-
-
-
-
-
-
-
-
-
-
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

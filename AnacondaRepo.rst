@@ -290,8 +290,10 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
 
        export BINSTAR_TOKEN=<your binstar token>
        export ANACONDA_TOKEN=<your anaconda-server token>
-       conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
-       conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
+       conda config --add channels \
+       https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
+       conda config --add channels \
+       https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
 **Note:** You should have received **two** tokens from Continuum
 Support, one for each channel. If you haven't, please contact
@@ -326,7 +328,7 @@ Create an initial “superuser” account for Anaconda Repo:
 
 ::
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" \\
+    anaconda-server-create-user --username "superuser" --password "yourpassword" \
     --email "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the

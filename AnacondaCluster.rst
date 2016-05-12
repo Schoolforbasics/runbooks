@@ -2,9 +2,6 @@
 Anaconda Cluster Runbook
 ========================
 
-.. important::
-   Beware killer rabbits!
-
 Anaconda Cluster is a resource management tool for Anaconda that allows
 users to easily create, provision, and manage bare-metal or cloud-based
 clusters. It enables management of Conda environments on clusters and
@@ -23,7 +20,7 @@ instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
 The following runbook walks through the steps needed to install a basic
-Anaconda Cluster comprised of a management ""client"" machine and four
+Anaconda Cluster comprised of a management "client" machine and four
 cluster nodes:
 
 -  **Client machine:** Where the Anaconda Cluster is configured from.
@@ -278,7 +275,7 @@ Your **~/admin/.ssh/authorized\_keys** will look something like this:
     cat ~admin/.ssh/authorized_keys
     ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRloraxLOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== admin@localhost
 
-Make sure ~/admin/.ssh/authorized\_keys has the proper permissions:
+Make sure ~/admin/.ssh/authorized_keys has the proper permissions:
 
 ::
 

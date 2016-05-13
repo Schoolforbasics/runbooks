@@ -1,10 +1,11 @@
 # Anaconda Enterprise Notebook Runbook
+**Citi Air-Gap Install (minimal) 2016-05-13**
 
 Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from Continuum Analytics. Accessed through a browser, Anaconda Enterprise Notebook is a ready-to-use, powerful, fully-configured Python analytics environment. We believe that programmers, scientists, and analysts should spend their time analyzing data, not working to set up a system. Data should be shareable, and analysis should be repeatable. Reproducibility should extend beyond just code to include the runtime environment, configuration, and input data.
 
 Anaconda Enterprise Notebook makes it easy to start your analysis immediately.
 
-This runbook walks through the steps needed to install a basic Anaconda Enterprise Notebook system comprised of the front-end server, gateway, and two compute machines. The runbook is designed for two audiences: those who have direct access to the internet for installation and those where such access is not available or restricted for security reasons. For these restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
+This runbook walks through the steps needed to install a basic Anaconda Enterprise Notebook system comprised of the front-end server, gateway, and two compute machines. This runbook is designed for offline environments where public Internet access is not available or restricted for security reasons. For these restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
 
 **NOTE:** This component of Anaconda Enterprise was formerly known as *Wakari*, and that name still appears in the software and the installation and configuration information below.
 
@@ -57,7 +58,6 @@ Configure to meet the needs of the projects.  At least:
 
 **NOTE:** For Air Gap installations, Oracle JRE must already be installed, and if using Python 3.5 then Anaconda Repository must also be installed.
 
-
 **AEN Compute**
 
 * git
@@ -79,43 +79,16 @@ Configure to meet the needs of the projects.  At least:
 ### 1.6 Other Requirements
 Assuming the above requirements are met, there are no additional dependencies necessary for Anaconda Enterprise Notebooks.
 
-### 1.7 Air Gap vs. Regular Installation
-As stated previously, this document contains installation instructions for two audiences: those with internet access on the destination server(s) and those who have no access to internet resources. Many of the steps below have two sections: **Air Gap Installation** and **Regular Installation**. Those without internet access should follow the **Air Gap Installation** instructions and those with internet access should follow **Regular Installation** instructions.
-
-### 1.8 Air Gap Media
-This document assumes that the Air Gap media is located at /installer on the server where the software is being installed.
-
-Air Gap media contents:
-
-```
-/installer
-mongodb-org-tools-2.6.8-1.x86_64.rpm
-mongodb-org-shell-2.6.8-1.x86_64.rpm
-mongodb-org-server-2.6.8-1.x86_64.rpm
-mongodb-org-mongos-2.6.8-1.x86_64.rpm
-mongodb-org-2.6.8-1.x86_64.rpm
-wakari-compute-0.10.0-Linux-x86_64.sh
-wakari-server-0.10.0-Linux-x86_64.sh
-wakari-gateway-0.10.0-Linux-x86_64.sh
-wakari-publisher-0.10.0-Linux-x86_64.sh
-nginx-1.6.2-1.el6.ngx.x86_64.rpm
-elasticsearch-1.7.2.noarch.rpm
-jre-8u65-linux-x64.rpm
-```
 ---
 ## 2. Download the Installers
 
 Download the installers and copy them to the corresponding servers. The Publisher should be installed on the AEN Server machine. 
 
-* **Air Gap Installation:** Copy installers from the Air Gap media
-
-* **Regular Installation:**
-
-		RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-		curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
-		curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
-		curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
-		curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
+	RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+	curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
+	curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
+	curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
+	curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
 
 
 ---
@@ -141,28 +114,19 @@ The AEN server is the administrative front­end to the system. This is where use
 
 ### 4.1 AEN Server Preparation ­Prerequisites
 
-
 #### Download Prerequisite RPMs
 
-
-* **Air Gap Installation:** Copy RPMs from the Air Gap media
-
-* **Regular Installation:**
-
-
-		RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-		curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm 
-		curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm 
-		curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm 
-		curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm 
-		curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm 
-		curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
-		curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
-		curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
-
+	RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+	curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm 
+	curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm 
+	curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm 
+	curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm 
+	curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm 
+	curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+	curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
+	curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 
 #### Install Prerequisite RPMs
-
 
 	sudo yum install -y *.rpm
 	sudo /etc/init.d/mongod start
@@ -173,40 +137,40 @@ The AEN server is the administrative front­end to the system. This is where use
 
 #### Set Variables and Change Permissions
 
-		export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-		chmod a+x wakari-*.sh                # Set installer to be executable
+	export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+	chmod a+x wakari-*.sh                # Set installer to be executable
 
-		sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER  
+	sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER  
 		
 		
 ####  Run AEN Server Installer
 
-		sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
-		<license text>
-		...
-		...
-		
-		PREFIX=/opt/wakari/wakari-server
-		Logging to /tmp/wakari_server.log
-		Checking server name
-		Ready for pre-install steps
-		Installing miniconda
-		...
-		...
-		Checking server name
-		Loading config from /opt/wakari/wakari-server/etc/wakari/config.json
-		Loading config from /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
-		
-		===================================
-		Created password '<RANDOM_PASSWORD>' for user 'wakari'
-		===================================
-		
-		Starting Wakari daemons...
-		installation finished.
+	sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+	<license text>
+	...
+	...
+	
+	PREFIX=/opt/wakari/wakari-server
+	Logging to /tmp/wakari_server.log
+	Checking server name
+	Ready for pre-install steps
+	Installing miniconda
+	...
+	...
+	Checking server name
+	Loading config from /opt/wakari/wakari-server/etc/wakari/config.json
+	Loading config from /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
+	
+	===================================
+	Created password '<RANDOM_PASSWORD>' for user 'wakari'
+	===================================
+	
+	Starting Wakari daemons...
+	installation finished.
 		
 After successfully completing the installation script, the installer will create the administrator account (wakari user) and assign it a password:
 
-		Created password '<RANDOM_PASSWORD>' for user 'wakari'
+	Created password '<RANDOM_PASSWORD>' for user 'wakari'
 
 **Record this password.** It will be needed in the following steps. It is also available in the installation log file found at `/tmp/wakari_server.log`.
 
@@ -231,37 +195,35 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 
 ### 5.1 Set Variables and Change Permissions
 		
-		export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-		export AEN_GATEWAY_PORT=8080
-		export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
-		chmod a+x wakari-*.sh                # Set installer to be executable
-
+	export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+	export AEN_GATEWAY_PORT=8080
+	export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
+	chmod a+x wakari-*.sh                # Set installer to be executable
 
 ### 5.2 Run AEN Gateway Installer
 
-
-		sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
-		<license text>
-		...
-		...
-		
-		PREFIX=/opt/wakari/wakari-gateway
-		Logging to /tmp/wakari_gateway.log
-		...
-		...
-		Checking server name
-		Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
-		
-		PATH=/opt/wakari/wakari-gateway/bin:$PATH \
-		/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-		--server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
-		--protocol http --summary Gateway --username wakari --password password
+	sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+	<license text>
+	...
+	...
+	
+	PREFIX=/opt/wakari/wakari-gateway
+	Logging to /tmp/wakari_gateway.log
+	...
+	...
+	Checking server name
+	Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
+	
+	PATH=/opt/wakari/wakari-gateway/bin:$PATH \
+	/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+	--server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
+	--protocol http --summary Gateway --username wakari --password password
 		
 **NOTE:** replace **password** with the password of the wakari user that was generated during server installation.
 
 ### 5.3 Start the AEN Gateway
 		
-		sudo service wakari-gateway start
+	sudo service wakari-gateway start
 
 ### 5.4 Register the AEN Gateway
 
@@ -309,27 +271,25 @@ This is where projects are stored and run. Adding multiple AEN Compute machines 
 
 ### 6.1 Set Variables and Change Permissions
 
-		export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-		chmod a+x wakari-*.sh                # Set installer to be executable
-
+	export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+	chmod a+x wakari-*.sh                # Set installer to be executable
 
 ### 6.2 Run AEN Compute Installer
 
-		sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
-		...
-		...
-		PREFIX=/opt/wakari/wakari-compute
-		Logging to /tmp/wakari_compute.log
-		Checking server name
-		...
-		...
-		Initial clone of root environment...
-		Starting Wakari daemons...
-		installation finished.
-		Do you wish the installer to prepend the wakari-compute install location
-		to PATH in your /root/.bashrc ? [yes|no]
-		[no] >>> yes
-
+	sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+	...
+	...
+	PREFIX=/opt/wakari/wakari-compute
+	Logging to /tmp/wakari_compute.log
+	Checking server name
+	...
+	...
+	Initial clone of root environment...
+	Starting Wakari daemons...
+	installation finished.
+	Do you wish the installer to prepend the wakari-compute install location
+	to PATH in your /root/.bashrc ? [yes|no]
+	[no] >>> yes
 
 ### 6.3 Configure AEN Compute Node
 
@@ -349,5 +309,3 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
 9. Click the Add Resource button to save the changes. 
 
 **Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
-		
-

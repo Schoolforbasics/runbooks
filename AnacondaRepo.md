@@ -1,6 +1,7 @@
 # Anaconda Repo Runbook
+**Citi Air-Gap Install (minimal) 2016-05-13**
 
-This following runbook walks through the steps needed to install Anaconda Repo. The runbook is designed for two audiences: those who have direct access to the internet for installation and those where such access is not available or restricted for security reasons. For these restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
+This following runbook walks through the steps needed to install Anaconda Repo. The runbook is designed for hose where such access is not available or restricted for security reasons. For such a restricted a.k.a. "Air Gap" environments, Continuum ships the entire Anaconda product suite on portable storage medium or as a downloadable TAR archive.  Where necessary, additional instructions for Air Gap environments are noted. If you have any questions about the instructions, please contact your sales representative or Priority Support team, if applicable, for additional assistance.
 
 ![](https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png)
 
@@ -36,10 +37,7 @@ This following runbook walks through the steps needed to install Anaconda Repo. 
 ### 1.5 Other Requirements
 Assuming the above requirements are met, there are no additional dependencies necessary for Anaconda Repo.
 
-### 1.6 Air Gap vs. Regular Installation
-As stated previously, this document contains installation instructions for two audiences: those with internet access on the destination server(s) and those who have no access to internet resources. Many of the steps below have two sections: **Air Gap Installation** and **Regular Installation**. Those without internet access should follow the **Air Gap Installation** instructions and those with internet access should follow **Regular Installation** instructions.
-
-### 1.7 Air Gap Media
+### 1.6 Air Gap Media
 This document assumes that the Air Gap Repo installer has been downloaded from http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh
 Note: This installer does not ship with any packages. 
 
@@ -53,15 +51,7 @@ The following sections detail the steps required to install Anaconda Repo.
 	
 #### Install MongoDB packages:
 
-Use your standard process, or leverage the RPM installers included in the Air Gap `/installer` directory:
-
-* **Air Gap Installation:**
-
-        sudo yum install -y /installer/mongodb-org*
-
-* **Regular Installation:**
-
-        sudo yum install -y mongodb-org*
+Use your standard process to install a supported version of MongoDB
 
 #### Start `mongodb`:
 
@@ -105,13 +95,7 @@ In a terminal window, create a new user account for Anaconda Repo named “binst
 
 #### Fetch the download script using curl:
 
-* **Air Gap Installation:** 
-
-	(Assumed) http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh has been downloaded to a machine with internet access and copied to the server.
-
-* **Regular Installation:**
-
-        curl -O http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh
+	http://airgap.demo.continuum.io/installers/anaconda-repository-2.16.9-Linux-x86_64.sh has been downloaded to a machine with internet access and copied to the server.
 
 ##### Run the installer script:
 
@@ -197,124 +181,8 @@ Visit **http://your.anaconda.server:8080**. Follow the onscreen instructions and
 
 **NOTE:** Contact your sales representative or support representative if you cannot find or have questions about your license.
 
-### 2.10 Mirror Anaconda Repo
 
-Now that Anaconda Repo is installed, we need to mirror packages into the local repository. If mirroring from Anaconda Cloud, the process will take hours or longer, depending on the available Internet bandwidth.  Typically 100-200 GB of data is transferred, depdening on the configuration. Use the `anaconda-server-sync-conda` command to mirror all Anaconda packages locally under the "anaconda" user account.
-
-* **Air Gap Installation:** Since we're mirroring from a local filesystem, some additional configuration is necessary.
-
-    **1.** Create a mirror config file:
-
-        vi /etc/binstar/mirrors/conda.yaml
-
-     Add the following:
-
-        channels:
-          - file:///installer/anaconda-suite/pkgs
-
-    **2.** Mirror the Anaconda packages:
-
-        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/conda.yaml
-
-* **Regular Installation:** Mirror from Anaconda Cloud.
-
-        anaconda-server-sync-conda
-
-To verify the local Anaconda Repo repo has been populated, visit **http://your.anaconda.server:8080/anaconda** in a browser.
-
-### 2.11 Mirror Installers for Miniconda
-Miniconda installers can be served by Anaconda Repo via the **static** directory located at **/home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.  This is **required** for Anaconda Cluster integration.  To serve up the latest Miniconda installers for each platform, download them and copy them to the **extras** directory:
-
-* **Air Gap Installation:**
-
-        # miniconda installers
-        mkdir -p /tmp/extras
-        pushd /tmp/extras
-        URL="file:///installer/anaconda-suite/miniconda/"
-        versions="Miniconda3-latest-Linux-x86_64.sh \
-        Miniconda3-latest-MacOSX-x86_64.sh \
-        Miniconda3-latest-Windows-x86.exe \
-        Miniconda3-latest-Windows-x86_64.exe \
-        Miniconda-latest-Linux-x86_64.sh \
-        Miniconda-latest-MacOSX-x86_64.sh \
-        Miniconda-latest-Windows-x86.exe \
-        Miniconda-latest-Windows-x86_64.exe"
-        
-        for installer in $versions
-         do
-          curl -O $URL$installer
-        done
-		
-		# Move installers into static directory
-		popd
-		cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
-
-* **Regular Installation:**
-
-        # miniconda installers
-        mkdir -p /tmp/extras
-        pushd /tmp/extras
-        URL="https://repo.continuum.io/miniconda/"
-        versions="Miniconda3-latest-Linux-x86_64.sh \
-        Miniconda3-latest-MacOSX-x86_64.sh \
-        Miniconda3-latest-Windows-x86.exe \
-        Miniconda3-latest-Windows-x86_64.exe \
-        Miniconda-latest-Linux-x86_64.sh \
-        Miniconda-latest-MacOSX-x86_64.sh \
-        Miniconda-latest-Windows-x86.exe \
-        Miniconda-latest-Windows-x86_64.exe"
-        
-        for installer in $versions
-         do
-          curl -O $URL$installer
-        done
-		
-		# Move installers into static directory
-		popd
-		cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
-
-
-### 2.12 Optional: Mirror the Anaconda Cluster Management channel
-If the local Anaconda Repo will be used by Anaconda Cluster nodes (head or compute), the recommended method is to mirror using an “anaconda-cluster” user. To mirror the Anaconda Cluster Management repo, create the mirror config YAML file below:
-
-* **Regular Installation:**
-
-    **1.** Create a mirror config file:
-
-        vi /etc/binstar/mirrors/anaconda-cluster.yaml
-
-    **2.** Add the following:
-
-        channels:
-          - https://conda.anaconda.org/t/<TOKEN>/anaconda-cluster
-
-    **3.** Mirror the Anaconda Cluster Management packages:
-
-        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-        --account=anaconda-cluster
-
-Where **"TOKEN"** is the Anaconda Cluster Mangagement token you should have received from Continuum Support.
-
-* **Air Gap Installation:**
-
-    **1.** Create a mirror config file:
-
-        vi /etc/binstar/mirrors/anaconda-cluster.yaml
-
-    **2.** Add the following:
-
-        channels:
-          - file:///installer/anaconda-cluster/pkgs
-
-    **3.** Mirror the Anaconda Cluster Management packages:
-
-        anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-        --account=anaconda-cluster
-
-
-**NOTE:**Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found here.
-
-### 2.13 Optional: Adjust iptables to accept requests on port 80
+### 2.10 Optional: Adjust iptables to accept requests on port 80
 
 The easiest way to enable clients to access an Anaconda Repo on standard ports is to configure the server to redirect traffic received on standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 

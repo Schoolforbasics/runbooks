@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Anaconda Enterprise Notebook Runbook &mdash; Continuum Runbooks 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/spacelab/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Continuum Runbooks 1.1 documentation" href="index.html" />
+    <link rel="prev" title="Anaconda Cluster Runbook" href="AnacondaCluster.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Continuum Runbooks</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Installations <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="AnacondaRepo.html">Anaconda Repo Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#anaconda-repo-installation">Anaconda Repo Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#configure-anaconda-repo">Configure Anaconda Repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#configure-anaconda-repo-server">Configure Anaconda Repo Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnacondaCluster.html">Anaconda Cluster Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-the-client-machine">Prepare the Client Machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#download-miniconda">Download Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-miniconda">Install Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#configure-the-cluster">Configure the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#create-the-cluster">Create the Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Enterprise Notebook Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-the-installers">Download the Installers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gather-ip-addresses-or-fqdns">Gather IP addresses or FQDNs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-wakari-server">Install Wakari Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-wakari-gateway">Install Wakari Gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-wakari-compute">Install Wakari Compute</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Anaconda Enterprise Notebook Runbook</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#hardware-recommendations">Hardware Recommendations</a></li>
+<li><a class="reference internal" href="#os-requirements">OS Requirements</a></li>
+<li><a class="reference internal" href="#software-prerequisites">Software Prerequisites</a></li>
+<li><a class="reference internal" href="#security-requirements">Security Requirements</a></li>
+<li><a class="reference internal" href="#network-requirements">Network Requirements</a></li>
+<li><a class="reference internal" href="#other-requirements">Other Requirements</a></li>
+<li><a class="reference internal" href="#air-gap-vs-regular-installation">Air Gap vs. Regular Installation</a></li>
+<li><a class="reference internal" href="#air-gap-media">Air Gap Media</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#download-the-installers">Download the Installers</a></li>
+<li><a class="reference internal" href="#gather-ip-addresses-or-fqdns">Gather IP addresses or FQDNs</a></li>
+<li><a class="reference internal" href="#install-wakari-server">Install Wakari Server</a><ul>
+<li><a class="reference internal" href="#wakari-server-preparation-prerequisites">Wakari Server Preparation ­Prerequisites</a><ul>
+<li><a class="reference internal" href="#download-prerequisite-rpms">Download Prerequisite RPMs</a></li>
+<li><a class="reference internal" href="#install-prerequisite-rpms">Install Prerequisite RPMs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#run-the-wakari-server-installer">Run the Wakari Server Installer</a><ul>
+<li><a class="reference internal" href="#set-variables-and-change-permissions">Set Variables and Change Permissions</a></li>
+<li><a class="reference internal" href="#run-wakari-server-installer">Run Wakari Server Installer</a></li>
+<li><a class="reference internal" href="#restart-elasticsearch">Restart ElasticSearch</a></li>
+<li><a class="reference internal" href="#test-the-wakari-server-install">Test the Wakari Server install</a></li>
+<li><a class="reference internal" href="#update-the-license">Update the License</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-wakari-gateway">Install Wakari Gateway</a><ul>
+<li><a class="reference internal" href="#id1">Set Variables and Change Permissions</a></li>
+<li><a class="reference internal" href="#run-wakari-gateway-installer">Run Wakari Gateway Installer</a></li>
+<li><a class="reference internal" href="#start-the-wakari-gateway">Start the Wakari Gateway</a></li>
+<li><a class="reference internal" href="#register-the-wakari-gateway">Register the Wakari Gateway</a><ul>
+<li><a class="reference internal" href="#ensure-proper-permissions">Ensure Proper Permissions</a></li>
+<li><a class="reference internal" href="#restart-the-gateway-to-load-the-new-configuration-file">Restart the gateway to load the new configuration file</a></li>
+<li><a class="reference internal" href="#verify-the-wakari-gateway-has-registered">Verify the Wakari Gateway has Registered</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-wakari-compute">Install Wakari Compute</a><ul>
+<li><a class="reference internal" href="#id2">Set Variables and Change Permissions</a></li>
+<li><a class="reference internal" href="#run-wakari-compute-installer">Run Wakari Compute Installer</a></li>
+<li><a class="reference internal" href="#configure-wakari-compute-node">Configure Wakari Compute Node</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/AnacondaEnterpriseNotebooks.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="anaconda-enterprise-notebook-runbook">
+<h1>Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
+<p>Anaconda Enterprise Notebooks is a Python data analysis environment from
+Continuum Analytics. Accessed through a browser, Anaconda Enterprise
+Notebooks is a ready-to-use, powerful, fully-configured Python analytics
+environment. We believe that programmers, scientists, and analysts
+should spend their time analyzing data, not working to set up a system.
+Data should be shareable, and analysis should be repeatable.
+Reproducibility should extend beyond just code to include the runtime
+environment, configuration, and input data.</p>
+<p>Anaconda Enterprise Notebooks makes it easy to start your analysis
+immediately.</p>
+<p>This runbook walks through the steps needed to install a basic Anaconda
+Enterprise Notebook system comprised of the front-end server, gateway,
+and two compute machines. The runbook is designed for two audiences:
+those who have direct access to the internet for installation and those
+where such access is not available or restricted for security reasons.
+For these restricted a.k.a. &#8220;Air Gap&#8221; environments, Continuum ships the
+entire Anaconda product suite on portable storage medium or as a
+downloadable TAR archive. Where necessary, additional instructions for
+Air Gap environments are noted. If you have any questions about the
+instructions, please contact your sales representative or Priority
+Support team, if applicable, for additional assistance.</p>
+<p><strong>Wakari Server:</strong> The administrative front-end to the system. This is
+where users login to the system, where user accounts are stored, and
+where admins can manage the system.</p>
+<p><strong>Wakari Gateway:</strong> The gateway is a reverse proxy that authenticates
+users and automatically directs them to the proper Wakari Compute
+machine for their project. Users will not notice this component as it
+automatically routes them. One could put a gateway in each datacenter in
+a tiered scale-out fashion.</p>
+<p><strong>Wakari Compute nodes:</strong> This is where projects are stored and run.
+Wakari Compute machines only need to be reachable by the Wakari Gateway,
+so they can be completely isolated by a firewall.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/wakari.png"><img alt="_images/wakari.png" class="align-center" src="_images/wakari.png" style="width: 816.0px; height: 1056.0px;" /></a>
+</div></blockquote>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hardware-recommendations">
+<h3>Hardware Recommendations<a class="headerlink" href="#hardware-recommendations" title="Permalink to this headline">¶</a></h3>
+<p><strong>Wakari Server</strong></p>
+<ul class="simple">
+<li>2+GB RAM</li>
+<li>2+CPU cores</li>
+<li>20GB storage</li>
+</ul>
+<p><strong>Wakari Gateway</strong></p>
+<ul class="simple">
+<li>2 GB RAM</li>
+<li>2 CPU cores</li>
+</ul>
+<p><strong>Wakari Compute</strong> (N-machines)</p>
+<p>Configure to meet the needs of the projects. At least:</p>
+<ul class="simple">
+<li>2GB RAM</li>
+<li>2 CPU cores</li>
+</ul>
+</div>
+<div class="section" id="os-requirements">
+<h3>OS Requirements<a class="headerlink" href="#os-requirements" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
+however this document assumes RHEL or CentOS 6.7)</p>
+</li>
+<li><p class="first"><strong>/opt/wakari:</strong> Ability to install here and at least 5GB of storage.</p>
+</li>
+<li><p class="first"><strong>/projects:</strong> Size depends on number and size of projects. At least
+20GB of storage.</p>
+<p><strong>NOTE:</strong> This directory needs the filesystem mounted with Posix ACL
+support (Posix.1e). Check with <code class="docutils literal"><span class="pre">mount</span></code> and
+<code class="docutils literal"><span class="pre">tune2fs</span> <span class="pre">-l</span> <span class="pre">/path/to/filesystem</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">options</span></code></p>
+</li>
+</ul>
+</div>
+<div class="section" id="software-prerequisites">
+<h3>Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h3>
+<p><strong>Wakari Server</strong></p>
+<ul class="simple">
+<li>Mongo Version: &gt;= 2.6.8 and &lt; 3.0</li>
+<li>Nginx version: &gt;= 1.4.0</li>
+<li>ElasticSearch</li>
+<li>Oracle JRE 8</li>
+</ul>
+<p><strong>NOTE:</strong> For Air Gap installations, Oracle JRE must already be
+installed</p>
+<p><strong>Wakari Compute</strong></p>
+<ul class="simple">
+<li>git</li>
+</ul>
+</div>
+<div class="section" id="security-requirements">
+<h3>Security Requirements<a class="headerlink" href="#security-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>root or sudo access</li>
+<li>SELinux in Permissive mode - check with <code class="docutils literal"><span class="pre">getenforce</span></code></li>
+</ul>
+</div>
+<div class="section" id="network-requirements">
+<h3>Network Requirements<a class="headerlink" href="#network-requirements" title="Permalink to this headline">¶</a></h3>
+<p><strong>TCP Ports</strong></p>
+<ul class="simple">
+<li>Server: 80</li>
+<li>Gateway: 8080</li>
+<li>Compute: 5002</li>
+</ul>
+</div>
+<div class="section" id="other-requirements">
+<h3>Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
+<p>Assuming the above requirements are met, there are no additional
+dependencies necessary for Wakari Enterprise.</p>
+</div>
+<div class="section" id="air-gap-vs-regular-installation">
+<h3>Air Gap vs. Regular Installation<a class="headerlink" href="#air-gap-vs-regular-installation" title="Permalink to this headline">¶</a></h3>
+<p>As stated previously, this document contains installation instructions
+for two audiences: those with internet access on the destination
+server(s) and those who have no access to internet resources. Many of
+the steps below have two sections: <strong>Air Gap Installation</strong> and
+<strong>Regular Installation</strong>. Those without internet access should follow
+the <strong>Air Gap Installation</strong> instructions and those with internet access
+should follow <strong>Regular Installation</strong> instructions.</p>
+</div>
+<div class="section" id="air-gap-media">
+<h3>Air Gap Media<a class="headerlink" href="#air-gap-media" title="Permalink to this headline">¶</a></h3>
+<p>This document assumes that the Air Gap media is located at /installer on
+the server where the software is being installed.</p>
+<p>Air Gap media contents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">installer</span>
+<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">mongos</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">wakari</span><span class="o">-</span><span class="n">compute</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">wakari</span><span class="o">-</span><span class="n">publisher</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">nginx</span><span class="o">-</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.</span><span class="n">el6</span><span class="o">.</span><span class="n">ngx</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">elasticsearch</span><span class="o">-</span><span class="mf">1.7</span><span class="o">.</span><span class="mf">2.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+<span class="n">jre</span><span class="o">-</span><span class="mi">8</span><span class="n">u65</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="download-the-installers">
+<h2>Download the Installers<a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
+<p>Download the installers and copy them to the corresponding servers. The
+Publisher should be installed on the Wakari Server machine.</p>
+<ul class="simple">
+<li><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media</li>
+<li><strong>Regular Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="gather-ip-addresses-or-fqdns">
+<h2>Gather IP addresses or FQDNs<a class="headerlink" href="#gather-ip-addresses-or-fqdns" title="Permalink to this headline">¶</a></h2>
+<p>Wakari is very sensitive to the IP address or domain name used to
+connect to the Server and Gateway components. If users will be using the
+domain name, you should install thecomponents using the domain name
+instead of the IP addresses. The authentication systemrequires the
+proper hostnames when authenticating users between the services.</p>
+<p>Fill in the domain names or IP addresses of the components below and
+record the auto­generated wakari password in the box below after
+installing the Wakari Server component.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Component</th>
+<th class="head">Name or IP address</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Wakari Server</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Wakari Gateway</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Wakari Compute</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="install-wakari-server">
+<h2>Install Wakari Server<a class="headerlink" href="#install-wakari-server" title="Permalink to this headline">¶</a></h2>
+<p>The Wakari server is the administrative front­end to the system. This is
+where users login to the system, where user accounts are stored, and
+where admins can manage the system.</p>
+<div class="section" id="wakari-server-preparation-prerequisites">
+<h3>Wakari Server Preparation ­Prerequisites<a class="headerlink" href="#wakari-server-preparation-prerequisites" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="download-prerequisite-rpms">
+<h4>Download Prerequisite RPMs<a class="headerlink" href="#download-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Air Gap Installation:</strong> Copy RPMs from the Air Gap media</li>
+<li><strong>Regular Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm
+curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
+curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
+curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-prerequisite-rpms">
+<h4>Install Prerequisite RPMs<a class="headerlink" href="#install-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">*.</span><span class="n">rpm</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mongod</span> <span class="n">start</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">elasticsearch</span> <span class="n">start</span>
+<span class="n">sudo</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">add</span> <span class="n">elasticsearch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-the-wakari-server-installer">
+<h3>Run the Wakari Server Installer<a class="headerlink" href="#run-the-wakari-server-installer" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="set-variables-and-change-permissions">
+<h4>Set Variables and Change Permissions<a class="headerlink" href="#set-variables-and-change-permissions" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span>export WAKARI_SERVER=&lt;FQDN HOSTNAME&gt; # Use the real FQDN
+chmod a+x wakari-*.sh                # Set installer to be executable
+
+sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-wakari-server-installer">
+<h4>Run Wakari Server Installer<a class="headerlink" href="#run-wakari-server-installer" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+&lt;license text&gt;
+...
+...
+
+PREFIX=/opt/wakari/wakari-server
+Logging to /tmp/wakari_server.log
+Checking server name
+Ready for pre-install steps
+Installing miniconda
+...
+...
+Checking server name
+Loading config from /opt/wakari/wakari-server/etc/wakari/config.json
+Loading config from /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
+
+
+===================================
+
+Created password &#39;&lt;RANDOM_PASSWORD&gt;&#39; for user &#39;wakari&#39;
+
+===================================
+
+
+Starting Wakari daemons...
+installation finished.
+</pre></div>
+</div>
+<p>After successfully completing the installation script, the installer
+will create the administrator account (wakari user) and assign it a
+password:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Created</span> <span class="n">password</span> <span class="s1">&#39;&lt;RANDOM_PASSWORD&gt;&#39;</span> <span class="k">for</span> <span class="n">user</span> <span class="s1">&#39;wakari&#39;</span>
+</pre></div>
+</div>
+<p><strong>Record this password.</strong> It will be needed in the following steps. It
+is also available in the installation log file found at
+<code class="docutils literal"><span class="pre">/tmp/wakari_server.log</span></code></p>
+</div>
+<div class="section" id="restart-elasticsearch">
+<h4>Restart ElasticSearch<a class="headerlink" href="#restart-elasticsearch" title="Permalink to this headline">¶</a></h4>
+<p>Restart elasticsearch to read the new config file</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">elasticsearch</span> <span class="n">restart</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-the-wakari-server-install">
+<h4>Test the Wakari Server install<a class="headerlink" href="#test-the-wakari-server-install" title="Permalink to this headline">¶</a></h4>
+<p>Visit <a class="reference external" href="http://$WAKARI_SERVER">http://$WAKARI_SERVER</a>. You should be shown the <strong>&#8220;license
+expired&#8221;</strong> page.</p>
+</div>
+<div class="section" id="update-the-license">
+<h4>Update the License<a class="headerlink" href="#update-the-license" title="Permalink to this headline">¶</a></h4>
+<p>From the <strong>&#8220;license expired&#8221;</strong> page, follow the onscreen instructions to
+upload your license file. After submitting, you should see the login
+page.</p>
+</div>
+</div>
+</div>
+<div class="section" id="install-wakari-gateway">
+<h2>Install Wakari Gateway<a class="headerlink" href="#install-wakari-gateway" title="Permalink to this headline">¶</a></h2>
+<p>The gateway is a reverse proxy that authenticates users and
+automatically directs them to the proper Wakari Compute machine for
+their project. Users will not notice this component as it automatically
+routes them.</p>
+<div class="section" id="id1">
+<h3>Set Variables and Change Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">WAKARI_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
+<span class="n">export</span> <span class="n">WAKARI_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8080</span>
+<span class="n">export</span> <span class="n">WAKARI_GATEWAY</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span>  <span class="c1"># will be needed shortly</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-wakari-gateway-installer">
+<h3>Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+&lt;license text&gt;
+...
+...
+
+PREFIX=/opt/wakari/wakari-gateway
+Logging to /tmp/wakari_gateway.log
+...
+...
+Checking server name
+Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
+
+PATH=/opt/wakari/wakari-gateway/bin:$PATH \
+/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+--server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
+--protocol http --summary Gateway --username wakari --password password
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> replace <strong>password</strong> with the password of the wakari user that
+was generated during server installation.</p>
+</div>
+<div class="section" id="start-the-wakari-gateway">
+<h3>Start the Wakari Gateway<a class="headerlink" href="#start-the-wakari-gateway" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">start</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-the-wakari-gateway">
+<h3>Register the Wakari Gateway<a class="headerlink" href="#register-the-wakari-gateway" title="Permalink to this headline">¶</a></h3>
+<p>The Wakari Gateway needs to register with the Wakari Server. This needs
+to be authenticated, so the wakari user’s credentials created during the
+Wakari Server install need to be used. <strong>This needs to be run as root</strong>
+to write the configuration file:
+<code class="docutils literal"><span class="pre">/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>PATH=/opt/wakari/wakari-gateway/bin:$PATH \
+/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+--server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
+--port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \
+--summary Gateway --username wakari \
+--password &#39;&lt;USE PASSWORD SET ABOVE&gt;&#39;
+</pre></div>
+</div>
+<div class="section" id="ensure-proper-permissions">
+<h4>Ensure Proper Permissions<a class="headerlink" href="#ensure-proper-permissions" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-the-gateway-to-load-the-new-configuration-file">
+<h4>Restart the gateway to load the new configuration file<a class="headerlink" href="#restart-the-gateway-to-load-the-new-configuration-file" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">restart</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> Ignore any errors about missing /lib/lsb/init-functions</p>
+</div>
+<div class="section" id="verify-the-wakari-gateway-has-registered">
+<h4>Verify the Wakari Gateway has Registered<a class="headerlink" href="#verify-the-wakari-gateway-has-registered" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p class="first">Login to the Wakari Server using Chrome or Firefox browser using the
+wakari user.</p>
+</li>
+<li><p class="first">Click the Admin link in the toolbar</p>
+<a class="reference internal image-reference" href="_images/admin-menu.png"><img alt="_images/admin-menu.png" src="_images/admin-menu.png" style="width: 234.4px; height: 170.4px;" /></a>
+</li>
+<li><p class="first">Click the Datacenters sub­section and then click your datacenter:</p>
+<a class="reference internal image-reference" href="_images/datacenter-leftnav.png"><img alt="_images/datacenter-leftnav.png" src="_images/datacenter-leftnav.png" style="width: 682.4px; height: 423.2px;" /></a>
+</li>
+<li><p class="first">Verify that your datacenter is registered and status is
+<code class="docutils literal"><span class="pre">{&quot;status&quot;:</span> <span class="pre">&quot;ok&quot;,</span> <span class="pre">&quot;messages&quot;:</span> <span class="pre">[]}</span></code></p>
+<a class="reference internal image-reference" href="_images/datacenter.png"><img alt="_images/datacenter.png" src="_images/datacenter.png" style="width: 680.8px; height: 433.6px;" /></a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="install-wakari-compute">
+<h2>Install Wakari Compute<a class="headerlink" href="#install-wakari-compute" title="Permalink to this headline">¶</a></h2>
+<p>This is where projects are stored and run. Adding multiple Wakari
+Compute machines allows one to scale-out horizontally to increase
+capacity. Projects can be created on individual compute nodes to spread
+the load.</p>
+<div class="section" id="id2">
+<h3>Set Variables and Change Permissions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">WAKARI_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-wakari-compute-installer">
+<h3>Run Wakari Compute Installer<a class="headerlink" href="#run-wakari-compute-installer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+...
+...
+PREFIX=/opt/wakari/wakari-compute
+Logging to /tmp/wakari_compute.log
+Checking server name
+...
+...
+Initial clone of root environment...
+Starting Wakari daemons...
+installation finished.
+Do you wish the installer to prepend the wakari-compute install location
+to PATH in your /root/.bashrc ? [yes|no]
+[no] &gt;&gt;&gt; yes
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-wakari-compute-node">
+<h3>Configure Wakari Compute Node<a class="headerlink" href="#configure-wakari-compute-node" title="Permalink to this headline">¶</a></h3>
+<p>Once installed, you need to configure the Compute Launcher on Wakari
+Server.</p>
+<ol class="arabic">
+<li><p class="first">Point your browser at the Wakari Server</p>
+</li>
+<li><p class="first">Login as the wakari user</p>
+</li>
+<li><p class="first">Click on the Admin link in the top navbar</p>
+</li>
+<li><p class="first">Click on Enterprise Resources in the left navbar</p>
+</li>
+<li><p class="first">Click on Add Resource</p>
+</li>
+<li><p class="first">Select the correct (probably the only) Data Center to associate this
+Compute Node with</p>
+</li>
+<li><p class="first">For URL, enter <strong>http://$WAKARI_COMPUTE:5002</strong>.</p>
+<p><strong>NOTE:</strong> If the Compute Launcher is located on the same box as the
+Gateway, we recommend using <strong>http://localhost:5002</strong> for the URL
+value.</p>
+</li>
+<li><p class="first">Add a Name and Description for the compute node</p>
+</li>
+<li><p class="first">Click the Add Resource button to save the changes.</p>
+</li>
+</ol>
+<p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured
+Anaconda Enterprise Notebook.</p>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Implementation Engineering.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

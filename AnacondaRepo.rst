@@ -290,10 +290,8 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
 
        export BINSTAR_TOKEN=<your binstar token>
        export ANACONDA_TOKEN=<your anaconda-server token>
-       conda config --add channels \
-       https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
-       conda config --add channels \
-       https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
+       conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
+       conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
 **Note:** You should have received **two** tokens from Continuum
 Support, one for each channel. If you haven't, please contact
@@ -328,8 +326,7 @@ Create an initial “superuser” account for Anaconda Repo:
 
 ::
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" \
-    --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the
 characters in this password, limit the password to lower case letters,
@@ -518,8 +515,7 @@ create the mirror config YAML file below:
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-       --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
 Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should
 have received from Continuum Support.
@@ -543,10 +539,9 @@ have received from Continuum Support.
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-       --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
-**NOTE:**\ Ignore any license warnings. Additional mirror
+**NOTE:** Ignore any license warnings. Additional mirror
 filtering/whitelisting/blacklisting options can be found here.
 
 Optional: Adjust iptables to accept requests on port 80
@@ -565,22 +560,19 @@ inaccessible.
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
-    -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j ACCEPT
 
 **Allow inbound access to tcp port 8080:**
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" \
-    -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" -j ACCEPT
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ::
 
-    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
-    -j REDIRECT --to-port 8080
+    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j REDIRECT --to-port 8080
 
 **Display the current iptables rules:**
 
@@ -589,8 +581,8 @@ inaccessible.
     sudo iptables -L -n
     Chain INPUT (policy ACCEPT)
     target     prot opt source               destination         
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 /* # Anaconda Repo # */
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */
+    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 # Anaconda Repo #
+    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo #
     ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
     ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
     ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
@@ -612,7 +604,7 @@ default; to show it, use:
     sudo iptables -L -n -t nat
     Chain PREROUTING (policy ACCEPT)
     target     prot opt source               destination         
-    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */ redir ports 8080
+    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo # redir ports 8080
 
     Chain POSTROUTING (policy ACCEPT)
     target     prot opt source               destination         

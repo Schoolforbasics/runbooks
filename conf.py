@@ -141,7 +141,7 @@ html_theme_options = {
     'navbar_sidebarrel': False,
 
     # # Render the current pages TOC in the navbar. (Default: true)
-    # 'navbar_pagenav': True,
+     'navbar_pagenav': False,
 
     # # Tab name for the current pages TOC. (Default: "Page")
     # 'navbar_pagenav_name': "Page",
@@ -165,7 +165,7 @@ html_theme_options = {
 
     # # Fix navigation bar to top of page?
     # # Values: "true" (default) or "false"
-    # 'navbar_fixed_top': "true",
+     'navbar_fixed_top': "false",
 
     # # Location of link to source.
     # # Options are "nav" (default), "footer" or anything else to exclude.
@@ -245,7 +245,7 @@ html_static_path = ['_static']
 #html_show_sourcelink = True
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
-html_show_sphinx = True
+html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
 html_show_copyright = False

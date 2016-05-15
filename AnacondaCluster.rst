@@ -121,7 +121,10 @@ Anaconda Cluster is managed by one or more client machines with the
 anaconda-cluster packages installed, along with the cluster
 configuration information. The client machine orchestrates the head node
 to install packages, run commands and operational tasks on the compute
-nodes. # # ####Create an SSH keypair as the admin user
+nodes.
+
+Create an SSH keypair as the admin user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -215,7 +218,7 @@ Use conda to download and install Anaconda Cluster
 --------------------------------------------------
 
 Add the anaconda-cluster and anaconda channels:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Install the Anaconda Cluster channel from
    the local Anaconda Repo server.

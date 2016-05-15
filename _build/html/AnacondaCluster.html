@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Anaconda Cluster Runbook &mdash; Continuum Runbooks 1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.6/spacelab/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Continuum Runbooks 1.1 documentation" href="index.html" />
+    <link rel="next" title="Anaconda Enterprise Notebook Runbook" href="AnacondaEnterpriseNotebooks.html" />
+    <link rel="prev" title="Anaconda Repo Runbook" href="AnacondaRepo.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Continuum Runbooks</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Installations <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="AnacondaRepo.html">Anaconda Repo Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#anaconda-repo-installation">Anaconda Repo Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#configure-anaconda-repo">Configure Anaconda Repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#configure-anaconda-repo-server">Configure Anaconda Repo Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaRepo.html#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Cluster Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-the-client-machine">Prepare the Client Machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-miniconda">Download Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-miniconda">Install Miniconda</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-the-cluster">Configure the Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-cluster">Create the Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html">Anaconda Enterprise Notebook Runbook</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#download-the-installers">Download the Installers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#gather-ip-addresses-or-fqdns">Gather IP addresses or FQDNs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-server">Install Wakari Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-gateway">Install Wakari Gateway</a></li>
+<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-compute">Install Wakari Compute</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Anaconda Cluster Runbook</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
+<li><a class="reference internal" href="#software-requirements">Software Requirements</a></li>
+<li><a class="reference internal" href="#security-requirements">Security Requirements</a></li>
+<li><a class="reference internal" href="#network-requirements">Network Requirements</a><ul>
+<li><a class="reference internal" href="#tcp-ports">TCP Ports</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-requirements">Other Requirements</a></li>
+<li><a class="reference internal" href="#assumptions">Assumptions</a></li>
+<li><a class="reference internal" href="#air-gap-vs-regular-installation">Air Gap vs. Regular Installation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prepare-the-client-machine">Prepare the Client Machine</a></li>
+<li><a class="reference internal" href="#download-miniconda">Download Miniconda</a></li>
+<li><a class="reference internal" href="#install-miniconda">Install Miniconda</a><ul>
+<li><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms:</a></li>
+<li><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
+<li><a class="reference internal" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2">Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):</a></li>
+<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">For the new path changes to take effect, “source” your .bashrc or start a new bash shell:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
+<li><a class="reference internal" href="#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
+<li><a class="reference internal" href="#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
+<li><a class="reference internal" href="#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a><ul>
+<li><a class="reference internal" href="#import-ssh-public-key">Import SSH public key</a></li>
+<li><a class="reference internal" href="#enable-passwordless-sudo">Enable passwordless sudo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configure-the-cluster">Configure the Cluster</a><ul>
+<li><a class="reference internal" href="#define-a-cluster-configuration">Define a Cluster Configuration</a></li>
+<li><a class="reference internal" href="#add-the-following-to-admin-acluster-providers-yaml">Add the following to ~admin/.acluster/providers.yaml:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#create-the-cluster">Create the Cluster</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/AnacondaCluster.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="anaconda-cluster-runbook">
+<h1>Anaconda Cluster Runbook<a class="headerlink" href="#anaconda-cluster-runbook" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Beware killer rabbits!</p>
+</div>
+<p>Anaconda Cluster is a resource management tool for Anaconda that allows
+users to easily create, provision, and manage bare-metal or cloud-based
+clusters. It enables management of Conda environments on clusters and
+provides integration, configuration, and setup management for Hadoop.
+Supported platforms include Amazon Web Services Elastic Compute Cloud
+(EC2), physical machines, or even a collection of virtual machines. The
+following runbook walks through the steps needed to install Anaconda
+Cluster. This runbook is designed for two audiences: those who have
+direct access to the internet for installation and those where such
+access is not available or restricted for security reasons. For these
+restricted a.k.a. &#8220;Air Gap&#8221; environments, Continuum ships the entire
+Anaconda product suite on portable storage medium or as a downloadable
+TAR archive. Where necessary, additional instructions for Air Gap
+environments are noted. If you have any questions about the
+instructions, please contact your sales representative or Priority
+Support team, if applicable, for additional assistance.</p>
+<p>The following runbook walks through the steps needed to install a basic
+Anaconda Cluster comprised of a management &#8220;&#8221;client&#8221;&#8221; machine and four
+cluster nodes:</p>
+<ul class="simple">
+<li><strong>Client machine:</strong> Where the Anaconda Cluster is configured from.
+Typically an IT-managed machine.</li>
+<li><strong>Head node (1):</strong> Controls the software, file/folder and environment
+state of compute nodes</li>
+<li><strong>Compute nodes (3):</strong> Where jobs are run. Managed by the head node.</li>
+</ul>
+<img alt="_images/cluster.png" class="align-center" src="_images/cluster.png" />
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hardware-requirements">
+<h3>Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Client machine<ul>
+<li>2+GB RAM, 2+CPU cores</li>
+</ul>
+</li>
+<li>Head and Compute nodes<ul>
+<li>8+GB RAM, 8+CPU cores</li>
+</ul>
+</li>
+<li>Storage: Head and Compute nodes<ul>
+<li>~1GB for Anaconda Cluster software</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="software-requirements">
+<h3>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>RHEL/CentOS 6.7 (Other operating systems are supported, however this
+document assumes RHEL or CentOS 6.7)</li>
+<li>MongoDB version 2.6</li>
+<li>Anaconda Repo Server (Anaconda Cloud or local Anaconda Repo)</li>
+<li>If using a local Anaconda Repo, Anaconda Cluster channel has been
+mirrored to <strong>http://your.anaconda.server:8080/anaconda-cluster</strong></li>
+</ul>
+</div>
+<div class="section" id="security-requirements">
+<h3>Security Requirements<a class="headerlink" href="#security-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Client machine</li>
+<li>Passwordless SSH access to Head and Compute nodes</li>
+<li>Head and Cluster nodes</li>
+<li>Matching user account/credentials on all nodes with passwordless sudo
+enabled</li>
+<li>SELinux in Permissive mode</li>
+</ul>
+</div>
+<div class="section" id="network-requirements">
+<h3>Network Requirements<a class="headerlink" href="#network-requirements" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="tcp-ports">
+<h4>TCP Ports<a class="headerlink" href="#tcp-ports" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Inbound TCP 22 (SSH) from client machine to all nodes</li>
+<li>Inbound TCP 4505,4506 (salt)<ul>
+<li>from client machine to all nodes</li>
+<li>from Head node to Compute nodes</li>
+</ul>
+</li>
+<li>Outbound TCP 443 from all machines to Anaconda Cloud or local
+Anaconda Server</li>
+</ul>
+</div>
+</div>
+<div class="section" id="other-requirements">
+<h3>Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
+<p>Assuming the above requirements are met, there are no additional
+dependencies necessary for Anaconda Repo.</p>
+</div>
+<div class="section" id="assumptions">
+<h3>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>‘<strong>admin</strong>’ user exists on client machine and all cluster nodes</li>
+<li>Client machine has an IP address of 172.31.56.123</li>
+<li>Head node has an IP address of 172.31.60.133</li>
+<li>Cluster nodes have IP addresses of 172.31.55.76, 172.31.55.77 and
+172.31.55.78</li>
+<li>Those with <strong>Air Gap</strong> installations have already completed the local
+<strong>Anaconda Repo</strong> installation and have a working local <strong>Anaconda
+Repo</strong> and Anaconda Cluster channel is available at
+<strong>http://your.anaconda.server:8080/anaconda-cluster</strong></li>
+</ul>
+</div>
+<div class="section" id="air-gap-vs-regular-installation">
+<h3>Air Gap vs. Regular Installation<a class="headerlink" href="#air-gap-vs-regular-installation" title="Permalink to this headline">¶</a></h3>
+<p>As stated previously, this document contains installation instructions
+for two audiences: those with internet access on the destination
+server(s) and those who have no access to internet resources. Many of
+the steps below have two sections: &#8220;<strong>Air Gap Installation</strong>&#8221; and
+&#8220;<strong>Regular Installation</strong>&#8221;. Those without internet access should follow
+the <strong>Air Gap Installation</strong> instructions and those with internet access
+should follow <strong>Regular Installation</strong> instructions.</p>
+</div>
+</div>
+<div class="section" id="prepare-the-client-machine">
+<h2>Prepare the Client Machine<a class="headerlink" href="#prepare-the-client-machine" title="Permalink to this headline">¶</a></h2>
+<p>Anaconda Cluster is managed by one or more client machines with the
+anaconda-cluster packages installed, along with the cluster
+configuration information. The client machine orchestrates the head node
+to install packages, run commands and operational tasks on the compute
+nodes. # # ####Create an SSH keypair as the admin user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/admin/.ssh/id_rsa):
+Created directory &#39;/home/admin/.ssh&#39;.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/admin/.ssh/id_rsa.
+Your public key has been saved in /home/admin/.ssh/id_rsa.pub.
+The key fingerprint is:
+d0:67:26:cd:3f:7c:f1:7e:b1:f4:fb:2b:86:2b:5e:c2 admin@localhost.localdomain
+The key&#39;s randomart image is:
++--[ RSA 2048]----+
+|                 |
+|       . o       |
+|      . o *   .  |
+|       . = o   o |
+|        S   + .o.|
+|        .    o..+|
+|         E ..  .+|
+|         .o. o  o|
+|        ....o .o+|
++-----------------+
+[admin@localhost ~]$
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> Save the contents of ~admin/.ssh/id_rsa.pub to a text file.</p>
+</div>
+<div class="section" id="download-miniconda">
+<h2>Download Miniconda<a class="headerlink" href="#download-miniconda" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Air Gap Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="s1">&#39;http://your.anaconda.server:8080/static/extras/miniconda/Miniconda-latest-Linux-x86_64.sh&#39;</span> <span class="o">&gt;</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Regular Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="s1">&#39;http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh&#39;</span> <span class="o">&gt;</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-miniconda">
+<h2>Install Miniconda<a class="headerlink" href="#install-miniconda" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bash</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<div class="section" id="review-and-accept-the-license-terms">
+<h3>Review and accept the license terms:<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Welcome to Miniconda 3.19.3 (by Continuum Analytics, Inc.)
+In order to continue the installation process, please review the license agreement. Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
+</pre></div>
+</div>
+</div>
+<div class="section" id="accept-the-default-location-or-specify-an-alternative">
+<h3>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Miniconda</span> <span class="n">will</span> <span class="n">now</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">into</span> <span class="n">this</span> <span class="n">location</span><span class="p">:</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">miniconda2</span>  <span class="o">-</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="n">to</span> <span class="n">confirm</span> <span class="n">the</span> <span class="n">location</span>
+<span class="o">-</span><span class="n">Press</span> <span class="n">CTRL</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">abort</span> <span class="n">the</span> <span class="n">installation</span>
+<span class="o">-</span><span class="n">Or</span> <span class="n">specify</span> <span class="n">a</span> <span class="n">different</span> <span class="n">location</span> <span class="n">below</span>
+ <span class="p">[</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">miniconda2</span><span class="p">]</span> <span class="o">&gt;&gt;&gt;</span><span class="s2">&quot; [Press ENTER]</span>
+ <span class="n">PREFIX</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/</span><span class="n">miniconda2</span>
+<span class="n">installing</span><span class="p">:</span> <span class="n">python</span><span class="o">-</span><span class="mf">2.7</span><span class="o">.</span><span class="mi">10</span><span class="o">-</span><span class="mi">0</span>
+<span class="o">...</span>
+<span class="n">Python</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">10</span> <span class="p">::</span> <span class="n">Continuum</span> <span class="n">Analytics</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>
+<span class="n">creating</span> <span class="n">default</span> <span class="n">environment</span><span class="o">...</span> <span class="n">installation</span> <span class="n">finished</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-the-admin-user-s-path-prepending-home-admin-miniconda2">
+<h3>Update the admin user&#8217;s path (prepending <strong>/home/admin/miniconda2</strong>):<a class="headerlink" href="#update-the-admin-user-s-path-prepending-home-admin-miniconda2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Do you wish the installer to prepend the Miniconda install location to PATH in your /home/admin/.bashrc ? [yes|no] yes
+</pre></div>
+</div>
+</div>
+<div class="section" id="for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell">
+<h3>For the new path changes to take effect, “source” your .bashrc or start a new bash shell:<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc-or-start-a-new-bash-shell" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="use-conda-to-download-and-install-anaconda-cluster">
+<h2>Use conda to download and install Anaconda Cluster<a class="headerlink" href="#use-conda-to-download-and-install-anaconda-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Add the anaconda-cluster and anaconda channels:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^</p>
+<ul class="simple">
+<li><strong>Air Gap Installation:</strong> Install the Anaconda Cluster channel from
+the local Anaconda Repo server.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">default_channels</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">anaconda</span> <span class="o">--</span><span class="n">system</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Regular Installation:</strong> Install the Anaconda Cluster channel from
+Anaconda Cloud.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>export TOKEN=&lt;your Anaconda Cloud token&gt;
+conda config --add channels http://conda.anaconda.org/t/$TOKEN/anaconda-cluster
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-the-anaconda-cluster-packages">
+<h2>Install the anaconda-cluster packages:<a class="headerlink" href="#install-the-anaconda-cluster-packages" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="initialize-anaconda-cluster">
+<h2>Initialize Anaconda Cluster:<a class="headerlink" href="#initialize-anaconda-cluster" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">acluster</span>
+</pre></div>
+</div>
+<p><strong>NOTE:</strong> this command creates the <strong>~/.acluster</strong> directory</p>
+</div>
+<div class="section" id="prepare-head-and-compute-nodes">
+<h2>Prepare Head and Compute Nodes<a class="headerlink" href="#prepare-head-and-compute-nodes" title="Permalink to this headline">¶</a></h2>
+<p>In order to communicate with the Head and Compute nodes, the admin user
+needs to be able to SSH to each node without being prompted for a
+password. To allow this but still maintain a level of security, we’ll
+use public key authentication from the client machine to the nodes.
+Additionally, we’ll allow the admin user to execute root level commands
+via sudo, in order to install system packages, update system files, etc.
+NOTE: The steps below should be repeated on the Head node and all
+Compute nodes.</p>
+<div class="section" id="import-ssh-public-key">
+<h3>Import SSH public key<a class="headerlink" href="#import-ssh-public-key" title="Permalink to this headline">¶</a></h3>
+<p>Using your editor of choice, copy the contents of
+<strong>~admin/.ssh/id_rsa.pub</strong> (from step XYZ above) from the Client
+machine to <strong>~/admin/.ssh/authorized_keys</strong></p>
+<p>Your <strong>~/admin/.ssh/authorized_keys</strong> will look something like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">~</span><span class="n">admin</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="n">AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr</span><span class="o">+</span><span class="n">kz4TjGYe7gHzIw</span><span class="o">+</span><span class="n">niNltGEFHzD8</span><span class="o">+</span><span class="n">v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL</span><span class="o">+</span><span class="n">GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRloraxLOzFUGaHqHDLKLX</span><span class="o">+</span><span class="n">FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ</span><span class="o">==</span> <span class="n">admin</span><span class="nd">@localhost</span>
+</pre></div>
+</div>
+<p>Make sure ~/admin/.ssh/authorized_keys has the proper permissions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">600</span> <span class="o">~</span><span class="n">admin</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">authorized_keys</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enable-passwordless-sudo">
+<h3>Enable passwordless sudo<a class="headerlink" href="#enable-passwordless-sudo" title="Permalink to this headline">¶</a></h3>
+<p>Add the following line to the bottom of /etc/sudoers to allow the admin
+user to run commands via sudo without entering a password:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">admin</span> <span class="n">ALL</span> <span class="o">=</span> <span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="n">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configure-the-cluster">
+<h2>Configure the Cluster<a class="headerlink" href="#configure-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>An Anaconda Cluster consists of two primary pieces of information; the
+cluster profile and the cluster provider. Both of these live within the
+~/admin/.acluster directory structure. In a nutshell, the profile
+describes the layout of the cluster: number of nodes, user to connect
+with, conda channels, plugins to install, etc. The provider describes
+<em>how</em> the cluster is provisioned and built; most importantly, cloud vs.
+bare-metal.</p>
+<div class="section" id="define-a-cluster-configuration">
+<h3>Define a Cluster Configuration<a class="headerlink" href="#define-a-cluster-configuration" title="Permalink to this headline">¶</a></h3>
+<p>We’re going to create a simple cluster configuration using the head node
+and 3 compute nodes we configured previously. Create the
+~admin/.acluster/profiles.d/demo-cluster.yaml with the following
+content:</p>
+<ul class="simple">
+<li><strong>Air Gap Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">demo</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">provider</span><span class="p">:</span> <span class="n">bare_metal</span>
+<span class="n">num_nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">node_id</span><span class="p">:</span> <span class="n">bare</span>
+<span class="n">node_type</span><span class="p">:</span> <span class="n">bare</span>
+<span class="n">user</span><span class="p">:</span> <span class="n">admin</span>
+<span class="n">machines</span><span class="p">:</span>
+    <span class="n">head</span><span class="p">:</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">60.133</span>
+    <span class="n">compute</span><span class="p">:</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.76</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.77</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.78</span>
+<span class="n">conda_channels</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+ <span class="o">-</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">anaconda</span>
+<span class="n">anaconda_url</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">Miniconda</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">default_channels</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">server</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">anaconda</span>
+<span class="n">plugins</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">conda</span><span class="p">:</span>
+     <span class="n">install_prefix</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span>
+     <span class="n">conda_sh</span><span class="p">:</span> <span class="n">false</span>
+     <span class="n">conda_acl</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>Regular Installation:</strong></li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span><span class="p">:</span> <span class="n">demo</span><span class="o">-</span><span class="n">cluster</span>
+<span class="n">provider</span><span class="p">:</span> <span class="n">bare_metal</span>
+<span class="n">num_nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">node_id</span><span class="p">:</span> <span class="n">bare</span>
+<span class="n">node_type</span><span class="p">:</span> <span class="n">bare</span>
+<span class="n">user</span><span class="p">:</span> <span class="n">admin</span>
+<span class="n">machines</span><span class="p">:</span>
+    <span class="n">head</span><span class="p">:</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">60.133</span>
+    <span class="n">compute</span><span class="p">:</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.76</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.77</span>
+<span class="o">-</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.78</span>
+<span class="n">plugins</span><span class="p">:</span>
+ <span class="o">-</span> <span class="n">conda</span><span class="p">:</span>
+     <span class="n">install_prefix</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span>
+     <span class="n">conda_sh</span><span class="p">:</span> <span class="n">false</span>
+     <span class="n">conda_acl</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong> More information about cluster profiles can be found
+<a class="reference external" href="https://docs.continuum.io/anaconda-cluster/config-profile">here</a>.</p>
+</div>
+<div class="section" id="add-the-following-to-admin-acluster-providers-yaml">
+<h3>Add the following to ~admin/.acluster/providers.yaml:<a class="headerlink" href="#add-the-following-to-admin-acluster-providers-yaml" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bare_metal</span><span class="p">:</span>
+  <span class="n">cloud_provider</span><span class="p">:</span> <span class="n">none</span>
+  <span class="n">private_key</span><span class="p">:</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+</pre></div>
+</div>
+<p>More information about cluster providers can be found
+<a class="reference external" href="https://docs.continuum.io/anaconda-cluster/config-provider">here</a>.</p>
+</div>
+</div>
+<div class="section" id="create-the-cluster">
+<h2>Create the Cluster<a class="headerlink" href="#create-the-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Now that the cluster has been defined, we’re ready to create it. Use the
+acluster create command to start the cluster. “demo” is the name of the
+new cluster and “demo-cluster” is the name of the cluster profile (from
+~admin/.acluster/profiles.d/demo-cluster.yaml).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">acluster</span> <span class="n">create</span> <span class="n">demo</span> <span class="o">-</span><span class="n">p</span> <span class="n">demo</span><span class="o">-</span><span class="n">cluster</span>
+
+<span class="n">Creating</span> <span class="n">cluster</span>
+<span class="n">No</span> <span class="n">license</span> <span class="n">file</span> <span class="n">found</span> <span class="n">matching</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/.</span><span class="n">acluster</span><span class="o">/</span><span class="n">cluster</span><span class="o">*.</span><span class="n">lic</span>
+<span class="n">Using</span> <span class="n">unlicensed</span> <span class="n">limits</span><span class="o">.</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">existing</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">requested</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">Licensed</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">License</span> <span class="ow">is</span> <span class="n">valid</span> <span class="k">for</span> <span class="n">the</span> <span class="n">current</span> <span class="n">number</span> <span class="n">of</span> <span class="n">nodes</span><span class="o">.</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Creating</span> <span class="n">new</span> <span class="n">cluster</span> <span class="s2">&quot;demo&quot;</span> <span class="k">with</span> <span class="n">profile</span> <span class="s2">&quot;demo-cluster&quot;</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Creating</span> <span class="mi">4</span> <span class="n">instances</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Checking</span> <span class="n">SSH</span> <span class="n">connection</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Successfully</span> <span class="n">created</span> <span class="n">instances</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Cluster</span> <span class="n">info</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;ips&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;172.31.60.133&#39;</span><span class="p">,</span> <span class="s1">&#39;172.31.55.76&#39;</span><span class="p">,</span> <span class="s1">&#39;172.31.55.77&#39;</span><span class="p">,</span> <span class="s1">&#39;172.31.55.78&#39;</span><span class="p">],</span> <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">u&#39;demo&#39;</span><span class="p">}</span>
+<span class="n">Saving</span> <span class="n">cluster</span> <span class="n">file</span>
+<span class="n">No</span> <span class="n">license</span> <span class="n">file</span> <span class="n">found</span> <span class="n">matching</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">admin</span><span class="o">/.</span><span class="n">acluster</span><span class="o">/</span><span class="n">cluster</span><span class="o">*.</span><span class="n">lic</span>
+<span class="n">Using</span> <span class="n">unlicensed</span> <span class="n">limits</span><span class="o">.</span>
+<span class="n">Cluster</span> <span class="s2">&quot;demo&quot;</span><span class="p">:</span> <span class="mi">4</span> <span class="n">nodes</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">existing</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">requested</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Licensed</span> <span class="n">nodes</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">License</span> <span class="ow">is</span> <span class="n">valid</span> <span class="k">for</span> <span class="n">the</span> <span class="n">current</span> <span class="n">number</span> <span class="n">of</span> <span class="n">nodes</span><span class="o">.</span>
+<span class="n">Checking</span> <span class="n">ssh</span> <span class="n">connection</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Checking</span> <span class="n">SSH</span> <span class="n">connection</span>
+<span class="n">Checking</span> <span class="n">sudo</span>
+<span class="n">Bootstraping</span> <span class="n">conda</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Checking</span> <span class="n">conda</span> <span class="n">installation</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Installing</span> <span class="n">miniconda</span>
+
+<span class="n">Syncing</span> <span class="n">formulas</span>
+
+<span class="n">Installing</span> <span class="n">plugin</span> <span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="p">:</span> <span class="n">conda</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">Disconnecting</span> <span class="kn">from</span> <span class="nn">all</span> <span class="n">active</span> <span class="n">servers</span>
+<span class="n">Disconnecting</span> <span class="kn">from</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">60.133</span><span class="o">...</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">Disconnecting</span> <span class="kn">from</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.76</span><span class="o">...</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">Disconnecting</span> <span class="kn">from</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.77</span><span class="o">...</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">Disconnecting</span> <span class="kn">from</span> <span class="mf">172.31</span><span class="o">.</span><span class="mf">55.78</span><span class="o">...</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">Done</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2016, Implementation Engineering.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

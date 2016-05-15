@@ -1,24 +1,34 @@
-###Creating PDFs from Markdown pages
+### Implementation Engineering's Runbook PDFs
 
-There are a dozen ways to convert Markdown docs to PDFs, but to stay consistent let's convert MD -> HTML -> PDF:
+The Runbook repo is now a sphinx-based install configured to be built via sphinx-build's `make html`. When pushed to gitub.com, the master branch is automatically built and presented at [http://runbooks.readthedocs.io/](http://runbooks.readthedocs.io/).
 
-1. Install grip and wkhtmltopdf
+####Requirements
 
-		pip install grip wkhtmltopdf
-		
-2. Convert a Markdown doc to HTML:
+- sphinx
+- sphinx_bootstrap_theme
 
-		grip filename.md --export filename.html --title=
+####Requirement installation
 
-3. Convert an HTML doc to PDF:
+	conda install sphinx
+	pip install sphinx_bootstrap_theme
 
-		wkhtmltopdf filename.html pdfs/filename.pdf
-		
-###Batch convert all Markdown pages to PDF
+####Updating Source
 
+1. Update the corresponding RST file
+2. Test with `make html`. This will build the html files in _build/html
+3. Commit and push changes to github
 
-Alternatively, we can batch convert all docs from MD -> HTML -> PDF:
+####Fetching PDFs
 
-		for i in *.md; do grip $i --export $(echo $i |sed 's/\.md//g').html --title=; done
+When master is updated, the docs are cloned and built at [http://runbooks.readthedocs.io/](http://runbooks.readthedocs.io/). Readthedocs.org _can_ build PDFs, however they're not very customizable or easy to work with.
+To create a PDF for a single runbook, do:
+
+	wget -O  pdfs/AnacodaRepo.pdf "http://pdfmyurl.com/api?license=ol6be2SjTSQV&orientation=portrait&no_javascript&url=http://runbooks.readthedocs.io/en/latest/AnacondaRepo.html
+
+This will send a request to http://pdfmyurl.com to generate a PDF from the supplied URL. Do this for each PDF you want to generate.
+
+To generate PDFs for all runbooks, do:
 	
-		for i in *.html; do wkhtmltopdf $i pdfs/$(echo $i |sed 's/\.html//g').pdf; done
+	for i in AnacondaCluster AnacondaEnterpriseNotebooks AnacondaRepo;
+		do wget -O  pdfs/$i.pdf "http://pdfmyurl.com/api?license=ol6be2SjTSQV&orientation=portrait&no_javascript&url=http://runbooks.readthedocs.io/en/sphinx-ified/$i.html";
+		done

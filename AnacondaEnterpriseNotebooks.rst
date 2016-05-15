@@ -2,7 +2,7 @@
 Anaconda Enterprise Notebook Runbook
 ====================================
 
-Anaconda Enterprise Notebooks is a Python data analysis environment from
+Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
 Notebooks is a ready-to-use, powerful, fully-configured Python analytics
 environment. We believe that programmers, scientists, and analysts
@@ -26,18 +26,18 @@ Air Gap environments are noted. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
-**Wakari Server:** The administrative front-end to the system. This is
+**AEN Server:** The administrative front-end to the system. This is
 where users login to the system, where user accounts are stored, and
 where admins can manage the system.
 
-**Wakari Gateway:** The gateway is a reverse proxy that authenticates
-users and automatically directs them to the proper Wakari Compute
+**AEN Gateway:** The gateway is a reverse proxy that authenticates
+users and automatically directs them to the proper AEN Compute
 machine for their project. Users will not notice this component as it
 automatically routes them. One could put a gateway in each datacenter in
 a tiered scale-out fashion.
 
-**Wakari Compute nodes:** This is where projects are stored and run.
-Wakari Compute machines only need to be reachable by the Wakari Gateway,
+**AEN Compute nodes:** This is where projects are stored and run.
+AEN Compute machines only need to be reachable by the AEN Gateway,
 so they can be completely isolated by a firewall.
 
 
@@ -51,18 +51,18 @@ Requirements
 Hardware Recommendations
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Wakari Server**
+**AEN Server**
 
 -  2+GB RAM
 -  2+CPU cores
 -  20GB storage
 
-**Wakari Gateway**
+**AEN Gateway**
 
 -  2 GB RAM
 -  2 CPU cores
 
-**Wakari Compute** (N-machines)
+**AEN Compute** (N-machines)
 
 Configure to meet the needs of the projects. At least:
 
@@ -87,7 +87,7 @@ OS Requirements
 Software Prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~
 
-**Wakari Server**
+**AEN Server**
 
 -  Mongo Version: >= 2.6.8 and < 3.0
 -  Nginx version: >= 1.4.0
@@ -97,7 +97,7 @@ Software Prerequisites
 **NOTE:** For Air Gap installations, Oracle JRE must already be
 installed
 
-**Wakari Compute**
+**AEN Compute**
 
 -  git
 
@@ -120,7 +120,7 @@ Other Requirements
 ~~~~~~~~~~~~~~~~~~
 
 Assuming the above requirements are met, there are no additional
-dependencies necessary for Wakari Enterprise.
+dependencies necessary for AEN.
 
 Air Gap vs. Regular Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,7 +161,7 @@ Download the Installers
 -----------------------
 
 Download the installers and copy them to the corresponding servers. The
-Publisher should be installed on the Wakari Server machine.
+Publisher should be installed on the AEN Server machine.
 
 -  **Air Gap Installation:** Copy installers from the Air Gap media
 
@@ -178,7 +178,7 @@ Publisher should be installed on the Wakari Server machine.
 Gather IP addresses or FQDNs
 ----------------------------
 
-Wakari is very sensitive to the IP address or domain name used to
+AEN is very sensitive to the IP address or domain name used to
 connect to the Server and Gateway components. If users will be using the
 domain name, you should install thecomponents using the domain name
 instead of the IP addresses. The authentication systemrequires the
@@ -186,28 +186,28 @@ proper hostnames when authenticating users between the services.
 
 Fill in the domain names or IP addresses of the components below and
 record the auto­generated wakari password in the box below after
-installing the Wakari Server component.
+installing the AEN Server component.
 
 
-+------------------+----------------------+
-| Component        | Name or IP address   |
-+==================+======================+
-| Wakari Server    |                      |
-+------------------+----------------------+
-| Wakari Gateway   |                      |
-+------------------+----------------------+
-| Wakari Compute   |                      |
-+------------------+----------------------+
++------------------+-----------------+
+| Component     | Name or IP address |
++==================+=================+
+| AEN Server    |                    |
++------------------+-----------------+
+| AEN Gateway   |                    |
++------------------+-----------------+
+| AEN Compute   |                    |
++------------------+-----------------+
 
 
-Install Wakari Server
+Install AEN Server
 ---------------------
 
-The Wakari server is the administrative front­end to the system. This is
+The AEN server is the administrative front­end to the system. This is
 where users login to the system, where user accounts are stored, and
 where admins can manage the system.
 
-Wakari Server Preparation ­Prerequisites
+AEN Server Preparation ­Prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Download Prerequisite RPMs
@@ -239,7 +239,7 @@ Install Prerequisite RPMs
     sudo /etc/init.d/elasticsearch start
     sudo chkconfig --add elasticsearch
 
-Run the Wakari Server Installer
+Run the AEN Server Installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Set Variables and Change Permissions
@@ -247,19 +247,19 @@ Set Variables and Change Permissions
 
 ::
 
-        export WAKARI_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+        export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
         chmod a+x wakari-*.sh                # Set installer to be executable
 
-        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER  
+        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER  
         
         
 
-Run Wakari Server Installer
+Run AEN Server Installer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
-        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
         <license text>
         ...
         ...
@@ -309,10 +309,10 @@ Restart elasticsearch to read the new config file
     sudo service elasticsearch restart
 
 
-Test the Wakari Server install
+Test the AEN Server install
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Visit http://$WAKARI\_SERVER. You should be shown the **"license
+Visit http://$AEN_SERVER. You should be shown the **"license
 expired"** page.
 
 
@@ -324,11 +324,11 @@ upload your license file. After submitting, you should see the login
 page.
 
 
-Install Wakari Gateway
+Install AEN Gateway
 ----------------------
 
 The gateway is a reverse proxy that authenticates users and
-automatically directs them to the proper Wakari Compute machine for
+automatically directs them to the proper AEN Compute machine for
 their project. Users will not notice this component as it automatically
 routes them.
 
@@ -337,9 +337,9 @@ Set Variables and Change Permissions
 
 ::
 
-        export WAKARI_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        export WAKARI_GATEWAY_PORT=8080
-        export WAKARI_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
+        export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+        export AEN_GATEWAY_PORT=8080
+        export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
         chmod a+x wakari-*.sh                # Set installer to be executable
 
 Run Wakari Gateway Installer
@@ -347,7 +347,7 @@ Run Wakari Gateway Installer
 
 ::
 
-        sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+        sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
         <license text>
         ...
         ...
@@ -357,7 +357,7 @@ Run Wakari Gateway Installer
         ...
         ...
         Checking server name
-        Please restart the Gateway after running the following command to connect this Gateway to the Wakari Server
+        Please restart the Gateway after running the following command to connect this Gateway to the AEN Server
         
         PATH=/opt/wakari/wakari-gateway/bin:$PATH \
         /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
@@ -368,19 +368,19 @@ Run Wakari Gateway Installer
 **NOTE:** replace **password** with the password of the wakari user that
 was generated during server installation.
 
-Start the Wakari Gateway
+Start the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
         sudo service wakari-gateway start
 
-Register the Wakari Gateway
+Register the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Wakari Gateway needs to register with the Wakari Server. This needs
+The AEN Gateway needs to register with the AEN Server. This needs
 to be authenticated, so the wakari user’s credentials created during the
-Wakari Server install need to be used. **This needs to be run as root**
+AEN Server install need to be used. **This needs to be run as root**
 to write the configuration file:
 ``/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json``
 
@@ -409,10 +409,10 @@ Restart the gateway to load the new configuration file
 
 **NOTE:** Ignore any errors about missing /lib/lsb/init-functions
 
-Verify the Wakari Gateway has Registered
+Verify the AEN Gateway has Registered
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Login to the Wakari Server using Chrome or Firefox browser using the
+1. Login to the AEN Server using Chrome or Firefox browser using the
    wakari user.
 2. Click the Admin link in the toolbar
 
@@ -430,10 +430,10 @@ Verify the Wakari Gateway has Registered
    .. image:: _static/datacenter.png
       :scale: 40 %
 
-Install Wakari Compute
+Install AEN Compute
 ----------------------
 
-This is where projects are stored and run. Adding multiple Wakari
+This is where projects are stored and run. Adding multiple AEN
 Compute machines allows one to scale-out horizontally to increase
 capacity. Projects can be created on individual compute nodes to spread
 the load.
@@ -443,15 +443,15 @@ Set Variables and Change Permissions
 
 ::
 
-        export WAKARI_SERVER=<FQDN HOSTNAME> # Use the real FQDN
+        export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
         chmod a+x wakari-*.sh                # Set installer to be executable
 
-Run Wakari Compute Installer
+Run AEN Compute Installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-        sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+        sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
         ...
         ...
         PREFIX=/opt/wakari/wakari-compute
@@ -466,20 +466,19 @@ Run Wakari Compute Installer
         to PATH in your /root/.bashrc ? [yes|no]
         [no] >>> yes
 
-Configure Wakari Compute Node
+Configure AEN Compute Node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once installed, you need to configure the Compute Launcher on Wakari
-Server.
+Once installed, you need to configure the Compute Launcher on AEN Server.
 
-1. Point your browser at the Wakari Server
+1. Point your browser at the AEN Server
 2. Login as the wakari user
 3. Click on the Admin link in the top navbar
 4. Click on Enterprise Resources in the left navbar
 5. Click on Add Resource
 6. Select the correct (probably the only) Data Center to associate this
    Compute Node with
-7. For URL, enter **http://$WAKARI\_COMPUTE:5002**.
+7. For URL, enter **http://$AEN_COMPUTE:5002**.
 
    **NOTE:** If the Compute Launcher is located on the same box as the
    Gateway, we recommend using **http://localhost:5002** for the URL

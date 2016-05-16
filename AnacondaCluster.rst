@@ -54,7 +54,6 @@ Software Requirements
 
 -  RHEL/CentOS 6.7 (Other operating systems are supported, however this
    document assumes RHEL or CentOS 6.7)
--  MongoDB version 2.6
 -  Anaconda Repo Server (Anaconda Cloud or local Anaconda Repo)
 -  If using a local Anaconda Repo, Anaconda Cluster channel has been
    mirrored to **http://your.anaconda.server:8080/anaconda-cluster**

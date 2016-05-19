@@ -1,5 +1,5 @@
 # Anaconda Enterprise Notebook Runbook
-**Citi Air-Gap Install (minimal) 2016-05-13**
+**Citi Air-Gap Install (minimal) 2016-05-19**
 
 Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from Continuum Analytics. Accessed through a browser, Anaconda Enterprise Notebook is a ready-to-use, powerful, fully-configured Python analytics environment. We believe that programmers, scientists, and analysts should spend their time analyzing data, not working to set up a system. Data should be shareable, and analysis should be repeatable. Reproducibility should extend beyond just code to include the runtime environment, configuration, and input data.
 
@@ -195,9 +195,9 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 
 ### 5.1 Set Variables and Change Permissions
 		
-	export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-	export AEN_GATEWAY_PORT=8080
-	export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
+	export AEN_SERVER=<FQDN HOSTNAME>    # Use the real FQDN
+	export AEN_GATEWAY_PORT=9090
+	export AEN_GATEWAY=<FQDN HOSTNAME>   # will be needed shortly
 	chmod a+x wakari-*.sh                # Set installer to be executable
 
 ### 5.2 Run AEN Gateway Installer
@@ -216,7 +216,7 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 	
 	PATH=/opt/wakari/wakari-gateway/bin:$PATH \
 	/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-	--server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
+	--server http://1.1.1.1 --host 1.1.1.2 --port $AEN_GATEWAY_PORT --name Gateway \
 	--protocol http --summary Gateway --username wakari --password password
 		
 **NOTE:** replace **password** with the password of the wakari user that was generated during server installation.

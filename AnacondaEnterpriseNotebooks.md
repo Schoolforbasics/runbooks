@@ -202,7 +202,7 @@ The gateway is a reverse proxy that authenticates users and automatically direct
 
 ### 5.2 Run AEN Gateway Installer
 
-	sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+	sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 	<license text>
 	...
 	...
@@ -232,8 +232,8 @@ The AEN Gateway needs to register with the AEN Server.  This needs to be authent
 
 	PATH=/opt/wakari/wakari-gateway/bin:$PATH \
 	/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-	--server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
-	--port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \
+	--server http://$AEN_SERVER --host $AEN_GATEWAY \
+	--port $AEN_GATEWAY_PORT --name Gateway --protocol http \
 	--summary Gateway --username wakari \
 	--password '<USE PASSWORD SET ABOVE>'	
 
@@ -276,7 +276,7 @@ This is where projects are stored and run. Adding multiple AEN Compute machines 
 
 ### 6.2 Run AEN Compute Installer
 
-	sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $WAKARI_SERVER
+	sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 	...
 	...
 	PREFIX=/opt/wakari/wakari-compute
@@ -301,7 +301,7 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
 4. Click on Enterprise Resources in the left navbar
 5. Click on Add Resource
 6. Select the correct (probably the only) Data Center to associate this Compute Node with
-7. For URL, enter **http://$WAKARI_COMPUTE:5002**. 
+7. For URL, enter **http://$AEN_COMPUTE:5002**. 
 		
 	**NOTE:** If the Compute Launcher is located on the same box as the Gateway, we recommend using **http://localhost:5002** for the URL value.
 

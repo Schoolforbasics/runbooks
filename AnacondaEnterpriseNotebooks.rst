@@ -152,7 +152,6 @@ Air Gap media contents:
     wakari-compute-0.10.0-Linux-x86_64.sh
     wakari-server-0.10.0-Linux-x86_64.sh
     wakari-gateway-0.10.0-Linux-x86_64.sh
-    wakari-publisher-0.10.0-Linux-x86_64.sh
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
@@ -173,7 +172,6 @@ Publisher should be installed on the AEN Server machine.
        curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
-       curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
 
 Gather IP addresses or FQDNs
 ----------------------------

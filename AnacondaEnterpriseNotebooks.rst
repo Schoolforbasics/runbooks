@@ -475,5 +475,40 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes.
 
+Configure conda to use local on-site Anaconda Enterprise Repo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
+Enterprise Repository server instead of Anaconda.org.
+
+Edit the condarc to match this:
+
+    **NOTE:** If there are some channels below that you haven't mirrored,
+    you should remove them from the configuration.
+
+::
+    #/opt/wakari/anaconda/.condarc
+    channels:
+        - defaults
+
+    create_default_packages:
+        - anaconda-client
+        - python
+        - ipython-we
+        - pip
+
+    # Default channels is needed for when users override the system .condarc
+    # with ~/.condarc.  This ensures that "defaults" maps to your Anaconda Server and not
+    # repo.continuum.io
+    default_channels:
+        - http://<your Anaconda Server name:8080/conda/anaconda
+        - http://<your Anaconda Server name:8080/conda/wakari
+        - http://<your Anaconda Server name:8080/conda/anaconda-cluster
+        - http://<your Anaconda Server name:8080/conda/r-channel
+
+    # Note:  You must add the "conda" subdirectory to the end
+    channel_alias: http://<your Anaconda Server name:8080/conda
+
+
 **Congratulations!** You've now successfully installed and configured
 Anaconda Enterprise Notebook.

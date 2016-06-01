@@ -105,7 +105,7 @@ Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  root or sudo access
--  SELinux in Permissive mode - check with ``getenforce``
+-  SELinux in Permissive or Disabled mode - check with ``getenforce``
 
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~

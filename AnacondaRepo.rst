@@ -46,7 +46,7 @@ Security Requirements
 -  Ability to make (optional) iptables modifications
 
 **NOTE**: SELinux does not have to be disabled for Anaconda Repo
-operation 
+operation
 
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
@@ -215,7 +215,7 @@ Fetch the download script using curl
 
 ::
 
-    curl 'http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+    curl 'http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh' > Miniconda.sh
 
 Run the Miniconda.sh installer script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -237,7 +237,7 @@ Review and accept the license terms
 ::
 
     Welcome to Miniconda (by Continuum Analytics, Inc.)
-    In order to continue the installation process, please review the license agreement.  
+    In order to continue the installation process, please review the license agreement.
     Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 
 Accept the default location or specify an alternative:
@@ -246,7 +246,7 @@ Accept the default location or specify an alternative:
 ::
 
     Miniconda will now be installed into this location:
-    /home/binstar/miniconda2  
+    /home/binstar/miniconda2
     -Press ENTER to confirm the location
     -Press CTRL-C to abort the installation
     -Or specify a different location below
@@ -392,7 +392,7 @@ packages locally under the "anaconda" user account.
    filesystem, some additional configuration is necessary.
 
    **1.** Create a mirror config file:
-   
+
 
    ::
 
@@ -580,21 +580,21 @@ inaccessible.
 
     sudo iptables -L -n
     Chain INPUT (policy ACCEPT)
-    target     prot opt source               destination         
+    target     prot opt source               destination
     ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 # Anaconda Repo #
     ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo #
     ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
-    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
-    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
+    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
     ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
     REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
 
     Chain FORWARD (policy ACCEPT)
-    target     prot opt source               destination         
+    target     prot opt source               destination
     REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination  
+    target     prot opt source               destination
 
 **NOTE:** the PREROUTING (nat) iptables chain is not displayed by
 default; to show it, use:
@@ -603,14 +603,14 @@ default; to show it, use:
 
     sudo iptables -L -n -t nat
     Chain PREROUTING (policy ACCEPT)
-    target     prot opt source               destination         
+    target     prot opt source               destination
     REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo # redir ports 8080
 
     Chain POSTROUTING (policy ACCEPT)
-    target     prot opt source               destination         
+    target     prot opt source               destination
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination       
+    target     prot opt source               destination
 
 Write the running iptables configuration to **/etc/sysconfig/iptables:**
 

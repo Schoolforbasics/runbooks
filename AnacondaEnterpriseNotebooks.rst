@@ -368,13 +368,6 @@ Run Wakari Gateway Installer
 **NOTE:** replace **password** with the password of the wakari user that
 was generated during server installation.
 
-Start the AEN Gateway
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-        sudo service wakari-gateway start
-
 Register the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -400,12 +393,12 @@ Ensure Proper Permissions
 
     sudo chown wakari /opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json
 
-Restart the gateway to load the new configuration file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+start the gateway
+^^^^^^^^^^^^^^^^^
 
 ::
 
-    sudo service wakari-gateway restart
+    sudo service wakari-gateway start
 
 **NOTE:** Ignore any errors about missing /lib/lsb/init-functions
 

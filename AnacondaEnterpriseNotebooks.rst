@@ -113,7 +113,7 @@ Network Requirements
 **TCP Ports**
 
 -  Server: 80
--  Gateway: 8080
+-  Gateway: 8088
 -  Compute: 5002
 
 Other Requirements
@@ -338,7 +338,7 @@ Set Variables and Change Permissions
 ::
 
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        export AEN_GATEWAY_PORT=8080
+        export AEN_GATEWAY_PORT=8088
         export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
         chmod a+x wakari-*.sh                # Set installer to be executable
 
@@ -361,7 +361,7 @@ Run Wakari Gateway Installer
 
         PATH=/opt/wakari/wakari-gateway/bin:$PATH \
         /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-        --server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
+        --server http://1.1.1.1 --host 1.1.1.2 --port 8088 --name Gateway \
         --protocol http --summary Gateway --username wakari --password password
 
 

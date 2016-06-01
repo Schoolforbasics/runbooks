@@ -71,6 +71,7 @@ Configure to meet the needs of the projects. At least:
 
 OS Requirements
 ~~~~~~~~~~~~~~~
+.. highlight:: bash
 
 -  RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
    however this document assumes RHEL or CentOS 6.7)
@@ -133,6 +134,8 @@ the steps below have two sections: **Air Gap Installation** and
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
+
+.. only:: airgap
 Air Gap Media
 ~~~~~~~~~~~~~
 
@@ -174,6 +177,8 @@ Publisher should be installed on the AEN Server machine.
        curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
+  
+  
 
 Gather IP addresses or FQDNs
 ----------------------------
@@ -229,8 +234,23 @@ Download Prerequisite RPMs
        curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
        curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 
+- Debian / Ubuntu
+
+::
+
+       RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+       curl -O $RPM_CDN/nginx-full_1.10.0-0+trusty0_amd64.deb 
+       curl -O $RPM_CDN/nginx-common_1.10.0-0+trusty0_all.deb
+       curl -O $RPM_CDN/mongodb-org-tools_2.6.12_amd64.deb
+       curl -O $RPM_CDN/mongodb-org-shell_2.6.12_amd64.deb
+       curl -O $RPM_CDN/mongodb-org-server_2.6.12_amd64.deb
+       curl -O $RPM_CDN/mongodb-org-mongos_2.6.12_amd64.deb
+       curl -O $RPM_CDN/elasticsearch-1.7.3.deb
+
 Install Prerequisite RPMs
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- RHEL / CentOS
 
 ::
 
@@ -238,6 +258,24 @@ Install Prerequisite RPMs
     sudo /etc/init.d/mongod start
     sudo /etc/init.d/elasticsearch start
     sudo chkconfig --add elasticsearch
+    
+- Debian / Ubuntu
+
+::
+    
+    # install mongodb
+    sudo dpkg -i mongodb-org-*
+    
+    # install nginx
+    sudo dpkg -i nginx-common_1.10.0-0+trusty0_all.deb 
+    sudo dpkg -i nginx-full_1.10.0-0+trusty0_amd64.deb 
+    sudo apt-get -f install
+    
+    # Must remove the default site config
+    sudo rm /etc/nginx/sites-enabled/default
+    
+    sudo apt-get install openjdk-7-jre
+    sudo dpkg -i elasticsearch-1.7.3.deb
 
 Run the AEN Server Installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,6 +337,11 @@ password:
 is also available in the installation log file found at
 ``/tmp/wakari_server.log``
 
+.. only:: ubuntu
+
+This is for ubuntu
+^^^^^^^^^^^^^^^^^^
+
 Restart ElasticSearch
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -306,6 +349,8 @@ Restart elasticsearch to read the new config file
 
 ::
 
+    
+    sudo service nginx restart    # On Debian / Ubuntu
     sudo service elasticsearch restart
 
 

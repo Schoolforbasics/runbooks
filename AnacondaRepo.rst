@@ -114,8 +114,9 @@ Download MongoDB packages
 
 -  **Air Gap Installation:** Skip this step.
 
--  **Regular Installation:**
+-  **Regular Installation:** Use the appropriate packages:
 
+- RHEL / CentOS
 ::
 
    RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
@@ -125,6 +126,16 @@ Download MongoDB packages
    curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
    curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 
+- Debian / Ubuntu
+
+::
+
+   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+   curl -O $RPM_CDN/mongodb-org-tools_2.6.12_amd64.deb 
+   curl -O $RPM_CDN/mongodb-org-shell_2.6.12_amd64.deb
+   curl -O $RPM_CDN/mongodb-org-server_2.6.12_amd64.deb
+   curl -O $RPM_CDN/mongodb-org-mongos_2.6.12_amd64.deb
+   
 Install MongoDB packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -135,10 +146,17 @@ Install MongoDB packages
     sudo yum install -y /installer/mongodb-org*
 
 -  **Regular Installation:**
+- RHEL / CentOS
 
 ::
 
     sudo yum install -y mongodb-org*
+    
+- Debian / Ubuntu
+
+::
+
+    sudo dpkg -i mongodb-org-*
 
 
 Start mongodb

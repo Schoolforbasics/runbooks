@@ -9,7 +9,8 @@
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootswatch-3.3.6/spacelab/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.3.6/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-3.3.6/css/bootstrap-theme.min.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -39,169 +40,6 @@
   </head>
   <body role="document">
 
-  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.html">
-          Continuum Runbooks</a>
-        <span class="navbar-text navbar-version pull-left"><b>1.1</b></span>
-      </div>
-
-        <div class="collapse navbar-collapse nav-collapse">
-          <ul class="nav navbar-nav">
-            
-            
-              <li class="dropdown globaltoc-container">
-  <a role="button"
-     id="dLabelGlobalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="index.html">Installations <b class="caret"></b></a>
-  <ul class="dropdown-menu globaltoc"
-      role="menu"
-      aria-labelledby="dLabelGlobalToc"><ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Anaconda Repo Runbook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#anaconda-repo-installation">Anaconda Repo Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configure-anaconda-repo">Configure Anaconda Repo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configure-anaconda-repo-server">Configure Anaconda Repo Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="AnacondaCluster.html">Anaconda Cluster Runbook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-the-client-machine">Prepare the Client Machine</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#download-miniconda">Download Miniconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-miniconda">Install Miniconda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#use-conda-to-download-and-install-anaconda-cluster">Use conda to download and install Anaconda Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#install-the-anaconda-cluster-packages">Install the anaconda-cluster packages:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#initialize-anaconda-cluster">Initialize Anaconda Cluster:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#prepare-head-and-compute-nodes">Prepare Head and Compute Nodes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#configure-the-cluster">Configure the Cluster</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaCluster.html#create-the-cluster">Create the Cluster</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html">Anaconda Enterprise Notebook Runbook</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#download-the-installers">Download the Installers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#gather-ip-addresses-or-fqdns">Gather IP addresses or FQDNs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-server">Install Wakari Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-gateway">Install Wakari Gateway</a></li>
-<li class="toctree-l2"><a class="reference internal" href="AnacondaEnterpriseNotebooks.html#install-wakari-compute">Install Wakari Compute</a></li>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-                <li class="dropdown">
-  <a role="button"
-     id="dLabelLocalToc"
-     data-toggle="dropdown"
-     data-target="#"
-     href="#">Page <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"
-      role="menu"
-      aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">Anaconda Repo Runbook</a><ul>
-<li><a class="reference internal" href="#requirements">Requirements</a><ul>
-<li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
-<li><a class="reference internal" href="#software-requirements">Software Requirements</a></li>
-<li><a class="reference internal" href="#security-requirements">Security Requirements</a></li>
-<li><a class="reference internal" href="#network-requirements">Network Requirements</a></li>
-<li><a class="reference internal" href="#other-requirements">Other Requirements</a></li>
-<li><a class="reference internal" href="#air-gap-vs-regular-installation">Air Gap vs. Regular Installation</a></li>
-<li><a class="reference internal" href="#air-gap-media">Air Gap Media</a></li>
-<li><a class="reference internal" href="#air-gap-media-contents">Air Gap media contents</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#anaconda-repo-installation">Anaconda Repo Installation</a><ul>
-<li><a class="reference internal" href="#install-mongodb">Install MongoDB</a></li>
-<li><a class="reference internal" href="#download-mongodb-packages">Download MongoDB packages</a></li>
-<li><a class="reference internal" href="#install-mongodb-packages">Install MongoDB packages</a></li>
-<li><a class="reference internal" href="#start-mongodb">Start mongodb</a></li>
-<li><a class="reference internal" href="#verify-mongod-is-running">Verify mongod is running</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#configure-anaconda-repo">Configure Anaconda Repo</a><ul>
-<li><a class="reference internal" href="#create-anaconda-repo-administrator-account">Create Anaconda Repo administrator account</a></li>
-<li><a class="reference internal" href="#create-anaconda-repo-directories">Create Anaconda Repo directories</a></li>
-<li><a class="reference internal" href="#give-the-binstar-user-ownership-of-directories">Give the binstar user ownership of directories</a></li>
-<li><a class="reference internal" href="#switch-to-the-anaconda-repo-administrator-account">Switch to the Anaconda Repo administrator account</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-miniconda-bootstrap-version">Install Miniconda bootstrap version</a><ul>
-<li><a class="reference internal" href="#fetch-the-download-script-using-curl">Fetch the download script using curl</a></li>
-<li><a class="reference internal" href="#run-the-miniconda-sh-installer-script">Run the Miniconda.sh installer script</a></li>
-<li><a class="reference internal" href="#review-and-accept-the-license-terms">Review and accept the license terms</a></li>
-<li><a class="reference internal" href="#accept-the-default-location-or-specify-an-alternative">Accept the default location or specify an alternative:</a></li>
-<li><a class="reference internal" href="#update-the-binstar-user-s-path">Update the binstar user&#8217;s path</a></li>
-<li><a class="reference internal" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc">For the new path changes to take effect, “source” your .bashrc</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-anaconda-repo-enterprise-packages">Install Anaconda Repo Enterprise Packages</a><ul>
-<li><a class="reference internal" href="#add-the-binstar-and-anaconda-server-repo-channels-to-conda">Add the Binstar and Anaconda-Server Repo channels to conda:</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#install-the-anaconda-repo-packages-via-conda">Install the Anaconda Repo packages via conda:</a></li>
-<li><a class="reference internal" href="#configure-anaconda-repo-server">Configure Anaconda Repo Server</a><ul>
-<li><a class="reference internal" href="#initialize-the-web-server-for-anaconda-repo">Initialize the web server for Anaconda Repo:</a></li>
-<li><a class="reference internal" href="#set-the-anaconda-repo-package-storage-location">Set the Anaconda Repo package storage location:</a></li>
-<li><a class="reference internal" href="#create-an-initial-superuser-account-for-anaconda-repo">Create an initial “superuser” account for Anaconda Repo:</a></li>
-<li><a class="reference internal" href="#initialize-the-anaconda-repo-database">Initialize the Anaconda Repo database:</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#set-up-automatic-restart-on-reboot-fail-or-error">Set up automatic restart on reboot, fail or error</a><ul>
-<li><a class="reference internal" href="#configure-supervisord">Configure Supervisord</a></li>
-<li><a class="reference internal" href="#verify-the-server-is-running">Verify the server is running:</a></li>
-<li><a class="reference internal" href="#install-anaconda-repo-license">Install Anaconda Repo License</a></li>
-<li><a class="reference internal" href="#mirror-anaconda-repo">Mirror Anaconda Repo</a></li>
-<li><a class="reference internal" href="#mirror-installers-for-miniconda">Mirror Installers for Miniconda</a></li>
-<li><a class="reference internal" href="#optional-mirror-the-anaconda-cluster-management-channel">Optional: Mirror the Anaconda Cluster Management channel</a></li>
-<li><a class="reference internal" href="#optional-adjust-iptables-to-accept-requests-on-port-80">Optional: Adjust iptables to accept requests on port 80</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</ul>
-</li>
-              
-            
-            
-            
-            
-            
-              <li class="hidden-sm">
-<div id="sourcelink">
-  <a href="_sources/AnacondaRepo.txt"
-     rel="nofollow">Source</a>
-</div></li>
-            
-          </ul>
-
-          
-            
-<form class="navbar-form navbar-right" action="search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-          
-        </div>
-    </div>
-  </div>
 
 <div class="container">
   <div class="row">
@@ -219,7 +57,7 @@ TAR archive. Where necessary, additional instructions for Air Gap
 environments are noted. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.</p>
-<img alt="https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png" src="https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png" />
+<img alt="_images/repo.png" src="_images/repo.png" />
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="hardware-requirements">
@@ -288,7 +126,7 @@ the server where the software is being installed.</p>
 </div>
 <div class="section" id="air-gap-media-contents">
 <h3>Air Gap media contents<a class="headerlink" href="#air-gap-media-contents" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>/installer
+<div class="highlight-bash"><div class="highlight"><pre>/installer
 ___ anaconda-suite
     ___ pkgs
 mongodb-org-tools-2.6.8-1.x86_64.rpm
@@ -311,14 +149,25 @@ Repo.</p>
 <h3>Download MongoDB packages<a class="headerlink" href="#download-mongodb-packages" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Skip this step.</li>
-<li><strong>Regular Installation:</strong></li>
+<li><strong>Regular Installation:</strong> Use the appropriate packages:</li>
+<li>RHEL / CentOS</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+<div class="highlight-default"><div class="highlight"><pre>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
 curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+</pre></div>
+</div>
+<ul class="simple">
+<li>Debian / Ubuntu</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+curl -O $RPM_CDN/mongodb-org-tools_2.6.12_amd64.deb
+curl -O $RPM_CDN/mongodb-org-shell_2.6.12_amd64.deb
+curl -O $RPM_CDN/mongodb-org-server_2.6.12_amd64.deb
+curl -O $RPM_CDN/mongodb-org-mongos_2.6.12_amd64.deb
 </pre></div>
 </div>
 </div>
@@ -327,25 +176,32 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">/</span><span class="n">installer</span><span class="o">/</span><span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">*</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">/</span><span class="n">installer</span><span class="o">/</span><span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">*</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>Regular Installation:</strong></li>
+<li>RHEL / CentOS</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">*</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">*</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Debian / Ubuntu</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-*</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="start-mongodb">
 <h3>Start mongodb<a class="headerlink" href="#start-mongodb" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">start</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">start</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="verify-mongod-is-running">
 <h3>Verify mongod is running<a class="headerlink" href="#verify-mongod-is-running" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">status</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">mongod</span> <span class="n">status</span>
 <span class="n">mongod</span> <span class="p">(</span><span class="n">pid</span> <span class="mi">1234</span><span class="p">)</span> <span class="ow">is</span> <span class="n">running</span><span class="o">...</span>
 </pre></div>
 </div>
@@ -359,7 +215,7 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 <h3>Create Anaconda Repo administrator account<a class="headerlink" href="#create-anaconda-repo-administrator-account" title="Permalink to this headline">¶</a></h3>
 <p>In a terminal window, create a new user account for Anaconda Repo named
 “binstar”</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">binstar</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">binstar</span>
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> The binstar user is the default for installing Anaconda Repo.
@@ -368,7 +224,7 @@ discouraged.</p>
 </div>
 <div class="section" id="create-anaconda-repo-directories">
 <h3>Create Anaconda Repo directories<a class="headerlink" href="#create-anaconda-repo-directories" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0770</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0770</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span>
 <span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0770</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
 <span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0770</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
 <span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">m</span> <span class="mi">0770</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span>
@@ -377,7 +233,7 @@ discouraged.</p>
 </div>
 <div class="section" id="give-the-binstar-user-ownership-of-directories">
 <h3>Give the binstar user ownership of directories<a class="headerlink" href="#give-the-binstar-user-ownership-of-directories" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span>
 <span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
 <span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
 <span class="n">sudo</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">binstar</span><span class="o">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span>
@@ -386,7 +242,7 @@ discouraged.</p>
 </div>
 <div class="section" id="switch-to-the-anaconda-repo-administrator-account">
 <h3>Switch to the Anaconda Repo administrator account<a class="headerlink" href="#switch-to-the-anaconda-repo-administrator-account" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="o">-</span> <span class="n">binstar</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">su</span> <span class="o">-</span> <span class="n">binstar</span>
 </pre></div>
 </div>
 </div>
@@ -399,7 +255,7 @@ discouraged.</p>
 <li><strong>Air Gap Installation:</strong> Skip this step.</li>
 <li><strong>Regular Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="s1">&#39;http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh&#39;</span> <span class="o">&gt;</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">curl</span> <span class="s1">&#39;http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh&#39;</span> <span class="o">&gt;</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>
@@ -408,19 +264,19 @@ discouraged.</p>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bash</span> <span class="o">/</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">suite</span><span class="o">/</span><span class="n">miniconda</span><span class="o">/</span><span class="n">Miniconda</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">bash</span> <span class="o">/</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">suite</span><span class="o">/</span><span class="n">miniconda</span><span class="o">/</span><span class="n">Miniconda</span><span class="o">-</span><span class="n">latest</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>Regular Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">bash</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">bash</span> <span class="n">Miniconda</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="review-and-accept-the-license-terms">
 <h3>Review and accept the license terms<a class="headerlink" href="#review-and-accept-the-license-terms" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Welcome to Miniconda (by Continuum Analytics, Inc.)
+<div class="highlight-default"><div class="highlight"><pre>Welcome to Miniconda (by Continuum Analytics, Inc.)
 In order to continue the installation process, please review the license agreement.
 Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 </pre></div>
@@ -428,7 +284,7 @@ Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 </div>
 <div class="section" id="accept-the-default-location-or-specify-an-alternative">
 <h3>Accept the default location or specify an alternative:<a class="headerlink" href="#accept-the-default-location-or-specify-an-alternative" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Miniconda</span> <span class="n">will</span> <span class="n">now</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">into</span> <span class="n">this</span> <span class="n">location</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">Miniconda</span> <span class="n">will</span> <span class="n">now</span> <span class="n">be</span> <span class="n">installed</span> <span class="n">into</span> <span class="n">this</span> <span class="n">location</span><span class="p">:</span>
 <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">miniconda2</span>
 <span class="o">-</span><span class="n">Press</span> <span class="n">ENTER</span> <span class="n">to</span> <span class="n">confirm</span> <span class="n">the</span> <span class="n">location</span>
 <span class="o">-</span><span class="n">Press</span> <span class="n">CTRL</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">abort</span> <span class="n">the</span> <span class="n">installation</span>
@@ -442,13 +298,13 @@ Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
 <h3>Update the binstar user&#8217;s path<a class="headerlink" href="#update-the-binstar-user-s-path" title="Permalink to this headline">¶</a></h3>
 <p>Do you wish the installer to prepend the Miniconda install location to
 PATH in your /home/binstar/.bashrc ?</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">yes</span><span class="o">|</span><span class="n">no</span><span class="p">]</span> <span class="n">yes</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="p">[</span><span class="n">yes</span><span class="o">|</span><span class="n">no</span><span class="p">]</span> <span class="n">yes</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="for-the-new-path-changes-to-take-effect-source-your-bashrc">
 <h3>For the new path changes to take effect, “source” your .bashrc<a class="headerlink" href="#for-the-new-path-changes-to-take-effect-source-your-bashrc" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">source</span> <span class="o">~/.</span><span class="n">bashrc</span>
 </pre></div>
 </div>
 </div>
@@ -460,14 +316,14 @@ PATH in your /home/binstar/.bashrc ?</p>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Add the channels from local files.</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span>  <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">suite</span><span class="o">/</span><span class="n">pkgs</span><span class="o">/</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span>  <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">suite</span><span class="o">/</span><span class="n">pkgs</span><span class="o">/</span>
 <span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">remove</span> <span class="n">channels</span> <span class="n">defaults</span> <span class="o">--</span><span class="n">force</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li><strong>Regular Installation:</strong> Add the channels from Anaconda Cloud.</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>export BINSTAR_TOKEN=&lt;your binstar token&gt;
+<div class="highlight-default"><div class="highlight"><pre>export BINSTAR_TOKEN=&lt;your binstar token&gt;
 export ANACONDA_TOKEN=&lt;your anaconda-server token&gt;
 conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
 conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
@@ -480,7 +336,7 @@ Support, one for each channel. If you haven&#8217;t, please contact
 </div>
 <div class="section" id="install-the-anaconda-repo-packages-via-conda">
 <h2>Install the Anaconda Repo packages via conda:<a class="headerlink" href="#install-the-anaconda-repo-packages-via-conda" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">client</span> <span class="n">binstar</span><span class="o">-</span><span class="n">server</span> <span class="n">binstar</span><span class="o">-</span><span class="n">static</span> <span class="n">cas</span><span class="o">-</span><span class="n">mirror</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">conda</span> <span class="n">install</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">client</span> <span class="n">binstar</span><span class="o">-</span><span class="n">server</span> <span class="n">binstar</span><span class="o">-</span><span class="n">static</span> <span class="n">cas</span><span class="o">-</span><span class="n">mirror</span>
 </pre></div>
 </div>
 </div>
@@ -488,20 +344,19 @@ Support, one for each channel. If you haven&#8217;t, please contact
 <h2>Configure Anaconda Repo Server<a class="headerlink" href="#configure-anaconda-repo-server" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="initialize-the-web-server-for-anaconda-repo">
 <h3>Initialize the web server for Anaconda Repo:<a class="headerlink" href="#initialize-the-web-server-for-anaconda-repo" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="n">init</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="n">init</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="set-the-anaconda-repo-package-storage-location">
 <h3>Set the Anaconda Repo package storage location:<a class="headerlink" href="#set-the-anaconda-repo-package-storage-location" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">fs_storage_root</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">fs_storage_root</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">package</span><span class="o">-</span><span class="n">storage</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="create-an-initial-superuser-account-for-anaconda-repo">
 <h3>Create an initial “superuser” account for Anaconda Repo:<a class="headerlink" href="#create-an-initial-superuser-account-for-anaconda-repo" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">create</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">username</span> <span class="s2">&quot;superuser&quot;</span> <span class="o">--</span><span class="n">password</span> <span class="s2">&quot;yourpassword&quot;</span> \\
-<span class="o">--</span><span class="n">email</span> <span class="s2">&quot;your@email.com&quot;</span> <span class="o">--</span><span class="n">superuser</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">create</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">username</span> <span class="s2">&quot;superuser&quot;</span> <span class="o">--</span><span class="n">password</span> <span class="s2">&quot;yourpassword&quot;</span> <span class="o">--</span><span class="n">email</span> <span class="s2">&quot;your@email.com&quot;</span> <span class="o">--</span><span class="n">superuser</span>
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> to ensure the bash shell does not process any of the
@@ -511,7 +366,7 @@ password can be changed with the web interface.</p>
 </div>
 <div class="section" id="initialize-the-anaconda-repo-database">
 <h3>Initialize the Anaconda Repo database:<a class="headerlink" href="#initialize-the-anaconda-repo-database" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="n">setup</span> <span class="o">--</span><span class="n">execute</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="n">setup</span> <span class="o">--</span><span class="n">execute</span>
 </pre></div>
 </div>
 </div>
@@ -520,7 +375,7 @@ password can be changed with the web interface.</p>
 <h2>Set up automatic restart on reboot, fail or error<a class="headerlink" href="#set-up-automatic-restart-on-reboot-fail-or-error" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="configure-supervisord">
 <h3>Configure Supervisord<a class="headerlink" href="#configure-supervisord" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">supervisord</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">supervisord</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>This step:</p>
@@ -534,7 +389,7 @@ password can be changed with the web interface.</p>
 </div>
 <div class="section" id="verify-the-server-is-running">
 <h3>Verify the server is running:<a class="headerlink" href="#verify-the-server-is-running" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">supervisorctl</span> <span class="n">status</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">supervisorctl</span> <span class="n">status</span>
 
 <span class="n">binstar</span><span class="o">-</span><span class="n">server</span> <span class="n">RUNNING</span>   <span class="n">pid</span> <span class="mi">10831</span><span class="p">,</span> <span class="n">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">05</span>
 <span class="n">binstar</span><span class="o">-</span><span class="n">worker</span> <span class="n">RUNNING</span>   <span class="n">pid</span> <span class="mi">2784</span><span class="p">,</span> <span class="n">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">04</span>
@@ -561,21 +416,21 @@ packages locally under the &#8220;anaconda&#8221; user account.</p>
 <li><p class="first"><strong>Air Gap Installation:</strong> Since we&#8217;re mirroring from a local
 filesystem, some additional configuration is necessary.</p>
 <p><strong>1.</strong> Create a mirror config file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <p>Add the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">channels</span><span class="p">:</span>
   <span class="o">-</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">suite</span><span class="o">/</span><span class="n">pkgs</span>
 </pre></div>
 </div>
 <p><strong>2.</strong> Mirror the Anaconda packages:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">conda</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first"><strong>Regular Installation:</strong> Mirror from Anaconda Cloud.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span>
 </pre></div>
 </div>
 </li>
@@ -595,7 +450,7 @@ latest Miniconda installers for each platform, download them and copy
 them to the <strong>extras</strong> directory:</p>
 <ul>
 <li><p class="first"><strong>Air Gap Installation:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># miniconda installers
+<div class="highlight-default"><div class="highlight"><pre># miniconda installers
 mkdir -p /tmp/extras
 pushd /tmp/extras
 URL=&quot;file:///installer/anaconda-suite/miniconda/&quot;
@@ -620,7 +475,7 @@ cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/s
 </div>
 </li>
 <li><p class="first"><strong>Regular Installation:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># miniconda installers
+<div class="highlight-default"><div class="highlight"><pre># miniconda installers
 mkdir -p /tmp/extras
 pushd /tmp/extras
 URL=&quot;https://repo.continuum.io/miniconda/&quot;
@@ -655,17 +510,16 @@ create the mirror config YAML file below:</p>
 <ul>
 <li><p class="first"><strong>Regular Installation:</strong></p>
 <p><strong>1.</strong> Create a mirror config file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <p><strong>2.</strong> Add the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">channels</span><span class="p">:</span>
   <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">conda</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">t</span><span class="o">/&lt;</span><span class="n">TOKEN</span><span class="o">&gt;/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
 </pre></div>
 </div>
 <p><strong>3.</strong> Mirror the Anaconda Cluster Management packages:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> \
-<span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
 </pre></div>
 </div>
 </li>
@@ -675,22 +529,21 @@ have received from Continuum Support.</p>
 <ul>
 <li><p class="first"><strong>Air Gap Installation:</strong></p>
 <p><strong>1.</strong> Create a mirror config file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 <p><strong>2.</strong> Add the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">channels</span><span class="p">:</span>
   <span class="o">-</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">installer</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">/</span><span class="n">pkgs</span>
 </pre></div>
 </div>
 <p><strong>3.</strong> Mirror the Anaconda Cluster Management packages:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> \
-<span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">binstar</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
 </pre></div>
 </div>
 </li>
 </ul>
-<p><strong>NOTE:</strong>Ignore any license warnings. Additional mirror
+<p><strong>NOTE:</strong> Ignore any license warnings. Additional mirror
 filtering/whitelisting/blacklisting options can be found here.</p>
 </div>
 <div class="section" id="optional-adjust-iptables-to-accept-requests-on-port-80">
@@ -703,26 +556,23 @@ standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.</p>
 caution; mistakes with iptables rules can render a remote machine
 inaccessible.</p>
 <p><strong>Allow inbound access to tcp port 80:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> \
-<span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 <p><strong>Allow inbound access to tcp port 8080:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">8080</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> \
-<span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">I</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">8080</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
 </pre></div>
 </div>
 <p><strong>Redirect inbound requests to port 80 to port 8080:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">PREROUTING</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> \
-<span class="o">-</span><span class="n">j</span> <span class="n">REDIRECT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">port</span> <span class="mi">8080</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">PREROUTING</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">80</span> <span class="o">-</span><span class="n">m</span> <span class="n">comment</span> <span class="o">--</span><span class="n">comment</span> <span class="s2">&quot;# Anaconda Repo #&quot;</span> <span class="o">-</span><span class="n">j</span> <span class="n">REDIRECT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">port</span> <span class="mi">8080</span>
 </pre></div>
 </div>
 <p><strong>Display the current iptables rules:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">n</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">n</span>
 <span class="n">Chain</span> <span class="n">INPUT</span> <span class="p">(</span><span class="n">policy</span> <span class="n">ACCEPT</span><span class="p">)</span>
 <span class="n">target</span>     <span class="n">prot</span> <span class="n">opt</span> <span class="n">source</span>               <span class="n">destination</span>
-<span class="n">ACCEPT</span>     <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">8080</span> <span class="o">/*</span> <span class="c1"># Anaconda Repo # */</span>
-<span class="n">ACCEPT</span>     <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">80</span> <span class="o">/*</span> <span class="c1"># Anaconda Repo # */</span>
+<span class="n">ACCEPT</span>     <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">8080</span> <span class="c1"># Anaconda Repo #</span>
+<span class="n">ACCEPT</span>     <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">80</span> <span class="c1"># Anaconda Repo #</span>
 <span class="n">ACCEPT</span>     <span class="nb">all</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">state</span> <span class="n">RELATED</span><span class="p">,</span><span class="n">ESTABLISHED</span>
 <span class="n">ACCEPT</span>     <span class="n">icmp</span> <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>
 <span class="n">ACCEPT</span>     <span class="nb">all</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>
@@ -739,10 +589,10 @@ inaccessible.</p>
 </div>
 <p><strong>NOTE:</strong> the PREROUTING (nat) iptables chain is not displayed by
 default; to show it, use:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">iptables</span> <span class="o">-</span><span class="n">L</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span>
 <span class="n">Chain</span> <span class="n">PREROUTING</span> <span class="p">(</span><span class="n">policy</span> <span class="n">ACCEPT</span><span class="p">)</span>
 <span class="n">target</span>     <span class="n">prot</span> <span class="n">opt</span> <span class="n">source</span>               <span class="n">destination</span>
-<span class="n">REDIRECT</span>   <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">80</span> <span class="o">/*</span> <span class="c1"># Anaconda Repo # */ redir ports 8080</span>
+<span class="n">REDIRECT</span>   <span class="n">tcp</span>  <span class="o">--</span>  <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>           <span class="n">tcp</span> <span class="n">dpt</span><span class="p">:</span><span class="mi">80</span> <span class="c1"># Anaconda Repo # redir ports 8080</span>
 
 <span class="n">Chain</span> <span class="n">POSTROUTING</span> <span class="p">(</span><span class="n">policy</span> <span class="n">ACCEPT</span><span class="p">)</span>
 <span class="n">target</span>     <span class="n">prot</span> <span class="n">opt</span> <span class="n">source</span>               <span class="n">destination</span>
@@ -752,7 +602,7 @@ default; to show it, use:</p>
 </pre></div>
 </div>
 <p>Write the running iptables configuration to <strong>/etc/sysconfig/iptables:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
+<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">iptables</span> <span class="n">save</span>
 </pre></div>
 </div>
 </div>
@@ -771,8 +621,6 @@ default; to show it, use:</p>
       
     </p>
     <p>
-        &copy; Copyright 2016, Implementation Engineering.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.<br/>
     </p>
   </div>
 </footer>

@@ -13,7 +13,7 @@ environments are noted. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
-.. image:: https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png
+.. image:: _static/repo.png
 
 
 Requirements
@@ -114,8 +114,9 @@ Download MongoDB packages
 
 -  **Air Gap Installation:** Skip this step.
 
--  **Regular Installation:**
+-  **Regular Installation:** Use the appropriate packages:
 
+- RHEL / CentOS
 ::
 
    RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
@@ -125,6 +126,16 @@ Download MongoDB packages
    curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
    curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 
+- Debian / Ubuntu
+
+::
+
+   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+   curl -O $RPM_CDN/mongodb-org-tools_2.6.12_amd64.deb 
+   curl -O $RPM_CDN/mongodb-org-shell_2.6.12_amd64.deb
+   curl -O $RPM_CDN/mongodb-org-server_2.6.12_amd64.deb
+   curl -O $RPM_CDN/mongodb-org-mongos_2.6.12_amd64.deb
+   
 Install MongoDB packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -135,10 +146,17 @@ Install MongoDB packages
     sudo yum install -y /installer/mongodb-org*
 
 -  **Regular Installation:**
+- RHEL / CentOS
 
 ::
 
     sudo yum install -y mongodb-org*
+    
+- Debian / Ubuntu
+
+::
+
+    sudo dpkg -i mongodb-org-*
 
 
 Start mongodb
@@ -326,8 +344,7 @@ Create an initial “superuser” account for Anaconda Repo:
 
 ::
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" \\
-    --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
 **NOTE:** to ensure the bash shell does not process any of the
 characters in this password, limit the password to lower case letters,
@@ -516,8 +533,7 @@ create the mirror config YAML file below:
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-       --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
 Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should
 have received from Continuum Support.
@@ -541,10 +557,9 @@ have received from Continuum Support.
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml \
-       --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
-**NOTE:**\ Ignore any license warnings. Additional mirror
+**NOTE:** Ignore any license warnings. Additional mirror
 filtering/whitelisting/blacklisting options can be found here.
 
 Optional: Adjust iptables to accept requests on port 80
@@ -563,22 +578,19 @@ inaccessible.
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
-    -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j ACCEPT
 
 **Allow inbound access to tcp port 8080:**
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" \
-    -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" -j ACCEPT
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ::
 
-    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" \
-    -j REDIRECT --to-port 8080
+    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j REDIRECT --to-port 8080
 
 **Display the current iptables rules:**
 
@@ -587,8 +599,8 @@ inaccessible.
     sudo iptables -L -n
     Chain INPUT (policy ACCEPT)
     target     prot opt source               destination         
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 /* # Anaconda Repo # */
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */
+    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 # Anaconda Repo #
+    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo #
     ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
     ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
     ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
@@ -610,7 +622,7 @@ default; to show it, use:
     sudo iptables -L -n -t nat
     Chain PREROUTING (policy ACCEPT)
     target     prot opt source               destination         
-    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 /* # Anaconda Repo # */ redir ports 8080
+    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo # redir ports 8080
 
     Chain POSTROUTING (policy ACCEPT)
     target     prot opt source               destination         
@@ -623,5 +635,3 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
-
-.. |image0| image:: https://www.lucidchart.com/publicSegments/view/591eb3b5-b326-49fb-addd-d733e6ceae18/image.png

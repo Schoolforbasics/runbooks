@@ -376,8 +376,8 @@ to write the configuration file:
 ::
 
     /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-    --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
-    --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \
+    --server http://$AEN_SERVER --host $AEN_GATEWAY \
+    --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
     --summary Gateway --username wakari \
     --password '<USE PASSWORD SET ABOVE>'
 

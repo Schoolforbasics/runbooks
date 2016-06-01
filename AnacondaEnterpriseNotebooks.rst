@@ -359,11 +359,7 @@ Run Wakari Gateway Installer
         Checking server name
         Please restart the Gateway after running the following command to connect this Gateway to the AEN Server
 
-        PATH=/opt/wakari/wakari-gateway/bin:$PATH \
-        /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-        --server http://1.1.1.1 --host 1.1.1.2 --port 8088 --name Gateway \
-        --protocol http --summary Gateway --username wakari --password password
-
+        ...
 
 **NOTE:** replace **password** with the password of the wakari user that
 was generated during server installation.
@@ -379,7 +375,6 @@ to write the configuration file:
 
 ::
 
-    PATH=/opt/wakari/wakari-gateway/bin:$PATH \
     /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
     --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
     --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \

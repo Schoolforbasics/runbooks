@@ -38,6 +38,7 @@ Software Requirements
 -  Anaconda Repo license file - given as part of the welcome packet -
    contact your sales representative or support representative if you
    cannot find your license.
+-  cron: The binstar user needs to add an entry to cron to start the server on reboot
 
 Linux System Accounts Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

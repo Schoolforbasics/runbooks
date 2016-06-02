@@ -107,7 +107,7 @@ Linux System Accounts Required
 Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:
 
-- mongod (RHEL) or mongodb (Ubuntu/Debian) - Created by the RPM or deb package
+- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package
 - elasticsearch: created by RPM or deb package
 - nginx: created by RPM or deb package
 - wakari: Created during installation of Anaconda Enterprise Notebooks
@@ -485,7 +485,7 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
 9. Click the Add Resource button to save the changes.
 
 Configure conda to use local on-site Anaconda Enterprise Repo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.
@@ -496,6 +496,7 @@ Edit the condarc to match this:
     you should remove them from the configuration.
 
 ::
+
     #/opt/wakari/anaconda/.condarc
     channels:
         - defaults

@@ -443,9 +443,6 @@ This is **required** for Anaconda Cluster integration. To serve up the
 latest Miniconda installers for each platform, download them and copy
 them to the **extras** directory:
 
-.. note::
-
-
 -  **Air Gap Installation:**
 
    ::

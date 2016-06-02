@@ -493,7 +493,8 @@ Configure conda to use local on-site Anaconda Enterprise Repo
 This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.
 
-Edit the condarc to match this:
+Edit the condarc
+^^^^^^^^^^^^^^^^
 
     **NOTE:** If there are some channels below that you haven't mirrored,
     you should remove them from the configuration.
@@ -522,6 +523,16 @@ Edit the condarc to match this:
     # Note:  You must add the "conda" subdirectory to the end
     channel_alias: http://<your Anaconda Server name:8080/conda
 
+Configure Anaconda Client
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Anaconda client lets users work with the Anaconda Repository from the command-line.
+Things like the following: search for packages, login, upload packages, etc.  The
+command below will set this value globally for all users.
+
+Run the following command filling in the proper value::
+
+    anaconda config --set url http://<your Anaconda Server>:8080/api -s
 
 **Congratulations!** You've now successfully installed and configured
 Anaconda Enterprise Notebook.

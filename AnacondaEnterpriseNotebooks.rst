@@ -101,6 +101,17 @@ installed
 
 -  git
 
+Linux System Accounts Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Linux system accounts (UIDs) are added to the system during installation.
+If your organization requires special actions, here is the list of UIDs:
+
+- mongod (RHEL) or mongodb (Ubuntu/Debian) - Created by the RPM or deb package
+- elasticsearch: created by RPM or deb package
+- nginx: created by RPM or deb package
+- wakari: Created during installation of Anaconda Enterprise Notebooks
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 

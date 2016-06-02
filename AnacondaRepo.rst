@@ -39,6 +39,15 @@ Software Requirements
    contact your sales representative or support representative if you
    cannot find your license.
 
+Linux System Accounts Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Linux system accounts (UIDs) are added to the system during installation.
+If your organization requires special actions, here is the list of UIDs:
+
+- mongod (RHEL) or mongodb (Ubuntu/Debian) - Created by the RPM or deb package
+- binstar: Created manually during installation
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 

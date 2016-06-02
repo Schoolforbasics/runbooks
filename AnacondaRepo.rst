@@ -1,3 +1,6 @@
+.. This sets up section numbering
+.. sectnum::
+
 =====================
 Anaconda Repo Runbook
 =====================
@@ -69,8 +72,6 @@ Network Requirements
   - Outbound TCP 25 (SMTP)
   - Outbound TCP 389/636 (LDAP(s))
 
-
-
 Other Requirements
 ~~~~~~~~~~~~~~~~~~
 
@@ -108,10 +109,15 @@ Air Gap media contents
 	mongodb-org-mongos-2.6.8-1.x86_64.rpm
 	mongodb-org-2.6.8-1.x86_64.rpm
 
+==============================
+Installation and Configuration
+==============================
+.. contents::
+   :local:
+   :depth: 1
 
 Anaconda Repo Installation
 --------------------------
-
 
 The following sections detail the steps required to install Anaconda
 Repo.

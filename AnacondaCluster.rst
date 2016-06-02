@@ -1,3 +1,6 @@
+.. This sets up section numbering
+.. sectnum::
+
 ========================
 Anaconda Cluster Runbook
 ========================

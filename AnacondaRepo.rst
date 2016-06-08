@@ -41,7 +41,7 @@ Software Requirements
 -  Anaconda Repo license file - given as part of the welcome packet -
    contact your sales representative or support representative if you
    cannot find your license.
--  cron: The binstar user needs to add an entry to cron to start the server on reboot
+-  cron: The anaconda-server user needs to add an entry to cron to start the server on reboot
 
 Linux System Accounts Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,7 +50,7 @@ Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:
 
 - mongod (RHEL) or mongodb (Ubuntu/Debian) - Created by the RPM or deb package
-- binstar: Created manually during installation
+- anaconda-server: Created manually during installation
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -182,13 +182,11 @@ Create Anaconda Repo administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In a terminal window, create a new user account for Anaconda Repo named
-“binstar”
+"anaconda-server"::
 
-::
+    sudo useradd -m anaconda-server
 
-    sudo useradd -m binstar
-
-**NOTE:** The binstar user is the default for installing Anaconda Repo.
+**NOTE:** The anaconda-server user is the default for installing Anaconda Repo.
 Any username can be used, however the use of the root user is
 discouraged.
 
@@ -197,27 +195,27 @@ Create Anaconda Repo directories
 
 ::
 
-    sudo mkdir -m 0770 /etc/binstar
+    sudo mkdir -m 0770 /etc/anaconda-server
     sudo mkdir -m 0770 /var/log/anaconda-server
     sudo mkdir -m 0770 -p /opt/anaconda-server/package-storage
-    sudo mkdir -m 0770 /etc/binstar/mirrors
+    sudo mkdir -m 0770 /etc/anaconda-server/mirrors
 
-Give the binstar user ownership of directories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Give the anaconda-server user ownership of directories
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    sudo chown -R binstar. /etc/binstar
-    sudo chown -R binstar. /var/log/anaconda-server
-    sudo chown -R binstar. /opt/anaconda-server/package-storage
-    sudo chown -R binstar. /etc/binstar/mirrors
+    sudo chown -R anaconda-server. /etc/anaconda-server
+    sudo chown -R anaconda-server. /var/log/anaconda-server
+    sudo chown -R anaconda-server. /opt/anaconda-server/package-storage
+    sudo chown -R anaconda-server. /etc/anaconda-server/mirrors
 
 Switch to the Anaconda Repo administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    sudo su - binstar
+    sudo su - anaconda-server
 
 Install Miniconda bootstrap version
 -----------------------------------
@@ -262,18 +260,18 @@ Accept the default location or specify an alternative:
 ::
 
     Miniconda will now be installed into this location:
-    /home/binstar/miniconda2
+    /home/anaconda-server/miniconda2
     -Press ENTER to confirm the location
     -Press CTRL-C to abort the installation
     -Or specify a different location below
-     [/home/binstar/miniconda2] >>>" [Press ENTER]
-     PREFIX=/home/binstar/miniconda2
+     [/home/anaconda-server/miniconda2] >>>" [Press ENTER]
+     PREFIX=/home/anaconda-server/miniconda2
 
-Update the binstar user's path
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Update the anaconda-server user's path
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Do you wish the installer to prepend the Miniconda install location to
-PATH in your /home/binstar/.bashrc ?
+PATH in your /home/anaconda-server/.bashrc ?
 
 ::
 
@@ -344,10 +342,10 @@ Create an initial “superuser” account for Anaconda Repo:
 
     anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
-**NOTE:** to ensure the bash shell does not process any of the
-characters in this password, limit the password to lower case letters,
-upper case letters and numbers, with no punctuation. After setup the
-password can be changed with the web interface.
+:Note: to ensure the bash shell does not process any of the
+  characters in this password, limit the password to lower case letters,
+  upper case letters and numbers, with no punctuation. After setup the
+  password can be changed with the web interface.
 
 Initialize the Anaconda Repo database:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -368,11 +366,11 @@ Configure Supervisord
 
 This step:
 
--  creates the following entry in the binstar user’s crontab:
+-  creates the following entry in the anaconda-server user’s crontab:
 
-   ``@reboot /home/binstar/miniconda/bin/supervisord``
+   ``@reboot /home/anaconda-server/miniconda/bin/supervisord``
 
--  generates the ``/home/binstar/miniconda/etc/supervisord.conf`` file
+-  generates the ``/home/anaconda-server/miniconda/etc/supervisord.conf`` file
 
 Verify the server is running:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -400,7 +398,7 @@ Mirror Installers for Miniconda
 
 Miniconda installers can be served by Anaconda Repo via the **static**
 directory located at
-**/home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.
+**/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.
 This is **required** for Anaconda Cluster integration. To serve up the
 latest Miniconda installers for each platform, download them and copy
 them to the **extras** directory:
@@ -429,7 +427,7 @@ them to the **extras** directory:
 
        # Move installers into static directory
        popd
-       cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
+       cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 
 -  **Regular Installation:**
 
@@ -455,7 +453,7 @@ them to the **extras** directory:
 
        # Move installers into static directory
        popd
-       cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
+       cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -476,7 +474,7 @@ packages locally under the "anaconda" user account.
 
    ::
 
-       vi /etc/binstar/mirrors/conda.yaml
+       vi /etc/anaconda-server/mirrors/conda.yaml
 
    Add the following:
 
@@ -489,7 +487,7 @@ packages locally under the "anaconda" user account.
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/conda.yaml
+       anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/conda.yaml
 
 -  **Regular Installation:** Mirror from Anaconda Cloud.
 
@@ -509,7 +507,7 @@ Optional: Mirror the R channel
 
    **1.** Create a mirror config file::
 
-       vi /etc/binstar/mirrors/r-channel.yaml
+       vi /etc/anaconda-server/mirrors/r-channel.yaml
 
    **2.** Add the following::
 
@@ -519,13 +517,13 @@ Optional: Mirror the R channel
    **3.** Mirror the R packages::
 
        anaconda-server-sync-conda --mirror-config \
-           /etc/binstar/mirrors/r-channel.yaml --account=r-channel
+           /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
 -  **Air Gap Installation:**
 
    **1.** Create a mirror config file::
 
-       vi /etc/binstar/mirrors/r-chanel.yaml
+       vi /etc/anaconda-server/mirrors/r-chanel.yaml
 
    **2.** Add the following::
 
@@ -535,7 +533,7 @@ Optional: Mirror the R channel
    **3.** Mirror the Anaconda Cluster Management packages::
 
        anaconda-server-sync-conda --mirror-config \
-           /etc/binstar/mirrors/r-channel.yaml --account=r-channel
+           /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
 Optional: Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -551,7 +549,7 @@ YAML file below:
 
    ::
 
-       vi /etc/binstar/mirrors/wakari.yaml
+       vi /etc/anaconda-server/mirrors/wakari.yaml
 
    **2.** Add the following:
 
@@ -566,7 +564,7 @@ YAML file below:
    ::
 
        anaconda-server-sync-conda --mirror-config \
-         /etc/binstar/mirrors/wakari.yaml --account=wakari
+         /etc/anaconda-server/mirrors/wakari.yaml --account=wakari
 
 Where **“TOKEN”** is the Anaconda NB Extensions token you should
 have received from Continuum Support.
@@ -577,7 +575,7 @@ have received from Continuum Support.
 
    ::
 
-       vi /etc/binstar/mirrors/wakari.yaml
+       vi /etc/anaconda-server/mirrors/wakari.yaml
 
    **2.** Add the following:
 
@@ -591,7 +589,7 @@ have received from Continuum Support.
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/wakari.yaml --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/wakari.yaml --account=anaconda-cluster
 
 Optional: Mirror the Anaconda Cluster Management channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -607,7 +605,7 @@ create the mirror config YAML file below:
 
    ::
 
-       vi /etc/binstar/mirrors/anaconda-cluster.yaml
+       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
    **2.** Add the following:
 
@@ -620,7 +618,7 @@ create the mirror config YAML file below:
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
+       anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
 Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should
 have received from Continuum Support.
@@ -631,7 +629,7 @@ have received from Continuum Support.
 
    ::
 
-       vi /etc/binstar/mirrors/anaconda-cluster.yaml
+       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
    **2.** Add the following:
 
@@ -645,7 +643,7 @@ have received from Continuum Support.
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -395,50 +395,6 @@ login page.
 **NOTE:** Contact your sales representative or support representative if
 you cannot find or have questions about your license.
 
-Mirror Anaconda Repo
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Now that Anaconda Repo is installed, we want to mirror packages into our
-local repository. If mirroring from Anaconda Cloud, the process will
-take hours or longer, depending on the available internet bandwidth. Use
-the ``anaconda-server-sync-conda`` command to mirror all Anaconda
-packages locally under the "anaconda" user account.
-
--  **Air Gap Installation:** Since we're mirroring from a local
-   filesystem, some additional configuration is necessary.
-
-   **1.** Create a mirror config file:
-
-
-   ::
-
-       vi /etc/binstar/mirrors/conda.yaml
-
-   Add the following:
-
-   ::
-
-       channels:
-         - file:///installer/anaconda-suite/pkgs
-
-   **2.** Mirror the Anaconda packages:
-
-   ::
-
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/conda.yaml
-
--  **Regular Installation:** Mirror from Anaconda Cloud.
-
-   ::
-
-       anaconda-server-sync-conda
-
-**NOTE:** Depending on the type of installation, this process may take
-30-90 minutes.
-
-To verify the local Anaconda Repo repo has been populated, visit
-**http://your.anaconda.server:8080/anaconda** in a browser.
-
 Mirror Installers for Miniconda
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -501,6 +457,142 @@ them to the **extras** directory:
        popd
        cp -a /tmp/extras /home/binstar/miniconda2/lib/python2.7/site-packages/binstar/static
 
+Mirror Anaconda Repo
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now that Anaconda Repo is installed, we want to mirror packages into our
+local repository. If mirroring from Anaconda Cloud, the process will
+take hours or longer, depending on the available internet bandwidth. Use
+the ``anaconda-server-sync-conda`` command to mirror all Anaconda
+packages locally under the "anaconda" user account.
+
+:Note: Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found `here <https://docs.continuum.io/anaconda-repository/mirrors-sync-configuration>`_.
+
+-  **Air Gap Installation:** Since we're mirroring from a local
+   filesystem, some additional configuration is necessary.
+
+   **1.** Create a mirror config file:
+
+
+   ::
+
+       vi /etc/binstar/mirrors/conda.yaml
+
+   Add the following:
+
+   ::
+
+       channels:
+         - file:///installer/anaconda-suite/pkgs
+
+   **2.** Mirror the Anaconda packages:
+
+   ::
+
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/conda.yaml
+
+-  **Regular Installation:** Mirror from Anaconda Cloud.
+
+   ::
+
+       anaconda-server-sync-conda
+
+:Note: Depending on the type of installation, this process may take hours.
+
+To verify the local Anaconda Repo repo has been populated, visit
+**http://your.anaconda.server:8080/anaconda** in a browser.
+
+Optional: Mirror the R channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  **Regular Installation:**
+
+   **1.** Create a mirror config file::
+
+       vi /etc/binstar/mirrors/r-channel.yaml
+
+   **2.** Add the following::
+
+       channels:
+         - https://conda.anaconda.org/r
+
+   **3.** Mirror the R packages::
+
+       anaconda-server-sync-conda --mirror-config \
+           /etc/binstar/mirrors/r-channel.yaml --account=r-channel
+
+-  **Air Gap Installation:**
+
+   **1.** Create a mirror config file::
+
+       vi /etc/binstar/mirrors/r-chanel.yaml
+
+   **2.** Add the following::
+
+       channels:
+         - file:///installer/r/pkgs
+
+   **3.** Mirror the Anaconda Cluster Management packages::
+
+       anaconda-server-sync-conda --mirror-config \
+           /etc/binstar/mirrors/r-channel.yaml --account=r-channel
+
+Optional: Mirror the Anaconda Enterprise Notebooks Channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
+the recommended method is to mirror using the “wakari” user.
+To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
+YAML file below:
+
+-  **Regular Installation:**
+
+   **1.** Create a mirror config file:
+
+   ::
+
+       vi /etc/binstar/mirrors/wakari.yaml
+
+   **2.** Add the following:
+
+   ::
+
+       channels:
+         - https://conda.anaconda.org/t/<TOKEN>/anaconda-nb-extensions
+         - https://conda.anaconda.org/wakari
+
+   **3.** Mirror the Anaconda Enterprise Notebooks packages:
+
+   ::
+
+       anaconda-server-sync-conda --mirror-config \
+         /etc/binstar/mirrors/wakari.yaml --account=wakari
+
+Where **“TOKEN”** is the Anaconda NB Extensions token you should
+have received from Continuum Support.
+
+-  **Air Gap Installation:**
+
+   **1.** Create a mirror config file:
+
+   ::
+
+       vi /etc/binstar/mirrors/wakari.yaml
+
+   **2.** Add the following:
+
+   ::
+
+       channels:
+         - file:///installer/wakari/pkgs
+         - file:///installer/anaconda-nb-extensions/pkgs
+
+   **3.** Mirror the Anaconda Enteprise Notebooks packages:
+
+   ::
+
+       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/wakari.yaml --account=anaconda-cluster
+
 Optional: Mirror the Anaconda Cluster Management channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -552,10 +644,8 @@ have received from Continuum Support.
 
    ::
 
-       anaconda-server-sync-conda --mirror-config /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
-
-**NOTE:** Ignore any license warnings. Additional mirror
-filtering/whitelisting/blacklisting options can be found here.
+       anaconda-server-sync-conda --mirror-config \
+          /etc/binstar/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

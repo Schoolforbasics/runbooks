@@ -326,14 +326,14 @@ Initialize the web server for Anaconda Repo:
 
 ::
 
-    anaconda-server-config --init
+    anaconda-server-config --init --config-file /etc/anaconda-server/config.yaml
 
 Set the Anaconda Repo package storage location:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage
+    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage --config-file /etc/anaconda-server/config.yaml
 
 Create an initial “superuser” account for Anaconda Repo:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -381,6 +381,8 @@ Verify the server is running:
 
     binstar-server RUNNING   pid 10831, uptime 0:00:05
     binstar-worker RUNNING   pid 2784, uptime 0:00:04
+    ...
+    ...
 
 Install Anaconda Repo License
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -401,7 +403,10 @@ directory located at
 **/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.
 This is **required** for Anaconda Cluster integration. To serve up the
 latest Miniconda installers for each platform, download them and copy
-them to the **extras** directory:
+them to the **extras** directory.
+
+Users will then be able to download installers at a URL that looks like the
+following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
 
 -  **Air Gap Installation:**
 

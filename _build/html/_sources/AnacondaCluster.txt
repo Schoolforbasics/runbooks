@@ -1,9 +1,9 @@
+.. This sets up section numbering
+.. sectnum::
+
 ========================
 Anaconda Cluster Runbook
 ========================
-
-.. important::
-   Beware killer rabbits!
 
 Anaconda Cluster is a resource management tool for Anaconda that allows
 users to easily create, provision, and manage bare-metal or cloud-based
@@ -23,7 +23,7 @@ instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
 The following runbook walks through the steps needed to install a basic
-Anaconda Cluster comprised of a management ""client"" machine and four
+Anaconda Cluster comprised of a management "client" machine and four
 cluster nodes:
 
 -  **Client machine:** Where the Anaconda Cluster is configured from.
@@ -57,10 +57,18 @@ Software Requirements
 
 -  RHEL/CentOS 6.7 (Other operating systems are supported, however this
    document assumes RHEL or CentOS 6.7)
--  MongoDB version 2.6
 -  Anaconda Repo Server (Anaconda Cloud or local Anaconda Repo)
 -  If using a local Anaconda Repo, Anaconda Cluster channel has been
    mirrored to **http://your.anaconda.server:8080/anaconda-cluster**
+
+Linux System Accounts Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Linux system accounts (UIDs) are added to the system during installation.
+If your organization requires special actions, here is the list of UIDs:
+
+- salt: created on cluster machines during cluster creation
+- anaconda: created on cluster machines during cluster creation
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -124,16 +132,19 @@ Anaconda Cluster is managed by one or more client machines with the
 anaconda-cluster packages installed, along with the cluster
 configuration information. The client machine orchestrates the head node
 to install packages, run commands and operational tasks on the compute
-nodes. # # ####Create an SSH keypair as the admin user
+nodes.
+
+Create an SSH keypair as the admin user
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     ssh-keygen
     Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/admin/.ssh/id_rsa): 
+    Enter file in which to save the key (/home/admin/.ssh/id_rsa):
     Created directory '/home/admin/.ssh'.
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
     Your identification has been saved in /home/admin/.ssh/id_rsa.
     Your public key has been saved in /home/admin/.ssh/id_rsa.pub.
     The key fingerprint is:
@@ -161,7 +172,7 @@ Download Miniconda
 
 ::
 
-  curl 'http://your.anaconda.server:8080/static/extras/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+  curl 'http://your.anaconda.server:8080/static/extras/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 -  **Regular Installation:**
 
@@ -190,7 +201,7 @@ Accept the default location or specify an alternative:
 ::
 
         Miniconda will now be installed into this location:
-        /home/admin/miniconda2  -Press ENTER to confirm the location 
+        /home/admin/miniconda2  -Press ENTER to confirm the location
         -Press CTRL-C to abort the installation
         -Or specify a different location below
          [/home/admin/miniconda2] >>>" [Press ENTER]
@@ -218,7 +229,7 @@ Use conda to download and install Anaconda Cluster
 --------------------------------------------------
 
 Add the anaconda-cluster and anaconda channels:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Install the Anaconda Cluster channel from
    the local Anaconda Repo server.
@@ -233,8 +244,7 @@ Add the anaconda-cluster and anaconda channels:
 
 ::
 
-      export TOKEN=<your Anaconda Cloud token>
-      conda config --add channels http://conda.anaconda.org/t/$TOKEN/anaconda-cluster
+      conda config --add channels http://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
 
 Install the anaconda-cluster packages:
 --------------------------------------
@@ -278,7 +288,7 @@ Your **~/admin/.ssh/authorized\_keys** will look something like this:
     cat ~admin/.ssh/authorized_keys
     ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRloraxLOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== admin@localhost
 
-Make sure ~/admin/.ssh/authorized\_keys has the proper permissions:
+Make sure ~/admin/.ssh/authorized_keys has the proper permissions:
 
 ::
 
@@ -326,7 +336,7 @@ content:
        machines:
            head:
        - 172.31.60.133
-           compute: 
+           compute:
        - 172.31.55.76
        - 172.31.55.77
        - 172.31.55.78
@@ -339,7 +349,10 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl:
+              - user1
+              - user2
+              - user3
 
 -  **Regular Installation:**
 
@@ -354,7 +367,7 @@ content:
        machines:
            head:
        - 172.31.60.133
-           compute: 
+           compute:
        - 172.31.55.76
        - 172.31.55.77
        - 172.31.55.78
@@ -362,7 +375,7 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl: [list of users]
 
 **Note:** More information about cluster profiles can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-profile>`__.
@@ -375,7 +388,7 @@ Add the following to ~admin/.acluster/providers.yaml:
     bare_metal:
       cloud_provider: none
       private_key: ~/.ssh/id_rsa
-      
+
 
 More information about cluster providers can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-provider>`__.
@@ -390,7 +403,7 @@ new cluster and “demo-cluster” is the name of the cluster profile (from
 
 ::
 
-    acluster create demo -p demo-cluster 
+    acluster create demo -p demo-cluster
 
     Creating cluster
     No license file found matching /home/admin/.acluster/cluster*.lic

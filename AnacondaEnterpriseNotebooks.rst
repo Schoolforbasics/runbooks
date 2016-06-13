@@ -262,9 +262,6 @@ Set Variables and Change Permissions
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
         chmod a+x wakari-*.sh                # Set installer to be executable
 
-        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
-
-
 
 Run AEN Server Installer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

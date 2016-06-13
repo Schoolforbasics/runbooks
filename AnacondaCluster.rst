@@ -172,7 +172,7 @@ Download Miniconda
 
 ::
 
-  curl 'http://your.anaconda.server:8080/static/extras/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+  curl 'http://your.anaconda.server:8080/static/extras/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 -  **Regular Installation:**
 
@@ -244,8 +244,7 @@ Add the anaconda-cluster and anaconda channels:
 
 ::
 
-      export TOKEN=<your Anaconda Cloud token>
-      conda config --add channels http://conda.anaconda.org/t/$TOKEN/anaconda-cluster
+      conda config --add channels http://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
 
 Install the anaconda-cluster packages:
 --------------------------------------
@@ -350,7 +349,10 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl:
+              - user1
+              - user2
+              - user3
 
 -  **Regular Installation:**
 
@@ -373,7 +375,7 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl: [list of users]
 
 **Note:** More information about cluster profiles can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-profile>`__.

@@ -508,22 +508,6 @@ To verify the local Anaconda Repo repo has been populated, visit
 Optional: Mirror the R channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Regular Installation:**
-
-   **1.** Create a mirror config file::
-
-       vi /etc/anaconda-server/mirrors/r-channel.yaml
-
-   **2.** Add the following::
-
-       channels:
-         - https://conda.anaconda.org/r
-
-   **3.** Mirror the R packages::
-
-       anaconda-server-sync-conda --mirror-config \
-           /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
-
 -  **Air Gap Installation:**
 
    **1.** Create a mirror config file::
@@ -540,6 +524,22 @@ Optional: Mirror the R channel
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
+-  **Regular Installation:**
+
+   **1.** Create a mirror config file::
+
+       vi /etc/anaconda-server/mirrors/r-channel.yaml
+
+   **2.** Add the following::
+
+       channels:
+         - https://conda.anaconda.org/r
+
+   **3.** Mirror the R packages::
+
+       anaconda-server-sync-conda --mirror-config \
+           /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
+
 Optional: Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -547,6 +547,29 @@ If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user.
 To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
 YAML file below:
+
+-  **Air Gap Installation:**
+
+   **1.** Create a mirror config file:
+
+   ::
+
+       vi /etc/anaconda-server/mirrors/wakari.yaml
+
+   **2.** Add the following:
+
+   ::
+
+       channels:
+         - file:///installer/wakari/pkgs
+         - file:///installer/anaconda-nb-extensions/pkgs
+
+   **3.** Mirror the Anaconda Enteprise Notebooks packages:
+
+   ::
+
+       anaconda-server-sync-conda --mirror-config \
+           /etc/anaconda-server/mirrors/wakari.yaml --account=wakari
 
 -  **Regular Installation:**
 
@@ -574,28 +597,6 @@ YAML file below:
 Where **“TOKEN”** is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
--  **Air Gap Installation:**
-
-   **1.** Create a mirror config file:
-
-   ::
-
-       vi /etc/anaconda-server/mirrors/wakari.yaml
-
-   **2.** Add the following:
-
-   ::
-
-       channels:
-         - file:///installer/wakari/pkgs
-         - file:///installer/anaconda-nb-extensions/pkgs
-
-   **3.** Mirror the Anaconda Enteprise Notebooks packages:
-
-   ::
-
-       anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/wakari.yaml --account=anaconda-cluster
-
 Optional: Mirror the Anaconda Cluster Management channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -603,30 +604,6 @@ If the local Anaconda Repo will be used by Anaconda Cluster nodes (head
 or compute), the recommended method is to mirror using an
 “anaconda-cluster” user. To mirror the Anaconda Cluster Management repo,
 create the mirror config YAML file below:
-
--  **Regular Installation:**
-
-   **1.** Create a mirror config file:
-
-   ::
-
-       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
-
-   **2.** Add the following:
-
-   ::
-
-       channels:
-         - https://conda.anaconda.org/t/<TOKEN>/anaconda-cluster
-
-   **3.** Mirror the Anaconda Cluster Management packages:
-
-   ::
-
-       anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
-
-Where **“TOKEN”** is the Anaconda Cluster Mangagement token you should
-have received from Continuum Support.
 
 -  **Air Gap Installation:**
 
@@ -642,6 +619,29 @@ have received from Continuum Support.
 
        channels:
          - file:///installer/anaconda-cluster/pkgs
+
+   **3.** Mirror the Anaconda Cluster Management packages:
+
+   ::
+
+       anaconda-server-sync-conda --mirror-config \
+          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
+          --account=anaconda-cluster
+
+-  **Regular Installation:**
+
+   **1.** Create a mirror config file:
+
+   ::
+
+       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+
+   **2.** Add the following:
+
+   ::
+
+       channels:
+         - https://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
 
    **3.** Mirror the Anaconda Cluster Management packages:
 

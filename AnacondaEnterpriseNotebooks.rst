@@ -1,3 +1,6 @@
+.. This sets up section numbering
+.. sectnum::
+
 ====================================
 Anaconda Enterprise Notebook Runbook
 ====================================
@@ -42,7 +45,7 @@ so they can be completely isolated by a firewall.
 
 
    .. image:: _static/wakari.png
-      :scale: 60 % 
+      :scale: 60 %
       :align: center
 
 Requirements
@@ -101,11 +104,22 @@ installed
 
 -  git
 
+Linux System Accounts Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Linux system accounts (UIDs) are added to the system during installation.
+If your organization requires special actions, here is the list of UIDs:
+
+- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package
+- elasticsearch: created by RPM or deb package
+- nginx: created by RPM or deb package
+- wakari: Created during installation of Anaconda Enterprise Notebooks
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  root or sudo access
--  SELinux in Permissive mode - check with ``getenforce``
+-  SELinux in Permissive or Disabled mode - check with ``getenforce``
 
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +127,7 @@ Network Requirements
 **TCP Ports**
 
 -  Server: 80
--  Gateway: 8080
+-  Gateway: 8088
 -  Compute: 5002
 
 Other Requirements
@@ -152,7 +166,6 @@ Air Gap media contents:
     wakari-compute-0.10.0-Linux-x86_64.sh
     wakari-server-0.10.0-Linux-x86_64.sh
     wakari-gateway-0.10.0-Linux-x86_64.sh
-    wakari-publisher-0.10.0-Linux-x86_64.sh
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
@@ -173,7 +186,6 @@ Publisher should be installed on the AEN Server machine.
        curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
        curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
-       curl -O $RPM_CDN/wakari-publisher-0.10.0-Linux-x86_64.sh
 
 Gather IP addresses or FQDNs
 ----------------------------
@@ -220,11 +232,11 @@ Download Prerequisite RPMs
 ::
 
        RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-       curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm 
-       curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm 
-       curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm 
-       curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm 
-       curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm 
+       curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm
+       curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+       curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+       curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+       curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
        curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
        curl -O $RPM_CDN/elasticsearch-1.7.2.noarch.rpm
        curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
@@ -236,7 +248,7 @@ Install Prerequisite RPMs
 
     sudo yum install -y *.rpm
     sudo /etc/init.d/mongod start
-    sudo /etc/init.d/elasticsearch start
+    sudo /etc/init.d/elasticsearch stop
     sudo chkconfig --add elasticsearch
 
 Run the AEN Server Installer
@@ -250,9 +262,6 @@ Set Variables and Change Permissions
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
         chmod a+x wakari-*.sh                # Set installer to be executable
 
-        sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER  
-        
-        
 
 Run AEN Server Installer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -263,7 +272,7 @@ Run AEN Server Installer
         <license text>
         ...
         ...
-        
+
         PREFIX=/opt/wakari/wakari-server
         Logging to /tmp/wakari_server.log
         Checking server name
@@ -274,18 +283,18 @@ Run AEN Server Installer
         Checking server name
         Loading config from /opt/wakari/wakari-server/etc/wakari/config.json
         Loading config from /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
-        
-        
+
+
         ===================================
-        
+
         Created password '<RANDOM_PASSWORD>' for user 'wakari'
-        
+
         ===================================
-        
-        
+
+
         Starting Wakari daemons...
         installation finished.
-        
+
 
 After successfully completing the installation script, the installer
 will create the administrator account (wakari user) and assign it a
@@ -299,14 +308,14 @@ password:
 is also available in the installation log file found at
 ``/tmp/wakari_server.log``
 
-Restart ElasticSearch
+Start ElasticSearch
 ^^^^^^^^^^^^^^^^^^^^^
 
-Restart elasticsearch to read the new config file
+Start elasticsearch to read the new config file
 
 ::
 
-    sudo service elasticsearch restart
+    sudo service elasticsearch start
 
 
 Test the AEN Server install
@@ -338,7 +347,7 @@ Set Variables and Change Permissions
 ::
 
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        export AEN_GATEWAY_PORT=8080
+        export AEN_GATEWAY_PORT=8088
         export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
         chmod a+x wakari-*.sh                # Set installer to be executable
 
@@ -351,47 +360,35 @@ Run Wakari Gateway Installer
         <license text>
         ...
         ...
-        
+
         PREFIX=/opt/wakari/wakari-gateway
         Logging to /tmp/wakari_gateway.log
         ...
         ...
         Checking server name
         Please restart the Gateway after running the following command to connect this Gateway to the AEN Server
-        
-        PATH=/opt/wakari/wakari-gateway/bin:$PATH \
-        /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-        --server http://1.1.1.1 --host 1.1.1.2 --port 8080 --name Gateway \
-        --protocol http --summary Gateway --username wakari --password password
-        
+
+        ...
 
 **NOTE:** replace **password** with the password of the wakari user that
 was generated during server installation.
-
-Start the AEN Gateway
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-        sudo service wakari-gateway start
 
 Register the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The AEN Gateway needs to register with the AEN Server. This needs
 to be authenticated, so the wakari user’s credentials created during the
-AEN Server install need to be used. **This needs to be run as root**
+AEN Server install need to be used. **This needs to be run as sudo or root**
 to write the configuration file:
 ``/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json``
 
 ::
 
-    PATH=/opt/wakari/wakari-gateway/bin:$PATH \
     /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
-    --server http://$WAKARI_SERVER --host $WAKARI_GATEWAY \
-    --port $WAKARI_GATEWAY_PORT --name Gateway --protocol http \
+    --server http://$AEN_SERVER --host $AEN_GATEWAY \
+    --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
     --summary Gateway --username wakari \
-    --password '<USE PASSWORD SET ABOVE>'   
+    --password '<USE PASSWORD SET ABOVE>'
 
 Ensure Proper Permissions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -400,12 +397,12 @@ Ensure Proper Permissions
 
     sudo chown wakari /opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json
 
-Restart the gateway to load the new configuration file
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+start the gateway
+^^^^^^^^^^^^^^^^^
 
 ::
 
-    sudo service wakari-gateway restart
+    sudo service wakari-gateway start
 
 **NOTE:** Ignore any errors about missing /lib/lsb/init-functions
 
@@ -417,7 +414,7 @@ Verify the AEN Gateway has Registered
 2. Click the Admin link in the toolbar
 
    .. image:: _static/admin-menu.png
-      :scale: 40 % 
+      :scale: 40 %
 
 3. Click the Datacenters sub­section and then click your datacenter:
 
@@ -486,6 +483,53 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
 
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes.
+
+Configure conda to use local on-site Anaconda Enterprise Repo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
+Enterprise Repository server instead of Anaconda.org.
+
+Edit the condarc
+^^^^^^^^^^^^^^^^
+
+    **NOTE:** If there are some channels below that you haven't mirrored,
+    you should remove them from the configuration.
+
+::
+
+    #/opt/wakari/anaconda/.condarc
+    channels:
+        - defaults
+
+    create_default_packages:
+        - anaconda-client
+        - python
+        - ipython-we
+        - pip
+
+    # Default channels is needed for when users override the system .condarc
+    # with ~/.condarc.  This ensures that "defaults" maps to your Anaconda Server and not
+    # repo.continuum.io
+    default_channels:
+        - http://<your Anaconda Server name:8080/conda/anaconda
+        - http://<your Anaconda Server name:8080/conda/wakari
+        - http://<your Anaconda Server name:8080/conda/anaconda-cluster
+        - http://<your Anaconda Server name:8080/conda/r-channel
+
+    # Note:  You must add the "conda" subdirectory to the end
+    channel_alias: http://<your Anaconda Server name:8080/conda
+
+Configure Anaconda Client
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Anaconda client lets users work with the Anaconda Repository from the command-line.
+Things like the following: search for packages, login, upload packages, etc.  The
+command below will set this value globally for all users.
+
+Run the following command filling in the proper value::
+
+    anaconda config --set url http://<your Anaconda Server>:8080/api -s
 
 **Congratulations!** You've now successfully installed and configured
 Anaconda Enterprise Notebook.

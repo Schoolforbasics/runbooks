@@ -1,3 +1,6 @@
+.. This sets up section numbering
+.. sectnum::
+
 ========================
 Anaconda Cluster Runbook
 ========================
@@ -57,6 +60,15 @@ Software Requirements
 -  Anaconda Repo Server (Anaconda Cloud or local Anaconda Repo)
 -  If using a local Anaconda Repo, Anaconda Cluster channel has been
    mirrored to **http://your.anaconda.server:8080/anaconda-cluster**
+
+Linux System Accounts Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Linux system accounts (UIDs) are added to the system during installation.
+If your organization requires special actions, here is the list of UIDs:
+
+- salt: created on cluster machines during cluster creation
+- anaconda: created on cluster machines during cluster creation
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -129,10 +141,10 @@ Create an SSH keypair as the admin user
 
     ssh-keygen
     Generating public/private rsa key pair.
-    Enter file in which to save the key (/home/admin/.ssh/id_rsa): 
+    Enter file in which to save the key (/home/admin/.ssh/id_rsa):
     Created directory '/home/admin/.ssh'.
-    Enter passphrase (empty for no passphrase): 
-    Enter same passphrase again: 
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
     Your identification has been saved in /home/admin/.ssh/id_rsa.
     Your public key has been saved in /home/admin/.ssh/id_rsa.pub.
     The key fingerprint is:
@@ -160,7 +172,7 @@ Download Miniconda
 
 ::
 
-  curl 'http://your.anaconda.server:8080/static/extras/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+  curl 'http://your.anaconda.server:8080/static/extras/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 -  **Regular Installation:**
 
@@ -189,7 +201,7 @@ Accept the default location or specify an alternative:
 ::
 
         Miniconda will now be installed into this location:
-        /home/admin/miniconda2  -Press ENTER to confirm the location 
+        /home/admin/miniconda2  -Press ENTER to confirm the location
         -Press CTRL-C to abort the installation
         -Or specify a different location below
          [/home/admin/miniconda2] >>>" [Press ENTER]
@@ -232,8 +244,7 @@ Add the anaconda-cluster and anaconda channels:
 
 ::
 
-      export TOKEN=<your Anaconda Cloud token>
-      conda config --add channels http://conda.anaconda.org/t/$TOKEN/anaconda-cluster
+      conda config --add channels http://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
 
 Install the anaconda-cluster packages:
 --------------------------------------
@@ -325,7 +336,7 @@ content:
        machines:
            head:
        - 172.31.60.133
-           compute: 
+           compute:
        - 172.31.55.76
        - 172.31.55.77
        - 172.31.55.78
@@ -338,7 +349,10 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl:
+              - user1
+              - user2
+              - user3
 
 -  **Regular Installation:**
 
@@ -353,7 +367,7 @@ content:
        machines:
            head:
        - 172.31.60.133
-           compute: 
+           compute:
        - 172.31.55.76
        - 172.31.55.77
        - 172.31.55.78
@@ -361,7 +375,7 @@ content:
         - conda:
             install_prefix: /opt/anaconda
             conda_sh: false
-            conda_acl: true
+            conda_acl: [list of users]
 
 **Note:** More information about cluster profiles can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-profile>`__.
@@ -374,7 +388,7 @@ Add the following to ~admin/.acluster/providers.yaml:
     bare_metal:
       cloud_provider: none
       private_key: ~/.ssh/id_rsa
-      
+
 
 More information about cluster providers can be found
 `here <https://docs.continuum.io/anaconda-cluster/config-provider>`__.
@@ -389,7 +403,7 @@ new cluster and “demo-cluster” is the name of the cluster profile (from
 
 ::
 
-    acluster create demo -p demo-cluster 
+    acluster create demo -p demo-cluster
 
     Creating cluster
     No license file found matching /home/admin/.acluster/cluster*.lic

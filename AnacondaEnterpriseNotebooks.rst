@@ -378,7 +378,7 @@ Register the AEN Gateway
 
 The AEN Gateway needs to register with the AEN Server. This needs
 to be authenticated, so the wakari user’s credentials created during the
-AEN Server install need to be used. **This needs to be run as root**
+AEN Server install need to be used. **This needs to be run as sudo or root**
 to write the configuration file:
 ``/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json``
 

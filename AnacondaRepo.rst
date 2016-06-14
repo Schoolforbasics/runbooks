@@ -432,7 +432,8 @@ following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
 
        # Move installers into static directory
        popd
-       cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+       cp -a /tmp/extras \
+         /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 
 -  **Regular Installation:**
 
@@ -648,7 +649,8 @@ create the mirror config YAML file below:
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-cluster.yaml --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
+          --account=anaconda-cluster
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

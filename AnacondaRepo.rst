@@ -5,6 +5,8 @@
 Anaconda Repo Runbook
 =====================
 
+* Version: |version| | |today|
+
 This following runbook walks through the steps needed to install
 Anaconda Repo. The runbook is designed for two audiences: those who have
 direct access to the internet for installation and those where such

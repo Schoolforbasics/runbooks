@@ -4,6 +4,7 @@
 ========================
 Anaconda Cluster Runbook
 ========================
+* Version: |version| | |today|
 
 Anaconda Cluster is a resource management tool for Anaconda that allows
 users to easily create, provision, and manage bare-metal or cloud-based

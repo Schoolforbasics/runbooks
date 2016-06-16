@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1   Anaconda Repo Runbook &mdash; Continuum Runbooks 1.1 documentation</title>
+    <title>1   Anaconda Repo Runbook &mdash; Continuum Runbooks 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Continuum Runbooks 1.1 documentation" href="index.html" />
+    <link rel="top" title="Continuum Runbooks 1.2 documentation" href="index.html" />
     <link rel="next" title="1   Anaconda Cluster Runbook" href="AnacondaCluster.html" />
     <link rel="prev" title="Continuum Analytics’ Implementation Runbooks" href="index.html" />
 <meta charset='utf-8'>
@@ -47,6 +47,9 @@
       
   <div class="section" id="anaconda-repo-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repo Runbook<a class="headerlink" href="#anaconda-repo-runbook" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Version: 1.2 | Jun 14, 2016</li>
+</ul>
 <p>This following runbook walks through the steps needed to install
 Anaconda Repo. The runbook is designed for two audiences: those who have
 direct access to the internet for installation and those where such
@@ -452,7 +455,8 @@ done
 
 # Move installers into static directory
 popd
-cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+cp -a /tmp/extras \
+  /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 </pre></div>
 </div>
 </li>
@@ -650,7 +654,8 @@ create the mirror config YAML file below:</p>
 </div>
 <p><strong>3.</strong> Mirror the Anaconda Cluster Management packages:</p>
 <div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> \
-   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> \
+   <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
 </pre></div>
 </div>
 </li>

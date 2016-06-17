@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1   Anaconda Enterprise Notebook Runbook &mdash; Continuum Runbooks 1.1 documentation</title>
+    <title>1   Anaconda Enterprise Notebook Runbook &mdash; Continuum Runbooks 1.2.bkreider/versions documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.1',
+        VERSION:     '1.2.bkreider/versions',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Continuum Runbooks 1.1 documentation" href="index.html" />
+    <link rel="top" title="Continuum Runbooks 1.2.bkreider/versions documentation" href="index.html" />
     <link rel="prev" title="1   Anaconda Cluster Runbook" href="AnacondaCluster.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -46,6 +46,9 @@
       
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Version: 1.2.bkreider/versions | Jun 16, 2016</li>
+</ul>
 <p>Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
 Notebooks is a ready-to-use, powerful, fully-configured Python analytics
@@ -182,7 +185,7 @@ should follow <strong>Regular Installation</strong> instructions.</p>
 <p>This document assumes that the Air Gap media is located at /installer on
 the server where the software is being installed.</p>
 <p>Air Gap media contents:</p>
-<div class="highlight-default"><div class="highlight"><pre><span class="o">/</span><span class="n">installer</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">installer</span>
 <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
@@ -206,7 +209,7 @@ Publisher should be installed on the AEN Server machine.</p>
 <li><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media</li>
 <li><strong>Regular Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
 curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
 curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
 curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
@@ -255,7 +258,7 @@ where admins can manage the system.</p>
 <li><strong>Air Gap Installation:</strong> Copy RPMs from the Air Gap media</li>
 <li><strong>Regular Installation:</strong></li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
+<div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
 curl -O $RPM_CDN/nginx-1.6.2-1.el6.ngx.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
 curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
@@ -269,7 +272,7 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 </div>
 <div class="section" id="install-prerequisite-rpms">
 <h4>1.4.1.2&nbsp;&nbsp;&nbsp;Install Prerequisite RPMs<a class="headerlink" href="#install-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">*.</span><span class="n">rpm</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">*.</span><span class="n">rpm</span>
 <span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mongod</span> <span class="n">start</span>
 <span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">elasticsearch</span> <span class="n">stop</span>
 <span class="n">sudo</span> <span class="n">chkconfig</span> <span class="o">--</span><span class="n">add</span> <span class="n">elasticsearch</span>
@@ -281,14 +284,14 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 <h3>1.4.2&nbsp;&nbsp;&nbsp;Run the AEN Server Installer<a class="headerlink" href="#run-the-aen-server-installer" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="set-variables-and-change-permissions">
 <h4>1.4.2.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#set-variables-and-change-permissions" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-server-installer">
 <h4>1.4.2.2&nbsp;&nbsp;&nbsp;Run AEN Server Installer<a class="headerlink" href="#run-aen-server-installer" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre>sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -319,7 +322,7 @@ installation finished.
 <p>After successfully completing the installation script, the installer
 will create the administrator account (wakari user) and assign it a
 password:</p>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">Created</span> <span class="n">password</span> <span class="s1">&#39;&lt;RANDOM_PASSWORD&gt;&#39;</span> <span class="k">for</span> <span class="n">user</span> <span class="s1">&#39;wakari&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Created</span> <span class="n">password</span> <span class="s1">&#39;&lt;RANDOM_PASSWORD&gt;&#39;</span> <span class="k">for</span> <span class="n">user</span> <span class="s1">&#39;wakari&#39;</span>
 </pre></div>
 </div>
 <p><strong>Record this password.</strong> It will be needed in the following steps. It
@@ -329,7 +332,7 @@ is also available in the installation log file found at
 <div class="section" id="start-elasticsearch">
 <h4>1.4.2.3&nbsp;&nbsp;&nbsp;Start ElasticSearch<a class="headerlink" href="#start-elasticsearch" title="Permalink to this headline">¶</a></h4>
 <p>Start elasticsearch to read the new config file</p>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">elasticsearch</span> <span class="n">start</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">elasticsearch</span> <span class="n">start</span>
 </pre></div>
 </div>
 </div>
@@ -354,7 +357,7 @@ their project. Users will not notice this component as it automatically
 routes them.</p>
 <div class="section" id="id1">
 <h3>1.5.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8088</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span>  <span class="c1"># will be needed shortly</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
@@ -363,7 +366,7 @@ routes them.</p>
 </div>
 <div class="section" id="run-wakari-gateway-installer">
 <h3>1.5.2&nbsp;&nbsp;&nbsp;Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre>sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -388,7 +391,7 @@ to be authenticated, so the wakari user’s credentials created during the
 AEN Server install need to be used. <strong>This needs to be run as sudo or root</strong>
 to write the configuration file:
 <code class="docutils literal"><span class="pre">/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre>/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+<div class="highlight-default"><div class="highlight"><pre><span></span>/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
 --server http://$AEN_SERVER --host $AEN_GATEWAY \
 --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
 --summary Gateway --username wakari \
@@ -397,13 +400,13 @@ to write the configuration file:
 </div>
 <div class="section" id="ensure-proper-permissions">
 <h4>1.5.3.1&nbsp;&nbsp;&nbsp;Ensure Proper Permissions<a class="headerlink" href="#ensure-proper-permissions" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">chown</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="start-the-gateway">
 <h4>1.5.3.2&nbsp;&nbsp;&nbsp;start the gateway<a class="headerlink" href="#start-the-gateway" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">start</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">start</span>
 </pre></div>
 </div>
 <p><strong>NOTE:</strong> Ignore any errors about missing /lib/lsb/init-functions</p>
@@ -436,14 +439,14 @@ capacity. Projects can be created on individual compute nodes to spread
 the load.</p>
 <div class="section" id="id2">
 <h3>1.6.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-compute-installer">
 <h3>1.6.2&nbsp;&nbsp;&nbsp;Run AEN Compute Installer<a class="headerlink" href="#run-aen-compute-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre>sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 ...
 ...
 PREFIX=/opt/wakari/wakari-compute
@@ -497,7 +500,7 @@ Enterprise Repository server instead of Anaconda.org.</p>
 <blockquote>
 <div><strong>NOTE:</strong> If there are some channels below that you haven&#8217;t mirrored,
 you should remove them from the configuration.</div></blockquote>
-<div class="highlight-default"><div class="highlight"><pre><span class="c1">#/opt/wakari/anaconda/.condarc</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#/opt/wakari/anaconda/.condarc</span>
 <span class="n">channels</span><span class="p">:</span>
     <span class="o">-</span> <span class="n">defaults</span>
 
@@ -527,7 +530,7 @@ you should remove them from the configuration.</div></blockquote>
 Things like the following: search for packages, login, upload packages, etc.  The
 command below will set this value globally for all users.</p>
 <p>Run the following command filling in the proper value:</p>
-<div class="highlight-default"><div class="highlight"><pre><span class="n">anaconda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">your</span> <span class="n">Anaconda</span> <span class="n">Server</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">api</span> <span class="o">-</span><span class="n">s</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">your</span> <span class="n">Anaconda</span> <span class="n">Server</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">api</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
 <p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured

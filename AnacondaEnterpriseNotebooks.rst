@@ -4,6 +4,7 @@
 ====================================
 Anaconda Enterprise Notebook Runbook
 ====================================
+* Version: |release| | |today|
 
 Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise

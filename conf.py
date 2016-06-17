@@ -70,7 +70,7 @@ def get_git_branch():
 
 # The full version, including alpha/beta/rc tags.
 git_branch = get_git_branch()
-if git_branch == "master":
+if git_branch in ["master", "HEAD"]:
     release = version 
 else:
     release = "%s.%s" % (version, git_branch)

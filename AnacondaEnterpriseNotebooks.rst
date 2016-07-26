@@ -385,7 +385,7 @@ to write the configuration file:
 
 ::
 
-    /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+    sudo /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
     --server http://$AEN_SERVER --host $AEN_GATEWAY \
     --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
     --summary Gateway --username wakari \

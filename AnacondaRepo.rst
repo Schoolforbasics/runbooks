@@ -94,22 +94,26 @@ should follow **Regular Installation** instructions.
 Air Gap Media
 ~~~~~~~~~~~~~
 
-This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.
+This document assumes that the Air Gap media is available on
+the target server at $INSTALLER_PATH where the software is being installed. 
+
+**NOTE:** The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed
+below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory.
+
 
 Air Gap media contents
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-	/installer
-	___ anaconda-suite
-	    ___ pkgs
-	mongodb-org-tools-2.6.8-1.x86_64.rpm
-	mongodb-org-shell-2.6.8-1.x86_64.rpm
-	mongodb-org-server-2.6.8-1.x86_64.rpm
-	mongodb-org-mongos-2.6.8-1.x86_64.rpm
-	mongodb-org-2.6.8-1.x86_64.rpm
+  $INSTALLER_PATH
+  ___ anaconda-suite
+      ___ pkgs
+  mongodb-org-tools-2.6.8-1.x86_64.rpm
+  mongodb-org-shell-2.6.8-1.x86_64.rpm
+  mongodb-org-server-2.6.8-1.x86_64.rpm
+  mongodb-org-mongos-2.6.8-1.x86_64.rpm
+  mongodb-org-2.6.8-1.x86_64.rpm
 
 ==============================
 Installation and Configuration
@@ -150,7 +154,7 @@ Install MongoDB packages
 
 ::
 
-    sudo yum install -y /installer/mongodb-org*
+    sudo yum install -y $INSTALLER_PATH/mongodb-org*
 
 -  **Regular Installation:**
 
@@ -239,7 +243,7 @@ Run the Miniconda.sh installer script
 
 ::
 
-	bash /installer/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
+  bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
 
 -  **Regular Installation:**
 
@@ -297,7 +301,7 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
 
 ::
 
-       conda config --add channels  file:///installer/anaconda-suite/pkgs/
+       conda config --add channels  file://$INSTALLER_PATH/anaconda-suite/pkgs/
        conda config --remove channels defaults --force
 
 -  **Regular Installation:** Add the channels from Anaconda Cloud.
@@ -417,7 +421,7 @@ following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
        # miniconda installers
        mkdir -p /tmp/extras
        pushd /tmp/extras
-       URL="file:///installer/anaconda-suite/miniconda/"
+       URL="file://$INSTALLER_PATH/anaconda-suite/miniconda/"
        versions="Miniconda3-latest-Linux-x86_64.sh \
        Miniconda3-latest-MacOSX-x86_64.sh \
        Miniconda3-latest-Windows-x86.exe \
@@ -489,7 +493,7 @@ packages locally under the "anaconda" user account.
    ::
 
        channels:
-         - file:///installer/anaconda-suite/pkgs
+         - file://$INSTALLER_PATH/anaconda-suite/pkgs
 
    **2.** Mirror the Anaconda packages:
 
@@ -520,7 +524,7 @@ Optional: Mirror the R channel
    **2.** Add the following::
 
        channels:
-         - file:///installer/r/pkgs
+         - file://$INSTALLER_PATH/r/pkgs
 
    **3.** Mirror the Anaconda Cluster Management packages::
 
@@ -564,8 +568,8 @@ YAML file below:
    ::
 
        channels:
-         - file:///installer/wakari/pkgs
-         - file:///installer/anaconda-nb-extensions/pkgs
+         - file://$INSTALLER_PATH/wakari/pkgs
+         - file://$INSTALLER_PATH/anaconda-nb-extensions/pkgs
 
    **3.** Mirror the Anaconda Enteprise Notebooks packages:
 
@@ -621,7 +625,7 @@ create the mirror config YAML file below:
    ::
 
        channels:
-         - file:///installer/anaconda-cluster/pkgs
+         - file://$INSTALLER_PATH/anaconda-cluster/pkgs
 
    **3.** Mirror the Anaconda Cluster Management packages:
 
@@ -653,6 +657,11 @@ create the mirror config YAML file below:
        anaconda-server-sync-conda --mirror-config \
           /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
           --account=anaconda-cluster
+
+Optional: Assemble installer resources manually
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+** Describe the process of adding platform tarballs to an $INSTALLER_PATH **
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

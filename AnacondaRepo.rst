@@ -600,13 +600,13 @@ YAML file below:
 Where **“TOKEN”** is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
-Optional: Mirror the Anaconda Cluster Management channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional: Mirror the Anaconda Adam channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the local Anaconda Repo will be used by Anaconda Cluster nodes (head
-or compute), the recommended method is to mirror using an
-“anaconda-cluster” user. To mirror the Anaconda Cluster Management repo,
-create the mirror config YAML file below:
+If the local Anaconda Repo will be used by Anaconda Adam, the
+recommended method is to mirror using an “anaconda-adam” user.
+To mirror the Anaconda Adam channel, create the mirror config
+YAML file below:
 
 -  **Air Gap Installation:**
 
@@ -614,22 +614,22 @@ create the mirror config YAML file below:
 
    ::
 
-       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+       vi /etc/anaconda-server/mirrors/anaconda-adam.yaml
 
    **2.** Add the following:
 
    ::
 
        channels:
-         - file:///installer/anaconda-cluster/pkgs
+         - file:///installer/anaconda-adam/pkgs
 
    **3.** Mirror the Anaconda Cluster Management packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
-          --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
+          --account=anaconda-adam
 
 -  **Regular Installation:**
 
@@ -637,22 +637,22 @@ create the mirror config YAML file below:
 
    ::
 
-       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+       vi /etc/anaconda-server/mirrors/anaconda-adam.yaml
 
    **2.** Add the following:
 
    ::
 
        channels:
-         - https://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
+         - https://conda.anaconda.org/anaconda-adam
 
-   **3.** Mirror the Anaconda Cluster Management packages:
+   **3.** Mirror the Anaconda Adam packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
-          --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
+          --account=anaconda-adam
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

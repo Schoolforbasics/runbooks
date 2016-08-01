@@ -408,7 +408,7 @@ latest Miniconda installers for each platform, download them and copy
 them to the **extras** directory.
 
 Users will then be able to download installers at a URL that looks like the
-following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
+following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.sh
 
 -  **Air Gap Installation:**
 

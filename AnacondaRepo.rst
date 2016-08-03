@@ -13,8 +13,19 @@ direct access to the internet for installation and those where such
 access is not available or restricted for security reasons. For these
 restricted a.k.a. "Air Gap" environments, Continuum ships the entire
 Anaconda product suite on portable storage medium or as a downloadable
-TAR archive. Where necessary, additional instructions for Air Gap
-environments are noted. If you have any questions about the
+TAR archive. Additionally, Continuum provides a set of Air Gap TAR archives for
+those environments only needing certain platform architectures,
+such as 64-Bit Linux, 32-Bit Linux, etc. 
+With the exception of 64-Bit Linux, These platform-based archives include
+all of the available packages for that platform.
+The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
+neecessary to install Anaconda Repo.
+
+Additional platforms can be added by downloading the corresponding
+TAR archive and importing it to the local Anaconda Repo. See the section titled "Optional: Prepare Environment for Platform-based Installation" below to prepare your environment before starting the Anaconda Repo Installation. 
+
+Where necessary, additional instructions for Air Gap
+environments are noted throughout this document. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
@@ -736,3 +747,10 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
+
+Optional: Prepare Environment for Platform-based Installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost identical to the full install as described above, however there are a few things to note:
+
+- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
+- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.

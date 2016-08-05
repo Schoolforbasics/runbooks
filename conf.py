@@ -60,7 +60,7 @@ author = u'Implementation Engineering'
 # built documents.
 #
 # The short X.Y version.
-version = u'1.2'
+version = u'1.3'
 
 def get_git_branch():
     """get the current branch"""
@@ -370,7 +370,7 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
-#pdf_documents = [('index', u'AnacondaRepo', u'Anaconda Repo Runbook', u'Continuum Analytics'),]
+#pdf_documents = [('index', u'AnacondaRepository', u'Anaconda Repo Runbook', u'Continuum Analytics'),]
 #pdf_documents = [('index', u'rst2pdf', u'Continuum Analytics'),]
 
 # index - master document

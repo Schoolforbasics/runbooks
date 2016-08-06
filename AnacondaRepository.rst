@@ -111,13 +111,6 @@ Air Gap media contents
 	mongodb-org-mongos-2.6.8-1.x86_64.rpm
 	mongodb-org-2.6.8-1.x86_64.rpm
 
-==============================
-Installation and Configuration
-==============================
-.. contents::
-   :local:
-   :depth: 1
-
 Anaconda Repository Installation
 --------------------------------
 
@@ -335,14 +328,18 @@ Set the Anaconda Repository package storage location:
 
 ::
 
-    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage --config-file /etc/anaconda-server/config.yaml
+    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage \
+                           --config-file /etc/anaconda-server/config.yaml
 
 Create an initial “superuser” account for Anaconda Repository:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" \
+                                --password "yourpassword" \
+                                --email "your@email.com" \
+                                --superuser
 
 :Note: to ensure the bash shell does not process any of the
   characters in this password, limit the password to lower case letters,
@@ -461,7 +458,8 @@ following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.
 
        # Move installers into static directory
        popd
-       cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+       cp -a /tmp/extras \
+            /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 
 Mirror Anaconda Repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -670,19 +668,23 @@ inaccessible.
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repository #" -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -j ACCEPT \
+                  -m comment --comment "# Anaconda Repository #" 
 
 **Allow inbound access to tcp port 8080:**
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repository #" -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -j ACCEPT \
+                  -m comment --comment "# Anaconda Repository #"
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ::
 
-    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repository #" -j REDIRECT --to-port 8080
+    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 \
+                  -j REDIRECT --to-port 8080 \
+                  -m comment --comment "# Anaconda Repository #"
 
 **Display the current iptables rules:**
 
@@ -690,21 +692,21 @@ inaccessible.
 
     sudo iptables -L -n
     Chain INPUT (policy ACCEPT)
-    target     prot opt source               destination
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 # Anaconda Repository #
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repository #
-    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
-    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
-    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
-    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+    target     prot opt source     destination
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0     tcp dpt:8080 # Anaconda Repository #
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0     tcp dpt:80 # Anaconda Repository #
+    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0     state RELATED,ESTABLISHED
+    ACCEPT     icmp --  0.0.0.0/0  0.0.0.0/0
+    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0     state NEW tcp dpt:22
+    REJECT     all  --  0.0.0.0/0  0.0.0.0/0     reject-with icmp-host-prohibited
 
     Chain FORWARD (policy ACCEPT)
-    target     prot opt source               destination
-    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+    target     prot opt source     destination
+    REJECT     all  --  0.0.0.0/0  0.0.0.0/0     reject-with icmp-host-prohibited
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source     destination
 
 **NOTE:** the PREROUTING (nat) iptables chain is not displayed by
 default; to show it, use:
@@ -713,14 +715,14 @@ default; to show it, use:
 
     sudo iptables -L -n -t nat
     Chain PREROUTING (policy ACCEPT)
-    target     prot opt source               destination
-    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repository # redir ports 8080
+    target     prot opt source        destination
+    REDIRECT   tcp  --  0.0.0.0/0     0.0.0.0/0     tcp dpt:80 # Anaconda Repository # redir ports 8080
 
     Chain POSTROUTING (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source        destination
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source        destination
 
 Write the running iptables configuration to **/etc/sysconfig/iptables:**
 

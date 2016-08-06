@@ -367,8 +367,8 @@ Run Wakari Gateway Installer
         ...
         ...
         Checking server name
-        Please restart the Gateway after running the following command to connect this Gateway to the AEN Server
-
+        Please restart the Gateway after running the following command
+        to connect this Gateway to the AEN Server
         ...
 
 **NOTE:** replace **password** with the password of the wakari user that
@@ -534,3 +534,54 @@ Run the following command filling in the proper value::
 
 **Congratulations!** You've now successfully installed and configured
 Anaconda Enterprise Notebook.
+
+PAM Authentication (optional)
+-----------------------------
+
+This documents the process to configure the preliminary PAM authentication mechanism for AEN 4.0.0.
+
+1. remove `wk-server` from the current `supervisord` set:
+
+    ::
+
+        /opt/wakari/wakari-server/bin/supervisorctl stop wk-server
+        mv /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf      \
+        /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf.SUSPEND \
+        /opt/wakari/wakari-server/bin/supervisorctl reload
+
+2. install the new package:
+
+    ::
+
+        /opt/wakari/miniconda/bin/conda install \
+            -p /opt/wakari/wakari-server \
+            /path/to/wakari-server-1.10.9-0.tar.bz2
+
+3. modify the configuration to utilize the new auth method:
+
+    :: 
+        vim /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
+
+    change the entry for the line `"accounts":` to read instead:
+
+    ::
+
+        "accounts": "wk_server.plugins.accounts.pam",
+
+4. connect the new `initd` script:
+
+    ::
+
+        cd /etc/init.d
+        ln -s /opt/wakari/wakari-server/etc/init.d/wakari-server-root
+        chkconfig --add wakari-server-root
+        service wakari-server-root start
+        service wakari-server-root status
+        ps aux | grep wk-server
+
+5. restart/check the `worker` service is running (and only the `worker`) under the `supervisord` watchdog:
+
+    ::
+
+        /opt/wakari/wakari-server/bin/supervisorctl start all
+        /opt/wakari/wakari-server/bin/supervisorctl status

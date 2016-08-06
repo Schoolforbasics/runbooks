@@ -1,0 +1,116 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Anaconda Repository Runbook}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Requirements}{1}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Hardware Requirements}{1}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Software Requirements}{2}{subsection.1.1.2}
+\contentsline {subsection}{\numberline {1.1.3}Linux System Accounts Required}{2}{subsection.1.1.3}
+\contentsline {subsection}{\numberline {1.1.4}Security Requirements}{2}{subsection.1.1.4}
+\contentsline {subsection}{\numberline {1.1.5}Network Requirements}{2}{subsection.1.1.5}
+\contentsline {subsection}{\numberline {1.1.6}Other Requirements}{2}{subsection.1.1.6}
+\contentsline {subsection}{\numberline {1.1.7}Air Gap vs. Regular Installation}{3}{subsection.1.1.7}
+\contentsline {subsection}{\numberline {1.1.8}Air Gap Media}{3}{subsection.1.1.8}
+\contentsline {subsection}{\numberline {1.1.9}Air Gap media contents}{3}{subsection.1.1.9}
+\contentsline {section}{\numberline {1.2}Anaconda Repository Installation}{3}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Install MongoDB}{3}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Download MongoDB packages}{3}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Install MongoDB packages}{3}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Start mongodb}{4}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}Verify mongod is running}{4}{subsection.1.2.5}
+\contentsline {section}{\numberline {1.3}Configure Anaconda Repository}{4}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}Create Anaconda Repository administrator account}{4}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Create Anaconda Repository directories}{4}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}Give the anaconda-server user ownership of directories}{4}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}Switch to the Anaconda Repository administrator account}{4}{subsection.1.3.4}
+\contentsline {section}{\numberline {1.4}Install Miniconda bootstrap version}{5}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}Fetch the download script using curl}{5}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}Run the Miniconda.sh installer script}{5}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}Review and accept the license terms}{5}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {1.4.4}Accept the default location or specify an alternative:}{5}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {1.4.5}Update the anaconda-server user's path}{5}{subsection.1.4.5}
+\contentsline {subsection}{\numberline {1.4.6}For the new path changes to take effect, \IeC {\textquotedblleft }source\IeC {\textquotedblright } your .bashrc}{5}{subsection.1.4.6}
+\contentsline {section}{\numberline {1.5}Install Anaconda Repository Enterprise Packages}{6}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Add the Binstar and Anaconda-Server Repository channels to conda:}{6}{subsection.1.5.1}
+\contentsline {section}{\numberline {1.6}Install the Anaconda Repository packages via conda:}{6}{section.1.6}
+\contentsline {section}{\numberline {1.7}Configure Anaconda Repository Server}{6}{section.1.7}
+\contentsline {subsection}{\numberline {1.7.1}Initialize the web server for Anaconda Repository:}{6}{subsection.1.7.1}
+\contentsline {subsection}{\numberline {1.7.2}Set the Anaconda Repository package storage location:}{6}{subsection.1.7.2}
+\contentsline {subsection}{\numberline {1.7.3}Create an initial \IeC {\textquotedblleft }superuser\IeC {\textquotedblright } account for Anaconda Repository:}{6}{subsection.1.7.3}
+\contentsline {subsection}{\numberline {1.7.4}Initialize the Anaconda Repository database:}{7}{subsection.1.7.4}
+\contentsline {section}{\numberline {1.8}Set up automatic restart on reboot, fail or error}{7}{section.1.8}
+\contentsline {subsection}{\numberline {1.8.1}Configure Supervisord}{7}{subsection.1.8.1}
+\contentsline {subsection}{\numberline {1.8.2}Verify the server is running:}{7}{subsection.1.8.2}
+\contentsline {subsection}{\numberline {1.8.3}Install Anaconda Repository License}{7}{subsection.1.8.3}
+\contentsline {subsection}{\numberline {1.8.4}Mirror Installers for Miniconda}{7}{subsection.1.8.4}
+\contentsline {subsection}{\numberline {1.8.5}Mirror Anaconda Repository}{8}{subsection.1.8.5}
+\contentsline {subsection}{\numberline {1.8.6}Optional: Mirror the R channel}{9}{subsection.1.8.6}
+\contentsline {subsection}{\numberline {1.8.7}Optional: Mirror the Anaconda Enterprise Notebooks Channel}{9}{subsection.1.8.7}
+\contentsline {subsection}{\numberline {1.8.8}Optional: Mirror the Anaconda Cluster Management channel}{10}{subsection.1.8.8}
+\contentsline {subsection}{\numberline {1.8.9}Optional: Adjust iptables to accept requests on port 80}{11}{subsection.1.8.9}
+\contentsline {chapter}{\numberline {2}Anaconda Enterprise Notebook Runbook}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}Requirements}{14}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Hardware Recommendations}{14}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}OS Requirements}{15}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Software Prerequisites}{15}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Linux System Accounts Required}{15}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Security Requirements}{15}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.6}Network Requirements}{15}{subsection.2.1.6}
+\contentsline {subsection}{\numberline {2.1.7}Other Requirements}{16}{subsection.2.1.7}
+\contentsline {subsection}{\numberline {2.1.8}Air Gap vs. Regular Installation}{16}{subsection.2.1.8}
+\contentsline {subsection}{\numberline {2.1.9}Air Gap Media}{16}{subsection.2.1.9}
+\contentsline {section}{\numberline {2.2}Download the Installers}{16}{section.2.2}
+\contentsline {section}{\numberline {2.3}Gather IP addresses or FQDNs}{16}{section.2.3}
+\contentsline {section}{\numberline {2.4}Install AEN Server}{17}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}AEN Server Preparation \GenericError {(inputenc) }{Package inputenc Error: Unicode char \u 8:­ not set up for use with LaTeX}{See the inputenc package documentation for explanation.}{Your command was ignored.\MessageBreak Type I <command> <return> to replace it with another command,\MessageBreak or <return> to continue without it.}Prerequisites}{17}{subsection.2.4.1}
+\contentsline {subsubsection}{Download Prerequisite RPMs}{17}{subsubsection*.3}
+\contentsline {subsubsection}{Install Prerequisite RPMs}{17}{subsubsection*.4}
+\contentsline {subsection}{\numberline {2.4.2}Run the AEN Server Installer}{17}{subsection.2.4.2}
+\contentsline {subsubsection}{Set Variables and Change Permissions}{17}{subsubsection*.5}
+\contentsline {subsubsection}{Run AEN Server Installer}{17}{subsubsection*.6}
+\contentsline {subsubsection}{Start ElasticSearch}{18}{subsubsection*.7}
+\contentsline {subsubsection}{Test the AEN Server install}{18}{subsubsection*.8}
+\contentsline {subsubsection}{Update the License}{18}{subsubsection*.9}
+\contentsline {section}{\numberline {2.5}Install AEN Gateway}{19}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Set Variables and Change Permissions}{19}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Run Wakari Gateway Installer}{19}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Register the AEN Gateway}{19}{subsection.2.5.3}
+\contentsline {subsubsection}{Ensure Proper Permissions}{19}{subsubsection*.10}
+\contentsline {subsubsection}{start the gateway}{19}{subsubsection*.11}
+\contentsline {subsubsection}{Verify the AEN Gateway has Registered}{20}{subsubsection*.12}
+\contentsline {section}{\numberline {2.6}Install AEN Compute}{20}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Set Variables and Change Permissions}{20}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Run AEN Compute Installer}{20}{subsection.2.6.2}
+\contentsline {subsection}{\numberline {2.6.3}Configure AEN Compute Node}{21}{subsection.2.6.3}
+\contentsline {subsection}{\numberline {2.6.4}Configure conda to use local on-site Anaconda Enterprise Repo}{21}{subsection.2.6.4}
+\contentsline {subsubsection}{Edit the condarc}{21}{subsubsection*.13}
+\contentsline {subsubsection}{Configure Anaconda Client}{22}{subsubsection*.14}
+\contentsline {section}{\numberline {2.7}PAM Authentication (optional)}{22}{section.2.7}
+\contentsline {chapter}{\numberline {3}Anaconda Cluster Runbook}{24}{chapter.3}
+\contentsline {section}{\numberline {3.1}Requirements}{25}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Hardware Requirements}{25}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Software Requirements}{25}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Linux System Accounts Required}{26}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Security Requirements}{26}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Network Requirements}{26}{subsection.3.1.5}
+\contentsline {subsubsection}{TCP Ports}{26}{subsubsection*.15}
+\contentsline {subsection}{\numberline {3.1.6}Other Requirements}{26}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}Assumptions}{26}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}Air Gap vs. Regular Installation}{27}{subsection.3.1.8}
+\contentsline {section}{\numberline {3.2}Prepare the Client Machine}{27}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Create an SSH keypair as the admin user}{27}{subsection.3.2.1}
+\contentsline {section}{\numberline {3.3}Download Miniconda}{27}{section.3.3}
+\contentsline {section}{\numberline {3.4}Install Miniconda}{28}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Review and accept the license terms:}{28}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Accept the default location or specify an alternative:}{28}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Update the admin user's path (prepending \textbf {/home/admin/miniconda2}):}{28}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}For the new path changes to take effect, \IeC {\textquotedblleft }source\IeC {\textquotedblright } your .bashrc or start a new bash shell:}{28}{subsection.3.4.4}
+\contentsline {section}{\numberline {3.5}Use conda to download and install Anaconda Cluster}{28}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Add the anaconda-cluster and anaconda channels:}{28}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}Install the anaconda-cluster packages:}{29}{section.3.6}
+\contentsline {section}{\numberline {3.7}Initialize Anaconda Cluster:}{29}{section.3.7}
+\contentsline {section}{\numberline {3.8}Prepare Head and Compute Nodes}{29}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Import SSH public key}{29}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}Enable passwordless sudo}{29}{subsection.3.8.2}
+\contentsline {section}{\numberline {3.9}Configure the Cluster}{29}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Define a Cluster Configuration}{30}{subsection.3.9.1}
+\contentsline {subsection}{\numberline {3.9.2}Add the following to \textasciitilde {}admin/.acluster/providers.yaml:}{31}{subsection.3.9.2}
+\contentsline {section}{\numberline {3.10}Create the Cluster}{31}{section.3.10}

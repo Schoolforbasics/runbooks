@@ -1,5 +1,14 @@
 ### Implementation Engineering's Runbook PDFs
 
+<a href="https://travis-ci.org/rtfd/runbooks">
+    <img src="https://img.shields.io/travis/rtfd/readthedocs.org.svg?style=flat">
+</a>
+
+
+<a href="https://runbooks.readthedocs.io/en/latest/?badge=latest">
+    <img src="https://readthedocs.org/projects/runbooks/badge/?version=latest">
+</a>
+
 The Runbook repo is now a sphinx-based install configured to be built via sphinx-build's `make html`. When pushed to gitub.com, the master branch is automatically built and presented at [http://runbooks.readthedocs.io/](http://runbooks.readthedocs.io/).
 
 ####Requirements

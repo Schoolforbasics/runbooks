@@ -385,7 +385,7 @@ to write the configuration file:
 
 ::
 
-    /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+    sudo /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
     --server http://$AEN_SERVER --host $AEN_GATEWAY \
     --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
     --summary Gateway --username wakari \
@@ -491,8 +491,8 @@ Configure conda to use local on-site Anaconda Enterprise Repo
 This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.
 
-Edit the condarc
-^^^^^^^^^^^^^^^^
+Edit the condarc on the Compute Node
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     **NOTE:** If there are some channels below that you haven't mirrored,
     you should remove them from the configuration.

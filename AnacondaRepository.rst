@@ -13,8 +13,19 @@ direct access to the internet for installation and those where such
 access is not available or restricted for security reasons. For these
 restricted a.k.a. "Air Gap" environments, Continuum ships the entire
 Anaconda product suite on portable storage medium or as a downloadable
-TAR archive. Where necessary, additional instructions for Air Gap
-environments are noted. If you have any questions about the
+TAR archive. Additionally, Continuum provides a set of Air Gap TAR archives for
+those environments only needing certain platform architectures,
+such as 64-Bit Linux, 32-Bit Linux, etc. 
+With the exception of 64-Bit Linux, These platform-based archives include
+all of the available packages for that platform.
+The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
+neecessary to install Anaconda Repo.
+
+Additional platforms can be added by downloading the corresponding
+TAR archive and importing it to the local Anaconda Repo. See the section titled "Optional: Installing from Platform-based Archives" below to prepare your environment before starting the Anaconda Repo Installation. 
+
+Where necessary, additional instructions for Air Gap
+environments are noted throughout this document. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
@@ -94,22 +105,26 @@ should follow **Regular Installation** instructions.
 Air Gap Media
 ~~~~~~~~~~~~~
 
-This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.
+This document assumes that the Air Gap media is available on
+the target server at $INSTALLER_PATH where the software is being installed. 
+
+**NOTE:** The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed
+below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory.
+
 
 Air Gap media contents
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-	/installer
-	___ anaconda-suite
-	    ___ pkgs
-	mongodb-org-tools-2.6.8-1.x86_64.rpm
-	mongodb-org-shell-2.6.8-1.x86_64.rpm
-	mongodb-org-server-2.6.8-1.x86_64.rpm
-	mongodb-org-mongos-2.6.8-1.x86_64.rpm
-	mongodb-org-2.6.8-1.x86_64.rpm
+  $INSTALLER_PATH
+  ___ anaconda-suite
+      ___ pkgs
+  mongodb-org-tools-2.6.8-1.x86_64.rpm
+  mongodb-org-shell-2.6.8-1.x86_64.rpm
+  mongodb-org-server-2.6.8-1.x86_64.rpm
+  mongodb-org-mongos-2.6.8-1.x86_64.rpm
+  mongodb-org-2.6.8-1.x86_64.rpm
 
 ==============================
 Installation and Configuration
@@ -150,7 +165,7 @@ Install MongoDB packages
 
 ::
 
-    sudo yum install -y /installer/mongodb-org*
+    sudo yum install -y $INSTALLER_PATH/mongodb-org*
 
 -  **Regular Installation:**
 
@@ -239,7 +254,7 @@ Run the Miniconda.sh installer script
 
 ::
 
-	bash /installer/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
+  bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
 
 -  **Regular Installation:**
 
@@ -297,7 +312,7 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
 
 ::
 
-       conda config --add channels  file:///installer/anaconda-suite/pkgs/
+       conda config --add channels  file://$INSTALLER_PATH/anaconda-suite/pkgs/
        conda config --remove channels defaults --force
 
 -  **Regular Installation:** Add the channels from Anaconda Cloud.
@@ -417,7 +432,7 @@ following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
        # miniconda installers
        mkdir -p /tmp/extras
        pushd /tmp/extras
-       URL="file:///installer/anaconda-suite/miniconda/"
+       URL="file://$INSTALLER_PATH/anaconda-suite/miniconda/"
        versions="Miniconda3-latest-Linux-x86_64.sh \
        Miniconda3-latest-MacOSX-x86_64.sh \
        Miniconda3-latest-Windows-x86.exe \
@@ -489,7 +504,7 @@ packages locally under the "anaconda" user account.
    ::
 
        channels:
-         - file:///installer/anaconda-suite/pkgs
+         - file://$INSTALLER_PATH/anaconda-suite/pkgs
 
    **2.** Mirror the Anaconda packages:
 
@@ -520,7 +535,7 @@ Optional: Mirror the R channel
    **2.** Add the following::
 
        channels:
-         - file:///installer/r/pkgs
+         - file://$INSTALLER_PATH/r/pkgs
 
    **3.** Mirror the Anaconda Cluster Management packages::
 
@@ -564,8 +579,8 @@ YAML file below:
    ::
 
        channels:
-         - file:///installer/wakari/pkgs
-         - file:///installer/anaconda-nb-extensions/pkgs
+         - file://$INSTALLER_PATH/wakari/pkgs
+         - file://$INSTALLER_PATH/anaconda-nb-extensions/pkgs
 
    **3.** Mirror the Anaconda Enteprise Notebooks packages:
 
@@ -621,7 +636,7 @@ YAML file below:
    ::
 
        channels:
-         - file:///installer/anaconda-adam/pkgs
+         - file://$INSTALLER_PATH/anaconda-adam/pkgs
 
    **3.** Mirror the Anaconda Cluster Management packages:
 
@@ -653,6 +668,11 @@ YAML file below:
        anaconda-server-sync-conda --mirror-config \
           /etc/anaconda-server/mirrors/anaconda-adam.yaml \
           --account=anaconda-adam
+
+Optional: Assemble installer resources manually
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+** Describe the process of adding platform tarballs to an $INSTALLER_PATH **
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -727,3 +747,23 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
+
+Optional: Installing From Platform-based Archives 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost identical to the full install as described above, however there are a few things to note:
+
+- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
+- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+
+Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):
+
+::
+
+    tar xvf linux-32-2016-07-06.tar -C $INSTALLER_PATH/anaconda-suite/pkgs/
+
+This creates the **$INSTALLER_PATH/anaconda-suite/pkgs/linux-32** directory containing 32-Bit Linux packages.
+The steps in the "Mirror Anaconda Repo" section above will then mirror these packages into the default (anaconda) channel in your local Anaconda Repo.
+
+
+
+

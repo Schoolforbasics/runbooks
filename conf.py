@@ -51,16 +51,16 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Continuum Runbooks'
-copyright = u'2016, Implementation Engineering'
-author = u'Implementation Engineering'
+project = u'Anaconda Enterprise Runbooks'
+copyright = u'2016'
+author = u'Continuum Analytics'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = u'1.2'
+version = u'4.0-3'
 
 def get_git_branch():
     """get the current branch"""
@@ -292,6 +292,8 @@ htmlhelp_basename = 'ContinuumRunbooksdoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
+    'classoptions': ',openany,oneside',
+    'babel' : '\\usepackage[english]{babel}',
 # The paper size ('letterpaper' or 'a4paper').
 #'papersize': 'letterpaper',
 
@@ -309,13 +311,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ContinuumRunbooks.tex', u'Continuum Runbooks Documentation',
-     u'Implementation Engineering', 'manual'),
+    (master_doc, 'ContinuumRunbooks.tex', project,
+     author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.
-#latex_logo = None
+latex_logo = 'images/anaconda_logo.png'
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
@@ -339,7 +341,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'continuumrunbooks', u'Continuum Runbooks Documentation',
+    (master_doc, 'continuumrunbooks', project,
      [author], 1)
 ]
 
@@ -353,7 +355,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ContinuumRunbooks', u'Continuum Runbooks Documentation',
+    (master_doc, 'ContinuumRunbooks', project,
      author, 'ContinuumRunbooks', 'One line description of project.',
      'Miscellaneous'),
 ]
@@ -370,7 +372,7 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
-#pdf_documents = [('index', u'AnacondaRepo', u'Anaconda Repo Runbook', u'Continuum Analytics'),]
+#pdf_documents = [('index', u'AnacondaRepository', u'Anaconda Repo Runbook', u'Continuum Analytics'),]
 #pdf_documents = [('index', u'rst2pdf', u'Continuum Analytics'),]
 
 # index - master document

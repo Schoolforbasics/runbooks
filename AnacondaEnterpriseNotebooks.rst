@@ -174,8 +174,7 @@ Air Gap media contents:
 Download the Installers
 -----------------------
 
-Download the installers and copy them to the corresponding servers. The
-Publisher should be installed on the AEN Server machine.
+Download the installers and copy them to the corresponding servers.
 
 -  **Air Gap Installation:** Copy installers from the Air Gap media
 

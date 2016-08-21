@@ -132,7 +132,7 @@ There are two ways to obtain the "Air Gap" data:
 .. code-block:: bash
 
     tar xvf anaconda-full-2016-08-06.tar -C /installer/ --strip-components 2
-    INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+    INSTALLER_PATH=/installer
 
 
 3. For Air Gap tarball expanded without stripping directories `anaconda-full-2016-07-11.tar`:

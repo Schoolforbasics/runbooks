@@ -102,14 +102,42 @@ the steps below have two sections: **Air Gap Installation** and
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
-Air Gap Media
-~~~~~~~~~~~~~
+Air Gap
+~~~~~~~~
 
 This document assumes that the Air Gap media is available on
 the target server at $INSTALLER_PATH where the software is being installed. 
 
-**NOTE:** The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed
-below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory.
+There are two ways to obtain the "Air Gap" data: 
+
+1. A pen drive is over-nighted to client
+
+2. Client downloads the latest archive tarballs and expands the archive to
+   `/installer`. For example, `anaconda-full-2016-07-11.tar` expands to `scratch/anaconda-full-2016-07-11/`
+
+:Note: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed
+below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
+1. For Air-Gap pen drive media:
+
+.. code-block:: bash
+
+    INSTALLER_PATH=/installer
+
+2. For Air Gap tarball expanded from `anaconda-full-2016-07-11.tar`:
+
+.. code-block:: bash
+
+    tar xvf anaconda-full-2016-08-06.tar -C /installer/ --strip-components 2
+    INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+
+
+3. For Air Gap tarball expanded without stripping directories `anaconda-full-2016-07-11.tar`:
+
+.. code-block:: bash
+
+    tar xvf anaconda-full-2016-08-06.tar -C /installer/
+    INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+
 
 
 Air Gap media contents
@@ -118,8 +146,8 @@ Air Gap media contents
 .. code-block:: bash
 
   $INSTALLER_PATH
-  ___ anaconda-suite
-      ___ pkgs
+  anaconda-suite/
+  anaconda-suite/pkgs
   mongodb-org-tools-2.6.8-1.x86_64.rpm
   mongodb-org-shell-2.6.8-1.x86_64.rpm
   mongodb-org-server-2.6.8-1.x86_64.rpm
@@ -423,7 +451,7 @@ latest Miniconda installers for each platform, download them and copy
 them to the **extras** directory.
 
 Users will then be able to download installers at a URL that looks like the
-following: http://<your host>:8080/static/Miniconda3-latest-Linux-x86_64.sh
+following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.sh
 
 -  **Air Gap Installation:**
 
@@ -497,14 +525,9 @@ packages locally under the "anaconda" user account.
 
    ::
 
-       vi /etc/anaconda-server/mirrors/conda.yaml
+        echo "channels:" > /etc/anaconda-server/mirrors/conda.yaml
+        echo "  - file://$INSTALLER_PATH/anaconda-suite/pkgs" >> /etc/anaconda-server/mirrors/conda.yaml
 
-   Add the following:
-
-   ::
-
-       channels:
-         - file://$INSTALLER_PATH/anaconda-suite/pkgs
 
    **2.** Mirror the Anaconda packages:
 
@@ -528,16 +551,13 @@ Optional: Mirror the R channel
 
 -  **Air Gap Installation:**
 
-   **1.** Create a mirror config file::
+   **1.** Create a mirror config file:
+   ::
 
-       vi /etc/anaconda-server/mirrors/r-chanel.yaml
+        echo "channels:" > /etc/anaconda-server/mirrors/r-channel.yaml
+        echo "  - file://$INSTALLER_PATH/r/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
-   **2.** Add the following::
-
-       channels:
-         - file://$INSTALLER_PATH/r/pkgs
-
-   **3.** Mirror the Anaconda Cluster Management packages::
+   **2.** Mirror the r-packages::
 
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
@@ -561,28 +581,26 @@ Optional: Mirror the R channel
 Optional: Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+:Note: If AEN is not setup and no packages from wakari channel are needed
+       then this is an **optional** mirror. If you have an Anaconda Enterprise
+       Notebooks server which will be using this Repo Server, then this channel
+       must be mirrored.
+
 If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
-the recommended method is to mirror using the “wakari” user.
+the recommended method is to mirror using the “wakari” user account.
 To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
 YAML file below:
 
 -  **Air Gap Installation:**
 
-   **1.** Create a mirror config file:
-
+   **1.** Create a mirror config file
    ::
 
-       vi /etc/anaconda-server/mirrors/wakari.yaml
+        echo "channels:" > /etc/anaconda-server/mirrors/wakari.yaml
+        echo "  - file://$INSTALLER_PATH/wakari/pkgs" >> /etc/anaconda-server/mirrors/wakari.yaml
 
-   **2.** Add the following:
 
-   ::
-
-       channels:
-         - file://$INSTALLER_PATH/wakari/pkgs
-         - file://$INSTALLER_PATH/anaconda-nb-extensions/pkgs
-
-   **3.** Mirror the Anaconda Enteprise Notebooks packages:
+   **2.** Mirror the Anaconda Enteprise Notebooks packages:
 
    ::
 
@@ -630,15 +648,10 @@ YAML file below:
    ::
 
        vi /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       echo "  - file://$INSTALLER_PATH/anaconda-adam/pkgs" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
 
-   **2.** Add the following:
-
-   ::
-
-       channels:
-         - file://$INSTALLER_PATH/anaconda-adam/pkgs
-
-   **3.** Mirror the Anaconda Cluster Management packages:
+   **2.** Mirror the Anaconda Cluster Management packages:
 
    ::
 

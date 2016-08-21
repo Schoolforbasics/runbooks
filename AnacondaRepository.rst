@@ -96,7 +96,7 @@ Assuming the above requirements are met, there are no additional
 dependencies necessary for Anaconda Repo.
 
 Air Gap vs. Regular Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 As stated previously, this document contains installation instructions
 for two audiences: those with internet access on the destination

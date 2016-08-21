@@ -7,6 +7,10 @@ Anaconda Repo Runbook
 
 * Version: |release| | |today|
 
+.. contents::
+   :local:
+   :depth: 1
+
 This following runbook walks through the steps needed to install
 Anaconda Repo. The runbook is designed for two audiences: those who have
 direct access to the internet for installation and those where such
@@ -153,13 +157,6 @@ Air Gap media contents
   mongodb-org-server-2.6.8-1.x86_64.rpm
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
   mongodb-org-2.6.8-1.x86_64.rpm
-
-==============================
-Installation and Configuration
-==============================
-.. contents::
-   :local:
-   :depth: 1
 
 Anaconda Repo Installation
 --------------------------

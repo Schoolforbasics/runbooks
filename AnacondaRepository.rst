@@ -115,8 +115,8 @@ There are two ways to obtain the "Air Gap" data:
 2. Client downloads the latest archive tarballs and expands the archive to
    `/installer`. For example, `anaconda-full-2016-07-11.tar` expands to `scratch/anaconda-full-2016-07-11/`
 
-:Note: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed
-below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
+:Note: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
+
 1. For Air-Gap pen drive media:
 
 .. code-block:: bash
@@ -352,9 +352,8 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
        conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
-**Note:** You should have received **two** tokens from Continuum
-Support, one for each channel. If you haven't, please contact
-support@continuum.io. Tokens are not required for Air Gap installs.
+
+:Note: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
 Install the Anaconda Repo packages via conda:
 ---------------------------------------------
@@ -387,10 +386,7 @@ Create an initial “superuser” account for Anaconda Repo:
 
     anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
-:Note: to ensure the bash shell does not process any of the
-  characters in this password, limit the password to lower case letters,
-  upper case letters and numbers, with no punctuation. After setup the
-  password can be changed with the web interface.
+:Note: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
 Initialize the Anaconda Repo database:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -548,7 +548,7 @@ Optional: Mirror the R channel
    ::
 
         echo "channels:" > /etc/anaconda-server/mirrors/r-channel.yaml
-        echo "  - file://$INSTALLER_PATH/r/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
+        echo "  - file://$INSTALLER_PATH/R/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
    **2.** Mirror the r-packages::
 

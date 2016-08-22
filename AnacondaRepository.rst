@@ -75,8 +75,7 @@ Security Requirements
 -  Privileged (root) access or sudo capabilities
 -  Ability to make (optional) iptables modifications
 
-**NOTE**: SELinux does not have to be disabled for Anaconda Repo
-operation
+.. note:: SELinux does not have to be disabled for Anaconda Repo operation
 
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
@@ -119,7 +118,7 @@ There are two ways to obtain the "Air Gap" data:
 2. Client downloads the latest archive tarballs and expands the archive to
    `/installer`. For example, `anaconda-full-2016-07-11.tar` expands to `scratch/anaconda-full-2016-07-11/`
 
-:Note: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
+.. note:: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
 
 1. For Air-Gap pen drive media mounted on `/installer`:
 
@@ -175,7 +174,7 @@ In a terminal window, create a new user account for Anaconda Repo named "anacond
 
     sudo useradd -m anaconda-server
 
-:Note: The anaconda-server user is the default for installing Anaconda Repo.  Any username can be used, however the use of the root user is discouraged.
+.. note:: The anaconda-server user is the default for installing Anaconda Repo.  Any username can be used, however the use of the root user is discouraged.
 
 Create Anaconda Repo directories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -336,7 +335,7 @@ Verify mongod is running
     sudo service mongod status
     mongod (pid 1234) is running...
 
-:Note:** Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
+.. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
 
 .. _local-mongo-install-no-sudo:
 
@@ -393,7 +392,7 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
 
-:Note: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
+.. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
 Install the Anaconda Repo packages via conda:
 ---------------------------------------------
@@ -447,9 +446,9 @@ This step:
 Configure Supervisord For Local `mongodb` Install
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:Note: follow this step **only** if you did a local install of mongodb as given in Section :ref:`local-mongo-install-no-sudo`
+.. note:: follow this step **only** if you did a local install of mongodb as given in Section :ref:`local-mongo-install-no-sudo`
 
-:Note: ensure you have installed the Anaconda Repo packages (:ref:`install-ae-packages`) and configured Supervisord (:ref:`conf-supervisord`) before proceeding.
+.. note:: ensure you have installed the Anaconda Repo packages (:ref:`install-ae-packages`) and configured Supervisord (:ref:`conf-supervisord`) before proceeding.
 
 Create a local directory for mongo to use for writing out its databases and logs.
 
@@ -506,7 +505,7 @@ Create an initial “superuser” account for Anaconda Repo:
 
     anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
-:Note: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
+.. note:: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
 Initialize the Anaconda Repo database:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -524,8 +523,7 @@ instructions and upload your license file. Log in with the superuser
 user and password configured above. After submitting, you should see the
 login page.
 
-**NOTE:** Contact your sales representative or support representative if
-you cannot find or have questions about your license.
+.. note:: Contact your sales representative or support representative if you cannot find or have questions about your license.
 
 Mirror Installers for Miniconda
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -602,7 +600,7 @@ take hours or longer, depending on the available internet bandwidth. Use
 the ``anaconda-server-sync-conda`` command to mirror all Anaconda
 packages locally under the "anaconda" user account.
 
-:Note: Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found `here <https://docs.continuum.io/anaconda-repository/mirrors-sync-configuration>`_.
+.. note:: Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found `here <https://docs.continuum.io/anaconda-repository/mirrors-sync-configuration>`_.
 
 -  **Air Gap Installation:** Since we're mirroring from a local
    filesystem, some additional configuration is necessary.
@@ -628,7 +626,7 @@ packages locally under the "anaconda" user account.
 
        anaconda-server-sync-conda
 
-:Note: Depending on the type of installation, this process may take hours.
+.. note:: Depending on the type of installation, this process may take hours.
 
 To verify the local Anaconda Repo repo has been populated, visit
 **http://your.anaconda.server:8080/anaconda** in a browser.
@@ -668,10 +666,7 @@ Optional: Mirror the R channel
 Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:Note: If AEN is not setup and no packages from wakari channel are needed
-       then this is an **optional** mirror. If you have an Anaconda Enterprise
-       Notebooks server which will be using this Repo Server, then this channel
-       must be mirrored.
+.. note:: If AEN is not setup and no packages from wakari channel are needed then this is an **optional** mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.
 
 If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user account.
@@ -780,10 +775,7 @@ The easiest way to enable clients to access an Anaconda Repo on standard
 ports is to configure the server to redirect traffic received on
 standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 
-**NOTE:** These commands assume the default state of iptables on CentOS
-6.7 which is “on” and allowing inbound SSH access on port 22. Take
-caution; mistakes with iptables rules can render a remote machine
-inaccessible.
+.. note:: These commands assume the default state of iptables on CentOS 6.7 which is “on” and allowing inbound SSH access on port 22. Take caution; mistakes with iptables rules can render a remote machine inaccessible.
 
 **Allow inbound access to tcp port 80:**
 
@@ -825,8 +817,7 @@ inaccessible.
     Chain OUTPUT (policy ACCEPT)
     target     prot opt source               destination
 
-**NOTE:** the PREROUTING (nat) iptables chain is not displayed by
-default; to show it, use:
+.. note:: the PREROUTING (nat) iptables chain is not displayed by default; to show it, use:
 
 ::
 

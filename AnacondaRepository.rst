@@ -640,7 +640,6 @@ YAML file below:
 
    ::
 
-       vi /etc/anaconda-server/mirrors/anaconda-adam.yaml
        echo "channels:" > /etc/anaconda-server/mirrors/anaconda-adam.yaml
        echo "  - file://$INSTALLER_PATH/anaconda-adam/pkgs" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
 

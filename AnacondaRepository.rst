@@ -279,7 +279,7 @@ Run the Miniconda.sh installer script
 
 ::
 
-  bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda-latest-Linux-x86_64.sh
+  bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
 
 -  **Regular Installation:**
 

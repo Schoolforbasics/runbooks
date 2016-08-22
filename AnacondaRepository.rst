@@ -66,8 +66,8 @@ Linux System Accounts Required
 Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:
 
-- mongod (RHEL) or mongodb (Ubuntu/Debian) - Created by the RPM or deb package
 - anaconda-server: Created manually during installation
+- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package if doing a system wide mongo install
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~

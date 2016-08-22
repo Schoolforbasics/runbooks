@@ -158,79 +158,22 @@ Air Gap media contents
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
   mongodb-org-2.6.8-1.x86_64.rpm
 
-Anaconda Repo Installation
---------------------------
+Configure Anaconda Repo Server
+-----------------------------------------
+Prior to installing Anaconda Repo components, the following needs to be done by either the IT admin or
+need `sudo` access to do it ourselves.
 
-The following sections detail the steps required to install Anaconda
-Repo.
-
-Install MongoDB
-~~~~~~~~~~~~~~~~~~
-
-Download MongoDB packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  **Air Gap Installation:** Skip this step.
-
--  **Regular Installation:**
-
-::
-
-   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-   curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
-
-Install MongoDB packages
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-- **Air Gap Installation:**
-
-::
-
-    sudo yum install -y $INSTALLER_PATH/mongodb-org*
-
--  **Regular Installation:**
-
-::
-
-    sudo yum install -y mongodb-org*
-
-
-Start mongodb
-~~~~~~~~~~~~~
-
-::
-
-    sudo service mongod start
-
-Verify mongod is running
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    sudo service mongod status
-    mongod (pid 1234) is running...
-
-**NOTE:** Additional mongodb installation information can be found
-`here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
-
-Configure Anaconda Repo
------------------------
 
 Create Anaconda Repo administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a terminal window, create a new user account for Anaconda Repo named
-"anaconda-server"::
+In a terminal window, create a new user account for Anaconda Repo named "anaconda-server".
+
+::
 
     sudo useradd -m anaconda-server
 
-**NOTE:** The anaconda-server user is the default for installing Anaconda Repo.
-Any username can be used, however the use of the root user is
-discouraged.
+:Note: The anaconda-server user is the default for installing Anaconda Repo.  Any username can be used, however the use of the root user is discouraged.
 
 Create Anaconda Repo directories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,6 +201,7 @@ Switch to the Anaconda Repo administrator account
 ::
 
     sudo su - anaconda-server
+
 
 Install Miniconda bootstrap version
 -----------------------------------
@@ -329,6 +273,103 @@ For the new path changes to take effect, “source” your .bashrc
 Install Anaconda Repo Enterprise Packages
 -----------------------------------------
 
+Install `mongodb`
+------------------
+
+* System wide install of `mongodb`, which **requires `sudo` access**, see Section: 
+  :ref:`system-mongo-install-sudo`. 
+* For a local install of `mongodb`, see Section: :ref:`local-mongo-install-no-sudo`.
+  Does not require `sudo` access but requires a few more manual steps.
+
+
+.. _system-mongo-install-sudo:
+
+System Wide mongodb Installation - Requires `sudo`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Download MongoDB packages
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+-  **Air Gap Installation:** Skip this step.
+
+-  **Regular Installation:**
+
+::
+
+   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+   curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+
+Install MongoDB packages
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- **Air Gap Installation:**
+
+::
+
+    sudo yum install -y $INST/mongodb-org*
+
+-  **Regular Installation:**
+
+::
+
+    sudo yum install -y mongodb-org*
+
+
+Start mongodb
+^^^^^^^^^^^^^^^
+
+::
+
+    sudo service mongod start
+
+Verify mongod is running
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    sudo service mongod status
+    mongod (pid 1234) is running...
+
+:Note:** Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
+
+.. _local-mongo-install-no-sudo:
+
+Local mongodb Installation - `sudo` Not Required
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- **Air Gap Installation:**
+
+::
+
+    currently not part of airgap archive so this is not yet supported
+
+
+- **Regular Installation:** 
+
+::
+
+    conda install mongodb=2.6.12
+
+
+This will install mongodb in root conda environment of user: `anaconda-server`
+
+::
+
+    which mongod
+    ~/miniconda2/bin/mongod
+
+
+.. _install-ae-packages:
+
+Install Anaconda Repo Enterprise Packages
+------------------------------------------
+
+The following sections detail the steps required to install Anaconda Repo.
+
 
 Add the Binstar and Anaconda-Server Repo channels to conda:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -359,8 +400,9 @@ Install the Anaconda Repo packages via conda:
 
     conda install anaconda-client binstar-server binstar-static cas-mirror
 
-Configure Anaconda Repo Server
-------------------------------
+
+Setup Anaconda Repo Server Config Files
+-----------------------------------------
 
 Initialize the web server for Anaconda Repo:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -375,6 +417,85 @@ Set the Anaconda Repo package storage location:
 ::
 
     anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage --config-file /etc/anaconda-server/config.yaml
+
+
+Set up automatic restart on reboot, fail or error
+-------------------------------------------------
+
+.. _conf-supervisord:
+
+
+Configure Supervisord
+~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    anaconda-server-install-supervisord-config.sh
+
+This step:
+
+-  creates the following entry in the anaconda-server user’s crontab:
+
+   ``@reboot /home/anaconda-server/miniconda/bin/supervisord``
+
+-  generates the ``/home/anaconda-server/miniconda/etc/supervisord.conf`` file
+
+.. _conf-mongo-supervisord:
+
+Configure Supervisord For Local `mongodb` Install
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:Note: follow this step **only** if you did a local install of mongodb as given in Section :ref:`local-mongo-install-no-sudo`
+
+:Note: ensure you have installed the Anaconda Repo packages (:ref:`install-ae-packages`) and configured Supervisord (:ref:`conf-supervisord`) before proceeding.
+
+Create a local directory for mongo to use for writing out its databases and logs.
+
+::
+
+    $ mkdir -p ~/mongo/data && mkdir ~/mongo/log 
+
+Append following lines for mongo to `~/miniconda2/etc/supervisord.conf`:
+
+::
+
+    [program:mongo]
+    command=/home/anaconda-server/miniconda2/bin/mongod --dbpath /home/anaconda-server/mongo/data --logpath /home/anaconda-server/mongo/log/mongod.log --logappend --port 27017
+    stdout_logfile=syslog
+    stderr_logfile=syslog
+
+Update the Supervisor process so it picks up the new config and runs the mongo process.
+
+::
+
+    $ supervisorctl update
+    mongo: added process group
+
+
+Verify the server and mongo is running:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    $ supervisorctl status
+
+    binstar-scheduler                          RUNNING   pid 8445, uptime 0:00:09
+    binstar-server                             RUNNING   pid 8263, uptime 0:06:39
+    binstar-worker                             RUNNING   pid 8253, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_00   RUNNING   pid 8261, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_01   RUNNING   pid 8260, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_02   RUNNING   pid 8259, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_03   RUNNING   pid 8258, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_04   RUNNING   pid 8257, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_05   RUNNING   pid 8256, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_06   RUNNING   pid 8255, uptime 0:06:39
+    binstar-worker-low:binstar-worker-low_07   RUNNING   pid 8254, uptime 0:06:39
+    mongo                                      RUNNING   pid 8451, uptime 0:00:05
+
+
+
+Continue Server Configuration - requires `mongo` 
+-------------------------------------------------
 
 Create an initial “superuser” account for Anaconda Repo:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -392,35 +513,6 @@ Initialize the Anaconda Repo database:
 
     anaconda-server-db-setup --execute
 
-Set up automatic restart on reboot, fail or error
--------------------------------------------------
-
-Configure Supervisord
-~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    anaconda-server-install-supervisord-config.sh
-
-This step:
-
--  creates the following entry in the anaconda-server user’s crontab:
-
-   ``@reboot /home/anaconda-server/miniconda/bin/supervisord``
-
--  generates the ``/home/anaconda-server/miniconda/etc/supervisord.conf`` file
-
-Verify the server is running:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    supervisorctl status
-
-    binstar-server RUNNING   pid 10831, uptime 0:00:05
-    binstar-worker RUNNING   pid 2784, uptime 0:00:04
-    ...
-    ...
 
 Install Anaconda Repo License
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -571,7 +663,7 @@ Optional: Mirror the R channel
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
-Optional: Mirror the Anaconda Enterprise Notebooks Channel
+Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :Note: If AEN is not setup and no packages from wakari channel are needed

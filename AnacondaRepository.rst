@@ -121,7 +121,7 @@ There are two ways to obtain the "Air Gap" data:
 
 :Note: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
 
-1. For Air-Gap pen drive media:
+1. For Air-Gap pen drive media mounted on `/installer`:
 
 .. code-block:: bash
 
@@ -150,13 +150,15 @@ Air Gap media contents
 .. code-block:: bash
 
   $INSTALLER_PATH
+  anaconda-cluster/
   anaconda-suite/
-  anaconda-suite/pkgs
   mongodb-org-tools-2.6.8-1.x86_64.rpm
   mongodb-org-shell-2.6.8-1.x86_64.rpm
   mongodb-org-server-2.6.8-1.x86_64.rpm
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
   mongodb-org-2.6.8-1.x86_64.rpm
+  R/
+  wakari/
 
 Configure Anaconda Repo Server
 -----------------------------------------

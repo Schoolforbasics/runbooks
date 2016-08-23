@@ -194,18 +194,22 @@ Review and accept the license terms:
 ::
 
         Welcome to Miniconda 3.19.3 (by Continuum Analytics, Inc.)
-        In order to continue the installation process, please review the license agreement. Please, press ENTER to continue. Do you approve the license terms? [yes|no] yes
+        In order to continue the installation process, please review
+        the license agreement.
+        Please, press ENTER to continue.
+        Do you approve the license terms?
+        [yes|no] yes
 
 Accept the default location or specify an alternative:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-        Miniconda will now be installed into this location:
-        /home/admin/miniconda2  -Press ENTER to confirm the location
+        Miniconda will now be installed into this location: /home/admin/miniconda2
+        -Press ENTER to confirm the location
         -Press CTRL-C to abort the installation
         -Or specify a different location below
-         [/home/admin/miniconda2] >>>" [Press ENTER]
+         [/home/admin/miniconda2] >>> [Press ENTER]
          PREFIX=/home/admin/miniconda2
         installing: python-2.7.10-0
         ...
@@ -217,7 +221,9 @@ Update the admin user's path (prepending **/home/admin/miniconda2**):
 
 ::
 
-        Do you wish the installer to prepend the Miniconda install location to PATH in your /home/admin/.bashrc ? [yes|no] yes
+        Do you wish the installer to prepend the Miniconda install location
+        to PATH in your /home/admin/.bashrc ?
+        [yes|no] yes
 
 For the new path changes to take effect, “source” your .bashrc or start a new bash shell:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -287,7 +293,7 @@ Your **~/admin/.ssh/authorized\_keys** will look something like this:
 ::
 
     cat ~admin/.ssh/authorized_keys
-    ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22WDkTkyrtvp9eWW6A8YVr+kz4TjGYe7gHzIw+niNltGEFHzD8+v1I2YJ6oXevct1YeS0o9HZyN1Q9qgCgzUFtdOKLv6IedplqoPkcmF0aYet2PkEDo3MlTBckFXPITAMzF8dJSIFo9D8HfdOV0IAdx4O7PtixWKn5y2hMNG0zQPyUecp4pzC6kivAIhyfHilFR61RGL+GPXQ2MWZWFYbAGjyiYJnAmCP3NOTd0jMZEnDkbUvxhMmBYSdETk1rRloraxLOzFUGaHqHDLKLX+FIPKcF96hrucXzcWyLbIbEgE98OHlnVYCzRdK8jlqm8tehUc9c9WhQ== admin@localhost
+    ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA6NF8iallvQVp22.....
 
 Make sure ~/admin/.ssh/authorized_keys has the proper permissions:
 
@@ -417,7 +423,10 @@ new cluster and “demo-cluster” is the name of the cluster profile (from
     INFO: Creating 4 instances
     INFO: Checking SSH connection
     INFO: Successfully created instances
-    INFO: Cluster info: {'ips': ['172.31.60.133', '172.31.55.76', '172.31.55.77', '172.31.55.78'], 'user': 'admin', 'name': u'demo'}
+    INFO: Cluster info:
+        {'ips': ['172.31.60.133', '172.31.55.76', '172.31.55.77', '172.31.55.78'],
+         'user': 'admin',
+         'name': u'demo'}
     Saving cluster file
     No license file found matching /home/admin/.acluster/cluster*.lic
     Using unlicensed limits.

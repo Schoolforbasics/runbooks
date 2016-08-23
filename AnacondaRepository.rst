@@ -20,7 +20,7 @@ Anaconda product suite on portable storage medium or as a downloadable
 TAR archive. Additionally, Continuum provides a set of Air Gap TAR archives for
 those environments only needing certain platform architectures,
 such as 64-Bit Linux, 32-Bit Linux, etc. 
-With the exception of 64-Bit Linux, These platform-based archives include
+With the exception of 64-Bit Linux, these platform-based archives include
 all of the available packages for that platform.
 The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
 neecessary to install Anaconda Repo.

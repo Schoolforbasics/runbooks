@@ -2,7 +2,7 @@
 .. sectnum::
 
 =====================
-Anaconda Repo Runbook
+Anaconda Repository Runbook
 =====================
 
 * Version: |release| | |today|
@@ -12,7 +12,7 @@ Anaconda Repo Runbook
    :depth: 1
 
 This following runbook walks through the steps needed to install
-Anaconda Repo. The runbook is designed for two audiences: those who have
+Anaconda Repository. The runbook is designed for two audiences: those who have
 direct access to the internet for installation and those where such
 access is not available or restricted for security reasons. For these
 restricted a.k.a. "Air Gap" environments, Continuum ships the entire
@@ -23,10 +23,12 @@ such as 64-Bit Linux, 32-Bit Linux, etc.
 With the exception of 64-Bit Linux, these platform-based archives include
 all of the available packages for that platform.
 The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
-neecessary to install Anaconda Repo.
+neecessary to install Anaconda Repository.
 
-Additional platforms can be added by downloading the corresponding
-TAR archive and importing it to the local Anaconda Repo. See the section titled "Optional: Installing from Platform-based Archives" below to prepare your environment before starting the Anaconda Repo Installation. 
+Additional platforms can be added by downloading the corresponding TAR archive
+and importing it to the local Anaconda Repository. See the section titled "Optional:
+Installing from Platform-based Archives" below to prepare your environment
+before starting the Anaconda Repository Installation. 
 
 Where necessary, additional instructions for Air Gap
 environments are noted throughout this document. If you have any questions about the
@@ -44,20 +46,19 @@ Hardware Requirements
 
 -  Physical server or VM
 -  CPU: 2 x 64-bit 2 2.8GHz 8.00GT/s CPUs or better
--  Memory: 32GB RAM (per 50 users)
+-  Memory: 32GB RAM (per 50 users), minimum 4 GB
 -  Storage: Recommended minimum of 300GB; Additional space is
    recommended if the repository is will be used to store packages built
-   by the customer.
-- If downloading AirGap tarball 200GB is needed for full anaconda installer. Plus another 200GB for exapanding it, preferably to different disk on same machine.
-
+   by the customer.  With an empty repository a base install will require 2 GB
+- If downloading air-gap tarball 200GB is needed for the full Anaconda Enterprise installer, plus another 200GB for extracting its contents, preferably to different disk on same machine.
 
 Software Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
--  RHEL/CentOS 6.7 (Other operating systems are supported, however this
-   document assumes RHEL or CentOS 6.7)
+-  RHEL/CentOS 6.5 or later (Other operating systems are supported, however this
+   document assumes RHEL or CentOS 6.5)
 -  MongoDB version 2.6
--  Anaconda Repo license file - given as part of the welcome packet -
+-  Anaconda Repository license file - given as part of the welcome packet -
    contact your sales representative or support representative if you
    cannot find your license.
 -  cron: The anaconda-server user needs to add an entry to cron to start the server on reboot
@@ -68,14 +69,16 @@ Linux System Accounts Required
 Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:
 
-- anaconda-server: Created manually during installation
-- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package 
+- ``mongod`` (RHEL) or ``mongodb`` (Ubuntu/Debian) - Created by the RPM or deb package
+- ``anaconda-server``: Created manually during installation, and configurable to other names
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
--  Privileged (root) access or sudo capabilities
--  Ability to make (optional) iptables modifications
+-  Required: Privileged (``root``) access or ``sudo`` capabilities
+-  Required: Open HTTP(S) port (configurable, default ``8080``)
+-  Optional: Ability to make ``iptables`` modifications
+-  Optional: SSL certificate
 
 .. note:: SELinux does not have to be disabled for Anaconda Repo operation
 
@@ -84,17 +87,21 @@ Network Requirements
 
 * TCP Ports
 
-  - Inbound TCP 8080 (Anaconda Repo)
-  - Inbound TCP 22 (SSH)
-  - Outbound TCP 443 (to Anaconda Cloud or local Anaconda Repo)
-  - Outbound TCP 25 (SMTP)
-  - Outbound TCP 389/636 (LDAP(s))
+========= ==== ======= ======== ======== ============ ========
+direction type port    protocol optional configurable comments
+--------- ---- ------- -------- -------- ------------ --------
+inbound   TCP  8080    HTTP              yes          Anaconda Repository
+inbound   TCP    22    SSH      yes
+outbound  TCP   443    HTTPS    yes                   to Anaconda Cloud or secondary local Anaconda Repo
+outbound  TCP    25    SMTP     yes                   email notifications
+outbound  TCP  389/636 LDAP(S)  yes      yes          authentication integration
+========= ==== ======= ======== ======== ============ ========
 
 Other Requirements
 ~~~~~~~~~~~~~~~~~~
 
 Assuming the above requirements are met, there are no additional
-dependencies necessary for Anaconda Repo.
+dependencies necessary for Anaconda Repository.
 
 Air Gap vs. Regular Installation
 ----------------------------------
@@ -110,26 +117,28 @@ should follow **Regular Installation** instructions.
 Air Gap
 ~~~~~~~~
 
-This document assumes that the Air Gap media is available on
-the target server at $INSTALLER_PATH where the software is being installed. 
+This document assumes that the air-gap media is available on
+the target server at ``$INSTALLER_PATH` where the software is being installed. 
 
-There are two ways to obtain the "Air Gap" data: 
+There are two ways to obtain the air-gap installation assets:
 
-1. A pen drive is over-nighted to client
+#. A pen drive is over-nighted to client
 
-2. Client downloads the latest archive tarball or component tarballs and expands the archive to
-   `/installer`. 
+#. Client downloads the latest archive tarball or component tarballs and expands the archive to
+   ``/installer``. 
 
-.. note:: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
+.. note:: The ``$INSTALLER_PATH`` variable must be set to the location of the
+    air-gap media as displayed below. The ``$INSTALLER_PATH`` is the parent directory
+    to the ``anaconda-suite`` directory. See examples below:
 
-1. For Air-Gap pen drive media mounted on `/installer`:
+#. For air-gap pen drive media mounted on ``/installer``:
 
    .. code-block:: bash
    
        INSTALLER_PATH=/installer
 
 
-2. If the full anaconda installer is downloaded and expanded: `anaconda-full-2016-07-11.tar`:
+#. If the full anaconda installer is downloaded and expanded: `anaconda-full-2016-07-11.tar`:
 
    .. code-block:: bash
    
@@ -160,9 +169,16 @@ Air Gap Full Installer Contents - `anaconda-full-2016-07-11.tar`
 
 Optional: Air Gap Platform-based Archives (Linux)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To install AE-Repo and only mirror packages for a subset of platforms (eg. Linux-64); download a component based TAR archive.
-Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost identical to the full install once we create the same file structure
-in `$INSTALLER_PATH`. A couple of things to note about platform based archives:
+To install Anaconda Repository and only mirror packages for a subset of
+platforms (eg. Linux-64); download a component based TAR archive.  Using the
+**64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost
+identical to the full install once we create the same file structure in
+`$INSTALLER_PATH`. A couple of things to note about platform based archives:
+
+Anaconda Repository Installation
+--------------------------
+
+The following sections detail the steps required to install Anaconda Repository.
 
 - The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
 - The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
@@ -247,17 +263,21 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
    echo "expand default pkgs and AE-Repo installer"
    tar xf linux-64-2016-08-03.tar -C $INSTALLER_PATH --strip-components 1
 
-   # fix miniconda-latest location so it is consistent w/ full install and the remaining docs
+   # fix miniconda-latest location so it is consistent
+   # w/ full install and the remaining docs
    echo "expand miniconda versions"
    mkdir $INSTALLER_PATH/anaconda-suite/miniconda
-   ln -s $INSTALLER_PATH/miniconda/Miniconda-latest-Linux-x86_64.sh $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
+   ln -s $INSTALLER_PATH/miniconda/Miniconda-latest-Linux-x86_64.sh \
+         $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
    tar xf miniconda-64bit-2016-08-03.tar -C $INSTALLER_PATH/anaconda-suite/miniconda/
 
    # exapnd anaconda-cluster
    echo "expand anaconda-cluster and R packages"
-   tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03/ --strip-components 2
+   tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03\
+                                             / --strip-components 2
    mkdir -p $INSTALLER_PATH/R/pkgs/linux-64
-   tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ --strip-components 1
+   tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ \
+                                             --strip-components 1
 
 
 System Wide mongodb Installation - Requires `sudo`
@@ -313,23 +333,23 @@ Verify mongod is running
 .. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
 
 
-Configure Anaconda Repo Server
------------------------------------------
-Prior to installing Anaconda Repo components, the following needs to be done by either the IT admin or
-need `sudo` access to do it ourselves.
+Configure Anaconda Repository
+-----------------------
+Prior to installing Anaconda Repository components the following needs to be done by someone with
+`sudo` privileges
 
-Create Anaconda Repo administrator account
+Create Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a terminal window, create a new user account for Anaconda Repo named "anaconda-server".
+In a terminal window, create a new user account for Anaconda Repo named ``anaconda-server``.
 
 ::
 
     sudo useradd -m anaconda-server
 
-.. note:: The anaconda-server user is the default for installing Anaconda Repo.  Any username can be used, however the use of the root user is discouraged.
+.. note:: ``anaconda-server`` can be configured to any other service account name
 
-Create Anaconda Repo directories
+Create Anaconda Repository directories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -349,7 +369,7 @@ Give the anaconda-server user ownership of directories
     sudo chown -R anaconda-server. /opt/anaconda-server/package-storage
     sudo chown -R anaconda-server. /etc/anaconda-server/mirrors
 
-Switch to the Anaconda Repo administrator account
+Switch to the Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -424,14 +444,12 @@ For the new path changes to take effect, “source” your .bashrc
 
     source ~/.bashrc
 
-
-Install And Configure Anaconda Repo 
-------------------------------------------
-
+Install Anaconda Repository Enterprise Packages
+-----------------------------------------
 The following sections detail the steps required to install Anaconda Repo.
 
 
-Add the Binstar and Anaconda-Server Repo channels to conda
+Add the Binstar and Anaconda-Server Repository channels to Conda:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Add the channels from local files.
@@ -453,28 +471,50 @@ Add the Binstar and Anaconda-Server Repo channels to conda
 
 .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
-Install the Anaconda Repo packages via conda
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install the Anaconda Repository packages via conda:
+---------------------------------------------
 
 ::
 
     conda install anaconda-client binstar-server binstar-static cas-mirror
 
+Configure Anaconda Repository Server
+------------------------------
 
-Initialize the web server for Anaconda Repo:
+Initialize the web server for Anaconda Repository:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-config --init --config-file /etc/anaconda-server/config.yaml
 
-Set the Anaconda Repo package storage location:
+Set the Anaconda Repository package storage location:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage --config-file /etc/anaconda-server/config.yaml
+    anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage \
+                           --config-file /etc/anaconda-server/config.yaml
 
+Create an initial "superuser" account for Anaconda Repository:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    anaconda-server-create-user --username "superuser" --password "yourpassword" \
+                                --email "your@email.com" --superuser
+
+:Note: to ensure the bash shell does not process any of the
+  characters in this password, limit the password to lower case letters,
+  upper case letters and numbers, with no punctuation. After setup the
+  password can be changed with the web interface.
+
+Initialize the Anaconda Repository database:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    anaconda-server-db-setup --execute
 
 Set up automatic restart on reboot, fail or error
 -------------------------------------------------
@@ -523,7 +563,8 @@ Create an initial “superuser” account for Anaconda Repo:
 
 ::
 
-    anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
+    anaconda-server-create-user --username "superuser" --password "yourpassword" \
+                                --email "your@email.com" --superuser
 
 .. note:: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
@@ -536,7 +577,7 @@ Initialize the Anaconda Repo database:
     anaconda-server-db-setup --execute
 
 
-Install Anaconda Repo License
+Install Anaconda Repository License
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Visit **http://your.anaconda.server:8080**. Follow the onscreen
@@ -554,7 +595,7 @@ Mirror Installers for Miniconda - SKIP IF FOLLOWING :ref:`comp-install`
 
 .. note:: If using component installers - skip this section. It will not work at present.
 
-Miniconda installers can be served by Anaconda Repo via the **static**
+Miniconda installers can be served by Anaconda Repository via the **static**
 directory located at
 **/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.
 This is **required** for Anaconda Cluster integration. To serve up the
@@ -620,7 +661,7 @@ following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that Anaconda Repo is installed, we want to mirror packages into our
+Now that Anaconda Repository is installed, we want to mirror packages into our
 local repository. If mirroring from Anaconda Cloud, the process will
 take hours or longer, depending on the available internet bandwidth. Use
 the ``anaconda-server-sync-conda`` command to mirror all Anaconda
@@ -628,31 +669,32 @@ packages locally under the "anaconda" user account.
 
 .. note:: Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found `here <https://docs.continuum.io/anaconda-repository/mirrors-sync-configuration>`_.
 
--  **Air Gap Installation:** Since we're mirroring from a local
+**Air Gap Installation:** Since we're mirroring from a local
    filesystem, some additional configuration is necessary.
 
-   **1.** Create a mirror config file:
+#. Create a mirror config file:
 
 
    ::
 
         echo "channels:" > /etc/anaconda-server/mirrors/conda.yaml
-        echo "  - file://$INSTALLER_PATH/anaconda-suite/pkgs" >> /etc/anaconda-server/mirrors/conda.yaml
+        echo "  - file://$INSTALLER_PATH/anaconda-suite/pkgs" >> \
+                  /etc/anaconda-server/mirrors/conda.yaml
 
-   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+#. (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
    
    ::
 
         echo "platforms:" >> /etc/anaconda-server/mirrors/conda.yaml
         echo "  - linux-64" >> /etc/anaconda-server/mirrors/conda.yaml
 
-   **3.** Mirror the Anaconda packages:
+#. Mirror the Anaconda packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/conda.yaml
 
--  **Regular Installation:** Mirror from Anaconda Cloud.
+**Regular Installation:** Mirror from Anaconda Cloud.
 
    ::
 
@@ -660,21 +702,21 @@ packages locally under the "anaconda" user account.
 
 .. note:: Depending on the type of installation, this process may take hours.
 
-To verify the local Anaconda Repo repo has been populated, visit
+To verify the local Anaconda Repository repo has been populated, visit
 **http://your.anaconda.server:8080/anaconda** in a browser.
 
 Optional: Mirror the R channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Air Gap Installation:**
+**Air Gap Installation:**
 
-   **1.** Create a mirror config file:
+#. Create a mirror config file:
    ::
 
         echo "channels:" > /etc/anaconda-server/mirrors/r-channel.yaml
         echo "  - file://$INSTALLER_PATH/R/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
-   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+#. (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
    
    ::
 
@@ -682,23 +724,23 @@ Optional: Mirror the R channel
         echo "  - linux-64" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
 
-   **3.** Mirror the r-packages::
+#. Mirror the r-packages::
 
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
--  **Regular Installation:**
+**Regular Installation:**
 
-   **1.** Create a mirror config file::
+#. Create a mirror config file::
 
        vi /etc/anaconda-server/mirrors/r-channel.yaml
 
-   **2.** Add the following::
+#. Add the following::
 
        channels:
          - https://conda.anaconda.org/r
 
-   **3.** Mirror the R packages::
+#. Mirror the R packages::
 
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
@@ -710,36 +752,37 @@ Mirror the Anaconda Enterprise Notebooks Channel
 
 .. note:: If using platform based archive, :ref:`comp-install`, **SKIP** this section
 
-If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
-the recommended method is to mirror using the “wakari” user account.
+If the local Anaconda Repository will be used by Anaconda Enterprise Notebooks
+the recommended method is to mirror using the “wakari” user.
+
 To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
 YAML file below:
 
--  **Air Gap Installation:**
+**Air Gap Installation:**
 
-   **1.** Create a mirror config file
+#. Create a mirror config file
    ::
 
         echo "channels:" > /etc/anaconda-server/mirrors/wakari.yaml
         echo "  - file://$INSTALLER_PATH/wakari/pkgs" >> /etc/anaconda-server/mirrors/wakari.yaml
 
 
-   **2.** Mirror the Anaconda Enteprise Notebooks packages:
+#. Mirror the Anaconda Enteprise Notebooks packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/wakari.yaml --account=wakari
 
--  **Regular Installation:**
+**Regular Installation:**
 
-   **1.** Create a mirror config file:
+#. Create a mirror config file:
 
    ::
 
        vi /etc/anaconda-server/mirrors/wakari.yaml
 
-   **2.** Add the following:
+#. Add the following:
 
    ::
 
@@ -747,14 +790,14 @@ YAML file below:
          - https://conda.anaconda.org/t/<TOKEN>/anaconda-nb-extensions
          - https://conda.anaconda.org/wakari
 
-   **3.** Mirror the Anaconda Enterprise Notebooks packages:
+#. Mirror the Anaconda Enterprise Notebooks packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
          /etc/anaconda-server/mirrors/wakari.yaml --account=wakari
 
-Where **“TOKEN”** is the Anaconda NB Extensions token you should
+Where ``TOKEN`` is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
 Optional: Mirror the Anaconda Cluster channel
@@ -762,16 +805,24 @@ Optional: Mirror the Anaconda Cluster channel
 
 To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below: 
 
+If the local Anaconda Repository will be used by Anaconda Adam, the
+recommended method is to mirror using an ``anaconda-adam`` user.
+
+To mirror the Anaconda Adam channel, create the mirror config
+YAML file below:
+
 -  **Air Gap Installation:**
 
-   **1.** Create a mirror config file:
+#. Create a mirror config file:
 
    ::
 
        echo "channels:" > /etc/anaconda-server/mirrors/anaconda-cluster.yaml
-       echo "  - file://$INSTALLER_PATH/anaconda-cluster/pkgs" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+       echo "  - file://$INSTALLER_PATH/anaconda-cluster/pkgs" >> \
+            /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
-   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+#. (Optional) If mirroring packages for subset of platforms (eg.
+linux-64 only as shown in :ref:`comp-install`), append following:
    
    ::
 
@@ -779,7 +830,7 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
         echo "  - linux-64" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
 
-   **3.** Mirror the Anaconda Cluster Management packages:
+#. Mirror the Anaconda Cluster Management packages:
 
    ::
 
@@ -789,20 +840,20 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
 
 -  **Regular Installation:**
 
-   **1.** Create a mirror config file:
+#. Create a mirror config file:
 
    ::
 
        vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
-   **2.** Add the following:
+#. Add the following:
 
    ::
 
        channels:
          - https://conda.anaconda.org/anaconda-cluster
 
-   **3.** Mirror the Anaconda Adam packages:
+#. Mirror the Anaconda Adam packages:
 
    ::
 
@@ -814,9 +865,9 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The easiest way to enable clients to access an Anaconda Repo on standard
+The easiest way to enable clients to access an Anaconda Repository on standard
 ports is to configure the server to redirect traffic received on
-standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
+standard HTTP port 80 to the standard Anaconda Repository HTTP port 8080.
 
 .. note:: These commands assume the default state of iptables on CentOS 6.7 which is “on” and allowing inbound SSH access on port 22. Take caution; mistakes with iptables rules can render a remote machine inaccessible.
 
@@ -824,19 +875,22 @@ standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 80 -m comment \
+                  --comment "# Anaconda Repository #" -j ACCEPT
 
 **Allow inbound access to tcp port 8080:**
 
 ::
 
-    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# Anaconda Repo #" -j ACCEPT
+    sudo iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment \
+                  --comment "# Anaconda Repository #" -j ACCEPT
 
 **Redirect inbound requests to port 80 to port 8080:**
 
 ::
 
-    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment --comment "# Anaconda Repo #" -j REDIRECT --to-port 8080
+    sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -m comment \
+                  --comment "# Anaconda Repository #" -j REDIRECT --to-port 8080
 
 **Display the current iptables rules:**
 
@@ -844,21 +898,21 @@ standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 
     sudo iptables -L -n
     Chain INPUT (policy ACCEPT)
-    target     prot opt source               destination
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8080 # Anaconda Repo #
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo #
-    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
-    ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0
-    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
-    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           state NEW tcp dpt:22
-    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+    target     prot opt source     destination
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0   tcp dpt:8080 # Anaconda Repository #
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0   tcp dpt:80 # Anaconda Repository #
+    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0   state RELATED,ESTABLISHED
+    ACCEPT     icmp --  0.0.0.0/0  0.0.0.0/0
+    ACCEPT     all  --  0.0.0.0/0  0.0.0.0/0
+    ACCEPT     tcp  --  0.0.0.0/0  0.0.0.0/0   state NEW tcp dpt:22
+    REJECT     all  --  0.0.0.0/0  0.0.0.0/0   reject-with icmp-host-prohibited
 
     Chain FORWARD (policy ACCEPT)
-    target     prot opt source               destination
-    REJECT     all  --  0.0.0.0/0            0.0.0.0/0           reject-with icmp-host-prohibited
+    target     prot opt source     destination
+    REJECT     all  --  0.0.0.0/0  0.0.0.0/0   reject-with icmp-host-prohibited
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source     destination
 
 .. note:: the PREROUTING (nat) iptables chain is not displayed by default; to show it, use:
 
@@ -866,14 +920,14 @@ standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 
     sudo iptables -L -n -t nat
     Chain PREROUTING (policy ACCEPT)
-    target     prot opt source               destination
-    REDIRECT   tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:80 # Anaconda Repo # redir ports 8080
+    target     prot opt source     destination
+    REDIRECT   tcp  --  0.0.0.0/0  0.0.0.0/0   tcp dpt:80 # Anaconda Repository # redir ports 8080
 
     Chain POSTROUTING (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source     destination
 
     Chain OUTPUT (policy ACCEPT)
-    target     prot opt source               destination
+    target     prot opt source     destination
 
 Write the running iptables configuration to **/etc/sysconfig/iptables:**
 
@@ -881,4 +935,20 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 
     sudo service iptables save
 
+Optional: Installing From Platform-based Archives 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repository is almost identical to the full install as described above, however there are a few things to note:
 
+- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
+- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+
+Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):
+
+::
+
+    tar xvf linux-32-2016-07-06.tar -C $INSTALLER_PATH/anaconda-suite/pkgs/
+
+This creates the **$INSTALLER_PATH/anaconda-suite/pkgs/linux-32** directory
+containing 32-Bit Linux packages.  The steps in the "Mirror Anaconda
+Repository" section above will then mirror these packages into the default
+(anaconda) channel in your local Anaconda Repository.

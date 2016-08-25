@@ -48,6 +48,8 @@ Hardware Requirements
 -  Storage: Recommended minimum of 300GB; Additional space is
    recommended if the repository is will be used to store packages built
    by the customer.
+- If downloading AirGap tarball for install, allow ~500GB: roughly 200GB for full anaconda installer and 200GB for exapanding it.
+
 
 Software Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -67,7 +69,7 @@ Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:
 
 - anaconda-server: Created manually during installation
-- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package if doing a system wide mongo install
+- mongod (RHEL) or mongodb (Ubuntu/Debian): Created by the RPM or deb package 
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -115,36 +117,30 @@ There are two ways to obtain the "Air Gap" data:
 
 1. A pen drive is over-nighted to client
 
-2. Client downloads the latest archive tarballs and expands the archive to
-   `/installer`. For example, `anaconda-full-2016-07-11.tar` expands to `scratch/anaconda-full-2016-07-11/`
+2. Client downloads the latest archive tarball or component tarballs and expands the archive to
+   `/installer`. 
 
 .. note:: The $INSTALLER_PATH variable must be set to the location of the Air Gap media as displayed below. The $INSTALLER_PATH is the parent directory to the **anaconda-suite** directory. See examples below:
 
 1. For Air-Gap pen drive media mounted on `/installer`:
 
-.. code-block:: bash
-
-    INSTALLER_PATH=/installer
-
-2. For Air Gap tarball expanded from `anaconda-full-2016-07-11.tar`:
-
-.. code-block:: bash
-
-    tar xvf anaconda-full-2016-08-06.tar -C /installer/ --strip-components 2
-    INSTALLER_PATH=/installer
+   .. code-block:: bash
+   
+       INSTALLER_PATH=/installer
 
 
-3. For Air Gap tarball expanded without stripping directories `anaconda-full-2016-07-11.tar`:
+2. If the full anaconda installer is downloaded and expanded: `anaconda-full-2016-07-11.tar`:
 
-.. code-block:: bash
+   .. code-block:: bash
+   
+       tar xvf anaconda-full-2016-08-06.tar -C /installer/
+       INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
 
-    tar xvf anaconda-full-2016-08-06.tar -C /installer/
-    INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+The `anaconda-full-2016-07-11.tar` is roughly 200GB. If only a subset of components are required, refer to :ref:`comp-install`.
 
 
-
-Air Gap media contents
-~~~~~~~~~~~~~~~~~~~~~~
+Air Gap Full Installer Contents - `anaconda-full-2016-07-11.tar`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -159,11 +155,168 @@ Air Gap media contents
   R/
   wakari/
 
+
+.. _comp-install:
+
+Optional: Air Gap Platform-based Archives (Linux)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To install AE-Repo and only mirror packages for a subset of platforms (eg. Linux-64); download a component based TAR archive.
+Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost identical to the full install once we create the same file structure
+in `$INSTALLER_PATH`. A couple of things to note about platform based archives:
+
+- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
+- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+
+Each component has an md5 and list file which are both small and included more for convenience. Table below
+summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
+
+
++-----------------------------------+---------------------------------------------+-----------------------------------+
+| Tarball                           | Contents                                    |   Top Level Directory             |  
++===================================+=============================================+===================================+
+| anaconda-full-2016-07-11.tar      | All AE components and dependencies:         | scratch/anaconda-full-2016-08-06/ |
+|                                   |                                             |                                   |
+|                                   | - default packages (all platforms)          |                                   |
+|                                   | - AE-N installers + dependencies            |                                   |
+|                                   | - cluster packages (all platforms)          |                                   |
+|                                   | - R packages (all platforms)                |                                   |
+|                                   | - various miniconda version (all platforms) |                                   |
++-----------------------------------+---------------------------------------------+-----------------------------------+
+| linux-64-2016-08-03.tar           | AE-Repo install parts:                      | linux-64-2016-08-03/              |   
+|                                   |                                             |                                   |
+|                                   | - mongodb                                   |                                   |
+|                                   | - latest miniconda                          |                                   |
+|                                   | - linux pkgs for default channel            |                                   |
++-----------------------------------+---------------------------------------------+-----------------------------------+
+| cluster-2016-08-03.tar            | anaconda-cluster conda packages; mirror on  | scratch/cluster/                  |
+|                                   | R channel (all platforms)                   |                                   |
++-----------------------------------+---------------------------------------------+-----------------------------------+
+| linux-64-R-Packages-2016-08-03.tar| conda packages for R, mirror on R channel   | linux-64-R-Packages/              |
++-----------------------------------+---------------------------------------------+-----------------------------------+
+| miniconda-64bit-2016-08-03.tar    | various miniconda version for all 64bit     | ./                                |
+|                                   | platforms                                   |                                   |
++-----------------------------------+---------------------------------------------+-----------------------------------+
+ 
+
+Here's a sample bash script to download all packages for AE-Repo install and linux-64 only conda packages.
+
+.. code-block:: bash
+
+  #!/bin/bash
+  #
+  # get_installers.sh - to obtain all components for Linux packages and AE-Repo installation
+  PREFIX='https://s3.amazonaws.com/continuum-airgap/2016-08/'
+  DL=('linux-64-2016-08-03.list',
+      'linux-64-2016-08-03.md5',
+      'linux-64-2016-08-03.tar',
+      'cluster-2016-08-03.list'
+      'cluster-2016-08-03.md5'
+      'cluster-2016-08-03.tar'
+      'linux-64-R-Packages-2016-08-03.list'
+      'linux-64-R-Packages-2016-08-03.md5'
+      'linux-64-R-Packages-2016-08-03.tar'
+      'miniconda-64bit-2016-08-03.tar')
+
+  for file_ in "${DL[@]}"
+  do
+    CMD="curl -O -C - $PREFIX$file_"
+    echo $CMD > cout.txt
+    $CMD >> cout.txt
+  done  
+
+
+Save it to `get_installers.sh` and run in background. Tail the `cout.txt` to see progress of downloads 
+
+.. code-block:: bash
+
+   bash get_installers.sh > cout.txt &
+   tail -f cout.txt
+
+
+After downloading, expand the tarballs such that they they are consistent with full archive and the instructions from here on down.
+Running the commands from the script below will do this - set the `$INSTALLER_PATH` correctly for your system. This will take sometime to expand the archives.
+
+.. code-block:: bash
+
+   #!/bin/bash
+   #
+   # set INSTALLER_PATH for your system
+   INSTALLER_PATH=/installer
+
+   # strip the top level and expand archive
+   echo "expand default pkgs and AE-Repo installer"
+   tar xf linux-64-2016-08-03.tar -C $INSTALLER_PATH --strip-components 1
+
+   # fix miniconda-latest location so it is consistent w/ full install and the remaining docs
+   echo "expand miniconda versions"
+   mkdir $INSTALLER_PATH/anaconda-suite/miniconda
+   ln -s $INSTALLER_PATH/miniconda/Miniconda-latest-Linux-x86_64.sh $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
+   tar xf miniconda-64bit-2016-08-03.tar -C $INSTALLER_PATH/anaconda-suite/miniconda/
+
+   # exapnd anaconda-cluster
+   echo "expand anaconda-cluster and R packages"
+   tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03/ --strip-components 2
+   mkdir -p $INSTALLER_PATH/R/pkgs/linux-64
+   tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ --strip-components 1
+
+
+System Wide mongodb Installation - Requires `sudo`
+---------------------------------------------------
+
+Download MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  **Air Gap Installation:** Skip this step.
+
+-  **Regular Installation:**
+
+::
+
+   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+   curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
+   curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+
+Install MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- **Air Gap Installation:**
+
+::
+
+    sudo yum install -y $INSTALLER_PATH/mongodb-org*
+
+-  **Regular Installation:**
+
+::
+
+    sudo yum install -y mongodb-org*
+
+
+Start mongodb
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    sudo service mongod start
+
+Verify mongod is running
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    sudo service mongod status
+    mongod (pid 1234) is running...
+
+.. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
+
+
 Configure Anaconda Repo Server
 -----------------------------------------
 Prior to installing Anaconda Repo components, the following needs to be done by either the IT admin or
 need `sudo` access to do it ourselves.
-
 
 Create Anaconda Repo administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -271,108 +424,14 @@ For the new path changes to take effect, “source” your .bashrc
 
     source ~/.bashrc
 
-Install Anaconda Repo Enterprise Packages
------------------------------------------
 
-Install `mongodb`
-------------------
-
-* System wide install of `mongodb`, which **requires `sudo` access**, see Section: 
-  :ref:`system-mongo-install-sudo`. 
-* For a local install of `mongodb`, see Section: :ref:`local-mongo-install-no-sudo`.
-  Does not require `sudo` access but requires a few more manual steps.
-
-
-.. _system-mongo-install-sudo:
-
-System Wide mongodb Installation - Requires `sudo`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Download MongoDB packages
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
--  **Air Gap Installation:** Skip this step.
-
--  **Regular Installation:**
-
-::
-
-   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-   curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
-
-Install MongoDB packages
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-- **Air Gap Installation:**
-
-::
-
-    sudo yum install -y $INST/mongodb-org*
-
--  **Regular Installation:**
-
-::
-
-    sudo yum install -y mongodb-org*
-
-
-Start mongodb
-^^^^^^^^^^^^^^^
-
-::
-
-    sudo service mongod start
-
-Verify mongod is running
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-::
-
-    sudo service mongod status
-    mongod (pid 1234) is running...
-
-.. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
-
-.. _local-mongo-install-no-sudo:
-
-Local mongodb Installation - `sudo` Not Required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-- **Air Gap Installation:**
-
-::
-
-    currently not part of airgap archive so this is not yet supported
-
-
-- **Regular Installation:** 
-
-::
-
-    conda install mongodb=2.6.12
-
-
-This will install mongodb in root conda environment of user: `anaconda-server`
-
-::
-
-    which mongod
-    ~/miniconda2/bin/mongod
-
-
-.. _install-ae-packages:
-
-Install Anaconda Repo Enterprise Packages
+Install And Configure Anaconda Repo 
 ------------------------------------------
 
 The following sections detail the steps required to install Anaconda Repo.
 
 
-Add the Binstar and Anaconda-Server Repo channels to conda:
+Add the Binstar and Anaconda-Server Repo channels to conda
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Add the channels from local files.
@@ -394,16 +453,13 @@ Add the Binstar and Anaconda-Server Repo channels to conda:
 
 .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
-Install the Anaconda Repo packages via conda:
----------------------------------------------
+Install the Anaconda Repo packages via conda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     conda install anaconda-client binstar-server binstar-static cas-mirror
 
-
-Setup Anaconda Repo Server Config Files
------------------------------------------
 
 Initialize the web server for Anaconda Repo:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -423,9 +479,6 @@ Set the Anaconda Repo package storage location:
 Set up automatic restart on reboot, fail or error
 -------------------------------------------------
 
-.. _conf-supervisord:
-
-
 Configure Supervisord
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -440,37 +493,6 @@ This step:
    ``@reboot /home/anaconda-server/miniconda/bin/supervisord``
 
 -  generates the ``/home/anaconda-server/miniconda/etc/supervisord.conf`` file
-
-.. _conf-mongo-supervisord:
-
-Configure Supervisord For Local `mongodb` Install
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note:: follow this step **only** if you did a local install of mongodb as given in Section :ref:`local-mongo-install-no-sudo`
-
-.. note:: ensure you have installed the Anaconda Repo packages (:ref:`install-ae-packages`) and configured Supervisord (:ref:`conf-supervisord`) before proceeding.
-
-Create a local directory for mongo to use for writing out its databases and logs.
-
-::
-
-    $ mkdir -p ~/mongo/data && mkdir ~/mongo/log 
-
-Append following lines for mongo to `~/miniconda2/etc/supervisord.conf`:
-
-::
-
-    [program:mongo]
-    command=/home/anaconda-server/miniconda2/bin/mongod --dbpath /home/anaconda-server/mongo/data --logpath /home/anaconda-server/mongo/log/mongod.log --logappend --port 27017
-    stdout_logfile=syslog
-    stderr_logfile=syslog
-
-Update the Supervisor process so it picks up the new config and runs the mongo process.
-
-::
-
-    $ supervisorctl update
-    mongo: added process group
 
 
 Verify the server and mongo is running:
@@ -491,12 +513,10 @@ Verify the server and mongo is running:
     binstar-worker-low:binstar-worker-low_05   RUNNING   pid 8256, uptime 0:06:39
     binstar-worker-low:binstar-worker-low_06   RUNNING   pid 8255, uptime 0:06:39
     binstar-worker-low:binstar-worker-low_07   RUNNING   pid 8254, uptime 0:06:39
-    mongo                                      RUNNING   pid 8451, uptime 0:00:05
 
 
-
-Continue Server Configuration - requires `mongo` 
--------------------------------------------------
+Server Configuration - requires `mongo` 
+----------------------------------------
 
 Create an initial “superuser” account for Anaconda Repo:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -506,6 +526,7 @@ Create an initial “superuser” account for Anaconda Repo:
     anaconda-server-create-user --username "superuser" --password "yourpassword" --email "your@email.com" --superuser
 
 .. note:: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
+
 
 Initialize the Anaconda Repo database:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -525,8 +546,13 @@ login page.
 
 .. note:: Contact your sales representative or support representative if you cannot find or have questions about your license.
 
-Mirror Installers for Miniconda
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setup Mirrors
+--------------
+
+Mirror Installers for Miniconda - SKIP IF FOLLOWING :ref:`comp-install`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note:: If using component installers - skip this section. It will not work at present.
 
 Miniconda installers can be served by Anaconda Repo via the **static**
 directory located at
@@ -613,8 +639,14 @@ packages locally under the "anaconda" user account.
         echo "channels:" > /etc/anaconda-server/mirrors/conda.yaml
         echo "  - file://$INSTALLER_PATH/anaconda-suite/pkgs" >> /etc/anaconda-server/mirrors/conda.yaml
 
+   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+   
+   ::
 
-   **2.** Mirror the Anaconda packages:
+        echo "platforms:" >> /etc/anaconda-server/mirrors/conda.yaml
+        echo "  - linux-64" >> /etc/anaconda-server/mirrors/conda.yaml
+
+   **3.** Mirror the Anaconda packages:
 
    ::
 
@@ -642,7 +674,15 @@ Optional: Mirror the R channel
         echo "channels:" > /etc/anaconda-server/mirrors/r-channel.yaml
         echo "  - file://$INSTALLER_PATH/R/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
-   **2.** Mirror the r-packages::
+   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+   
+   ::
+
+        echo "platforms:" >> /etc/anaconda-server/mirrors/r-channel.yaml
+        echo "  - linux-64" >> /etc/anaconda-server/mirrors/r-channel.yaml
+
+
+   **3.** Mirror the r-packages::
 
        anaconda-server-sync-conda --mirror-config \
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
@@ -667,6 +707,8 @@ Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: If AEN is not setup and no packages from wakari channel are needed then this is an **optional** mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.
+
+.. note:: If using platform based archive, :ref:`comp-install`, **SKIP** this section
 
 If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user account.
@@ -715,13 +757,10 @@ YAML file below:
 Where **“TOKEN”** is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
-Optional: Mirror the Anaconda Adam channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional: Mirror the Anaconda Cluster channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the local Anaconda Repo will be used by Anaconda Adam, the
-recommended method is to mirror using an “anaconda-adam” user.
-To mirror the Anaconda Adam channel, create the mirror config
-YAML file below:
+To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below: 
 
 -  **Air Gap Installation:**
 
@@ -729,16 +768,24 @@ YAML file below:
 
    ::
 
-       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-adam.yaml
-       echo "  - file://$INSTALLER_PATH/anaconda-adam/pkgs" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+       echo "  - file://$INSTALLER_PATH/anaconda-cluster/pkgs" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
-   **2.** Mirror the Anaconda Cluster Management packages:
+   **2.** (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+   
+   ::
+
+        echo "platforms:" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+        echo "  - linux-64" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+
+
+   **3.** Mirror the Anaconda Cluster Management packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
-          --account=anaconda-adam
+          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
+          --account=anaconda-cluster
 
 -  **Regular Installation:**
 
@@ -746,27 +793,23 @@ YAML file below:
 
    ::
 
-       vi /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
    **2.** Add the following:
 
    ::
 
        channels:
-         - https://conda.anaconda.org/anaconda-adam
+         - https://conda.anaconda.org/anaconda-cluster
 
    **3.** Mirror the Anaconda Adam packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
-          --account=anaconda-adam
+          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
+          --account=anaconda-cluster
 
-Optional: Assemble installer resources manually
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-** Describe the process of adding platform tarballs to an $INSTALLER_PATH **
 
 Optional: Adjust iptables to accept requests on port 80
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -837,23 +880,5 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
-
-Optional: Installing From Platform-based Archives 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost identical to the full install as described above, however there are a few things to note:
-
-- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
-- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
-
-Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):
-
-::
-
-    tar xvf linux-32-2016-07-06.tar -C $INSTALLER_PATH/anaconda-suite/pkgs/
-
-This creates the **$INSTALLER_PATH/anaconda-suite/pkgs/linux-32** directory containing 32-Bit Linux packages.
-The steps in the "Mirror Anaconda Repo" section above will then mirror these packages into the default (anaconda) channel in your local Anaconda Repo.
-
-
 
 

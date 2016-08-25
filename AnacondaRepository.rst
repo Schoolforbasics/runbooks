@@ -48,7 +48,7 @@ Hardware Requirements
 -  Storage: Recommended minimum of 300GB; Additional space is
    recommended if the repository is will be used to store packages built
    by the customer.
-- If downloading AirGap tarball for install, allow ~500GB: roughly 200GB for full anaconda installer and 200GB for exapanding it.
+- If downloading AirGap tarball 200GB is needed for full anaconda installer. Plus another 200GB for exapanding it, preferably to different disk on same machine.
 
 
 Software Requirements

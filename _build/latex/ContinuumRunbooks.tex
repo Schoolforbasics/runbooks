@@ -3,7 +3,9 @@
 \documentclass[letterpaper,10pt,openany,oneside]{sphinxmanual}
 
 \usepackage[utf8]{inputenc}
-\DeclareUnicodeCharacter{00A0}{~}
+\ifdefined\DeclareUnicodeCharacter
+  \DeclareUnicodeCharacter{00A0}{\nobreakspace}
+\else\fi
 \usepackage{cmap}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb}
@@ -26,7 +28,7 @@
 
 
 \title{Anaconda Enterprise Runbooks}
-\date{Aug 05, 2016}
+\date{Aug 24, 2016}
 \release{4.0-3}
 \author{Continuum Analytics}
 \newcommand{\sphinxlogo}{\includegraphics{anaconda_logo.png}\par}
@@ -139,21 +141,32 @@
 
 
 
-\chapter{Anaconda Repository Runbook}
-\label{AnacondaRepository:anaconda-repository-runbook}\label{AnacondaRepository::doc}\label{AnacondaRepository:continuum-analytics-anaconda-enterprise-deployment-runbooks}\begin{itemize}
+\chapter{Anaconda Repo Runbook}
+\label{AnacondaRepository::doc}\label{AnacondaRepository:continuum-analytics-anaconda-enterprise-deployment-runbooks}\label{AnacondaRepository:anaconda-repo-runbook}\begin{itemize}
 \item {} 
-Version: 4.0-3 \textbar{} Aug 05, 2016
+Version: 4.0-3 \textbar{} Aug 24, 2016
 
 \end{itemize}
 
 This following runbook walks through the steps needed to install
-Anaconda Repository. The runbook is designed for two audiences: those who have
+Anaconda Repo. The runbook is designed for two audiences: those who have
 direct access to the internet for installation and those where such
 access is not available or restricted for security reasons. For these
 restricted a.k.a. ``Air Gap'' environments, Continuum ships the entire
 Anaconda product suite on portable storage medium or as a downloadable
-TAR archive. Where necessary, additional instructions for Air Gap
-environments are noted. If you have any questions about the
+TAR archive. Additionally, Continuum provides a set of Air Gap TAR archives for
+those environments only needing certain platform architectures,
+such as 64-Bit Linux, 32-Bit Linux, etc.
+With the exception of 64-Bit Linux, These platform-based archives include
+all of the available packages for that platform.
+The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
+neecessary to install Anaconda Repo.
+
+Additional platforms can be added by downloading the corresponding
+TAR archive and importing it to the local Anaconda Repo. See the section titled ``Optional: Installing from Platform-based Archives'' below to prepare your environment before starting the Anaconda Repo Installation.
+
+Where necessary, additional instructions for Air Gap
+environments are noted throughout this document. If you have any questions about the
 instructions, please contact your sales representative or Priority
 Support team, if applicable, for additional assistance.
 
@@ -192,7 +205,7 @@ document assumes RHEL or CentOS 6.7)
 MongoDB version 2.6
 
 \item {} 
-Anaconda Repository license file - given as part of the welcome packet -
+Anaconda Repo license file - given as part of the welcome packet -
 contact your sales representative or support representative if you
 cannot find your license.
 
@@ -226,7 +239,7 @@ Ability to make (optional) iptables modifications
 
 \end{itemize}
 
-\textbf{NOTE}: SELinux does not have to be disabled for Anaconda Repository
+\textbf{NOTE}: SELinux does not have to be disabled for Anaconda Repo
 operation
 
 
@@ -236,13 +249,13 @@ operation
 TCP Ports
 \begin{itemize}
 \item {} 
-Inbound TCP 8080 (Anaconda Repository)
+Inbound TCP 8080 (Anaconda Repo)
 
 \item {} 
 Inbound TCP 22 (SSH)
 
 \item {} 
-Outbound TCP 443 (to Anaconda Cloud or local Anaconda Repository)
+Outbound TCP 443 (to Anaconda Cloud or local Anaconda Repo)
 
 \item {} 
 Outbound TCP 25 (SMTP)
@@ -258,7 +271,7 @@ Outbound TCP 389/636 (LDAP(s))
 \subsection{Other Requirements}
 \label{AnacondaRepository:other-requirements}
 Assuming the above requirements are met, there are no additional
-dependencies necessary for Anaconda Repository.
+dependencies necessary for Anaconda Repo.
 
 
 \subsection{Air Gap vs. Regular Installation}
@@ -274,14 +287,17 @@ should follow \textbf{Regular Installation} instructions.
 
 \subsection{Air Gap Media}
 \label{AnacondaRepository:air-gap-media}
-This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.
+This document assumes that the Air Gap media is available on
+the target server at \$INSTALLER\_PATH where the software is being installed.
+
+\textbf{NOTE:} The \$INSTALLER\_PATH variable must be set to the location of the Air Gap media as displayed
+below. The \$INSTALLER\_PATH is the parent directory to the \textbf{anaconda-suite} directory.
 
 
 \subsection{Air Gap media contents}
 \label{AnacondaRepository:air-gap-media-contents}
 \begin{Verbatim}[commandchars=\\\{\}]
-/installer
+\PYG{n+nv}{\PYGZdl{}INSTALLER\PYGZus{}PATH}
 \PYGZus{}\PYGZus{}\PYGZus{} anaconda\PYGZhy{}suite
     \PYGZus{}\PYGZus{}\PYGZus{} pkgs
 mongodb\PYGZhy{}org\PYGZhy{}tools\PYGZhy{}2.6.8\PYGZhy{}1.x86\PYGZus{}64.rpm
@@ -292,10 +308,40 @@ mongodb\PYGZhy{}org\PYGZhy{}2.6.8\PYGZhy{}1.x86\PYGZus{}64.rpm
 \end{Verbatim}
 
 
-\section{Anaconda Repository Installation}
-\label{AnacondaRepository:anaconda-repository-installation}
+\chapter{Installation and Configuration}
+\label{AnacondaRepository:installation-and-configuration}\setbox0\vbox{
+\begin{minipage}{0.95\linewidth}
+\begin{itemize}
+\item {} 
+\phantomsection\label{AnacondaRepository:id1}{\hyperref[AnacondaRepository:anaconda\string-repo\string-installation]{\crossref{Anaconda Repo Installation}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id2}{\hyperref[AnacondaRepository:configure\string-anaconda\string-repo]{\crossref{Configure Anaconda Repo}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id3}{\hyperref[AnacondaRepository:install\string-miniconda\string-bootstrap\string-version]{\crossref{Install Miniconda bootstrap version}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id4}{\hyperref[AnacondaRepository:install\string-anaconda\string-repo\string-enterprise\string-packages]{\crossref{Install Anaconda Repo Enterprise Packages}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id5}{\hyperref[AnacondaRepository:install\string-the\string-anaconda\string-repo\string-packages\string-via\string-conda]{\crossref{Install the Anaconda Repo packages via conda:}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id6}{\hyperref[AnacondaRepository:configure\string-anaconda\string-repo\string-server]{\crossref{Configure Anaconda Repo Server}}}
+
+\item {} 
+\phantomsection\label{AnacondaRepository:id7}{\hyperref[AnacondaRepository:set\string-up\string-automatic\string-restart\string-on\string-reboot\string-fail\string-or\string-error]{\crossref{Set up automatic restart on reboot, fail or error}}}
+
+\end{itemize}
+\end{minipage}}
+\begin{center}\setlength{\fboxsep}{5pt}\shadowbox{\box0}\end{center}
+
+
+\section{Anaconda Repo Installation}
+\label{AnacondaRepository:anaconda-repo-installation}
 The following sections detail the steps required to install Anaconda
-Repository.
+Repo.
 
 
 \subsection{Install MongoDB}
@@ -329,7 +375,7 @@ curl \PYGZhy{}O \PYGZdl{}RPM\PYGZus{}CDN/mongodb\PYGZhy{}org\PYGZhy{}2.6.8\PYGZh
 \end{itemize}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{sudo} \PYG{n}{yum} \PYG{n}{install} \PYG{o}{\PYGZhy{}}\PYG{n}{y} \PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{mongodb}\PYG{o}{\PYGZhy{}}\PYG{n}{org}\PYG{o}{*}
+sudo yum install \PYGZhy{}y \PYGZdl{}INSTALLER\PYGZus{}PATH/mongodb\PYGZhy{}org*
 \end{Verbatim}
 \begin{itemize}
 \item {} 
@@ -360,25 +406,25 @@ curl \PYGZhy{}O \PYGZdl{}RPM\PYGZus{}CDN/mongodb\PYGZhy{}org\PYGZhy{}2.6.8\PYGZh
 \href{https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/}{here}.
 
 
-\section{Configure Anaconda Repository}
-\label{AnacondaRepository:configure-anaconda-repository}
+\section{Configure Anaconda Repo}
+\label{AnacondaRepository:configure-anaconda-repo}
 
-\subsection{Create Anaconda Repository administrator account}
-\label{AnacondaRepository:create-anaconda-repository-administrator-account}
-In a terminal window, create a new user account for Anaconda Repository named
+\subsection{Create Anaconda Repo administrator account}
+\label{AnacondaRepository:create-anaconda-repo-administrator-account}
+In a terminal window, create a new user account for Anaconda Repo named
 ``anaconda-server'':
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{sudo} \PYG{n}{useradd} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}
 \end{Verbatim}
 
-\textbf{NOTE:} The anaconda-server user is the default for installing Anaconda Repository.
+\textbf{NOTE:} The anaconda-server user is the default for installing Anaconda Repo.
 Any username can be used, however the use of the root user is
 discouraged.
 
 
-\subsection{Create Anaconda Repository directories}
-\label{AnacondaRepository:create-anaconda-repository-directories}
+\subsection{Create Anaconda Repo directories}
+\label{AnacondaRepository:create-anaconda-repo-directories}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{sudo} \PYG{n}{mkdir} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{l+m+mi}{0770} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}
 \PYG{n}{sudo} \PYG{n}{mkdir} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{l+m+mi}{0770} \PYG{o}{/}\PYG{n}{var}\PYG{o}{/}\PYG{n}{log}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}
@@ -397,8 +443,8 @@ discouraged.
 \end{Verbatim}
 
 
-\subsection{Switch to the Anaconda Repository administrator account}
-\label{AnacondaRepository:switch-to-the-anaconda-repository-administrator-account}
+\subsection{Switch to the Anaconda Repo administrator account}
+\label{AnacondaRepository:switch-to-the-anaconda-repo-administrator-account}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{sudo} \PYG{n}{su} \PYG{o}{\PYGZhy{}} \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}
 \end{Verbatim}
@@ -430,7 +476,7 @@ discouraged.
 \end{itemize}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{bash} \PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{suite}\PYG{o}{/}\PYG{n}{miniconda}\PYG{o}{/}\PYG{n}{Miniconda}\PYG{o}{\PYGZhy{}}\PYG{n}{latest}\PYG{o}{\PYGZhy{}}\PYG{n}{Linux}\PYG{o}{\PYGZhy{}}\PYG{n}{x86\PYGZus{}64}\PYG{o}{.}\PYG{n}{sh}
+bash \PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}suite/miniconda/Miniconda\PYGZhy{}latest\PYGZhy{}Linux\PYGZhy{}x86\PYGZus{}64.sh
 \end{Verbatim}
 \begin{itemize}
 \item {} 
@@ -482,19 +528,19 @@ PATH in your /home/anaconda-server/.bashrc ?
 \end{Verbatim}
 
 
-\section{Install Anaconda Repository Enterprise Packages}
-\label{AnacondaRepository:install-anaconda-repository-enterprise-packages}
+\section{Install Anaconda Repo Enterprise Packages}
+\label{AnacondaRepository:install-anaconda-repo-enterprise-packages}
 
-\subsection{Add the Binstar and Anaconda-Server Repository channels to conda:}
-\label{AnacondaRepository:add-the-binstar-and-anaconda-server-repository-channels-to-conda}\begin{itemize}
+\subsection{Add the Binstar and Anaconda-Server Repo channels to conda:}
+\label{AnacondaRepository:add-the-binstar-and-anaconda-server-repo-channels-to-conda}\begin{itemize}
 \item {} 
 \textbf{Air Gap Installation:} Add the channels from local files.
 
 \end{itemize}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{conda} \PYG{n}{config} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{add} \PYG{n}{channels}  \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{suite}\PYG{o}{/}\PYG{n}{pkgs}\PYG{o}{/}
-\PYG{n}{conda} \PYG{n}{config} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{remove} \PYG{n}{channels} \PYG{n}{defaults} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{force}
+conda config \PYGZhy{}\PYGZhy{}add channels  file://\PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}suite/pkgs/
+conda config \PYGZhy{}\PYGZhy{}remove channels defaults \PYGZhy{}\PYGZhy{}force
 \end{Verbatim}
 \begin{itemize}
 \item {} 
@@ -514,38 +560,34 @@ Support, one for each channel. If you haven't, please contact
 \href{mailto:support@continuum.io}{support@continuum.io}. Tokens are not required for Air Gap installs.
 
 
-\section{Install the Anaconda Repository packages via conda:}
-\label{AnacondaRepository:install-the-anaconda-repository-packages-via-conda}
+\section{Install the Anaconda Repo packages via conda:}
+\label{AnacondaRepository:install-the-anaconda-repo-packages-via-conda}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{conda} \PYG{n}{install} \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{client} \PYG{n}{binstar}\PYG{o}{\PYGZhy{}}\PYG{n}{server} \PYG{n}{binstar}\PYG{o}{\PYGZhy{}}\PYG{n}{static} \PYG{n}{cas}\PYG{o}{\PYGZhy{}}\PYG{n}{mirror}
 \end{Verbatim}
 
 
-\section{Configure Anaconda Repository Server}
-\label{AnacondaRepository:configure-anaconda-repository-server}
+\section{Configure Anaconda Repo Server}
+\label{AnacondaRepository:configure-anaconda-repo-server}
 
-\subsection{Initialize the web server for Anaconda Repository:}
-\label{AnacondaRepository:initialize-the-web-server-for-anaconda-repository}
+\subsection{Initialize the web server for Anaconda Repo:}
+\label{AnacondaRepository:initialize-the-web-server-for-anaconda-repo}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{config} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{init} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{config}\PYG{o}{\PYGZhy{}}\PYG{n}{file} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{config}\PYG{o}{.}\PYG{n}{yaml}
 \end{Verbatim}
 
 
-\subsection{Set the Anaconda Repository package storage location:}
-\label{AnacondaRepository:set-the-anaconda-repository-package-storage-location}
+\subsection{Set the Anaconda Repo package storage location:}
+\label{AnacondaRepository:set-the-anaconda-repo-package-storage-location}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{config} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n+nb}{set} \PYG{n}{fs\PYGZus{}storage\PYGZus{}root} \PYG{o}{/}\PYG{n}{opt}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{package}\PYG{o}{\PYGZhy{}}\PYG{n}{storage} \PYGZbs{}
-                       \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{config}\PYG{o}{\PYGZhy{}}\PYG{n}{file} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{config}\PYG{o}{.}\PYG{n}{yaml}
+\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{config} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n+nb}{set} \PYG{n}{fs\PYGZus{}storage\PYGZus{}root} \PYG{o}{/}\PYG{n}{opt}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{package}\PYG{o}{\PYGZhy{}}\PYG{n}{storage} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{config}\PYG{o}{\PYGZhy{}}\PYG{n}{file} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{config}\PYG{o}{.}\PYG{n}{yaml}
 \end{Verbatim}
 
 
-\subsection{Create an initial “superuser” account for Anaconda Repository:}
-\label{AnacondaRepository:create-an-initial-superuser-account-for-anaconda-repository}
+\subsection{Create an initial “superuser” account for Anaconda Repo:}
+\label{AnacondaRepository:create-an-initial-superuser-account-for-anaconda-repo}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{create}\PYG{o}{\PYGZhy{}}\PYG{n}{user} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{username} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{superuser}\PYG{l+s+s2}{\PYGZdq{}} \PYGZbs{}
-                            \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{password} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{yourpassword}\PYG{l+s+s2}{\PYGZdq{}} \PYGZbs{}
-                            \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{email} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{your@email.com}\PYG{l+s+s2}{\PYGZdq{}} \PYGZbs{}
-                            \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{superuser}
+\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{create}\PYG{o}{\PYGZhy{}}\PYG{n}{user} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{username} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{superuser}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{password} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{yourpassword}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{email} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{your@email.com}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{superuser}
 \end{Verbatim}
 \begin{quote}\begin{description}
 \item[{Note}] \leavevmode
@@ -557,8 +599,8 @@ password can be changed with the web interface.
 \end{description}\end{quote}
 
 
-\subsection{Initialize the Anaconda Repository database:}
-\label{AnacondaRepository:initialize-the-anaconda-repository-database}
+\subsection{Initialize the Anaconda Repo database:}
+\label{AnacondaRepository:initialize-the-anaconda-repo-database}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{db}\PYG{o}{\PYGZhy{}}\PYG{n}{setup} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{execute}
 \end{Verbatim}
@@ -598,8 +640,8 @@ generates the \code{/home/anaconda-server/miniconda/etc/supervisord.conf} file
 \end{Verbatim}
 
 
-\subsection{Install Anaconda Repository License}
-\label{AnacondaRepository:install-anaconda-repository-license}
+\subsection{Install Anaconda Repo License}
+\label{AnacondaRepository:install-anaconda-repo-license}
 Visit \textbf{http://your.anaconda.server:8080}. Follow the onscreen
 instructions and upload your license file. Log in with the superuser
 user and password configured above. After submitting, you should see the
@@ -611,7 +653,7 @@ you cannot find or have questions about your license.
 
 \subsection{Mirror Installers for Miniconda}
 \label{AnacondaRepository:mirror-installers-for-miniconda}
-Miniconda installers can be served by Anaconda Repository via the \textbf{static}
+Miniconda installers can be served by Anaconda Repo via the \textbf{static}
 directory located at
 \textbf{/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras}.
 This is \textbf{required} for Anaconda Cluster integration. To serve up the
@@ -619,7 +661,7 @@ latest Miniconda installers for each platform, download them and copy
 them to the \textbf{extras} directory.
 
 Users will then be able to download installers at a URL that looks like the
-following: \url{http:/}/\textless{}your host\textgreater{}:8080/static/extras/Miniconda3-latest-Linux-x86\_64.sh
+following: \url{http:/}/\textless{}your host\textgreater{}:8080/static/Miniconda3-latest-Linux-x86\_64.sh
 \begin{itemize}
 \item {} 
 \textbf{Air Gap Installation:}
@@ -628,7 +670,7 @@ following: \url{http:/}/\textless{}your host\textgreater{}:8080/static/extras/Mi
 \PYGZsh{} miniconda installers
 mkdir \PYGZhy{}p /tmp/extras
 pushd /tmp/extras
-URL=\PYGZdq{}file:///installer/anaconda\PYGZhy{}suite/miniconda/\PYGZdq{}
+URL=\PYGZdq{}file://\PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}suite/miniconda/\PYGZdq{}
 versions=\PYGZdq{}Miniconda3\PYGZhy{}latest\PYGZhy{}Linux\PYGZhy{}x86\PYGZus{}64.sh \PYGZbs{}
 Miniconda3\PYGZhy{}latest\PYGZhy{}MacOSX\PYGZhy{}x86\PYGZus{}64.sh \PYGZbs{}
 Miniconda3\PYGZhy{}latest\PYGZhy{}Windows\PYGZhy{}x86.exe \PYGZbs{}
@@ -673,16 +715,15 @@ done
 
 \PYGZsh{} Move installers into static directory
 popd
-cp \PYGZhy{}a /tmp/extras \PYGZbs{}
-     /home/anaconda\PYGZhy{}server/miniconda2/lib/python2.7/site\PYGZhy{}packages/binstar/static
+cp \PYGZhy{}a /tmp/extras /home/anaconda\PYGZhy{}server/miniconda2/lib/python2.7/site\PYGZhy{}packages/binstar/static
 \end{Verbatim}
 
 \end{itemize}
 
 
-\subsection{Mirror Anaconda Repository}
-\label{AnacondaRepository:mirror-anaconda-repository}
-Now that Anaconda Repository is installed, we want to mirror packages into our
+\subsection{Mirror Anaconda Repo}
+\label{AnacondaRepository:mirror-anaconda-repo}
+Now that Anaconda Repo is installed, we want to mirror packages into our
 local repository. If mirroring from Anaconda Cloud, the process will
 take hours or longer, depending on the available internet bandwidth. Use
 the \code{anaconda-server-sync-conda} command to mirror all Anaconda
@@ -706,8 +747,8 @@ filesystem, some additional configuration is necessary.
 Add the following:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{channels}\PYG{p}{:}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{suite}\PYG{o}{/}\PYG{n}{pkgs}
+channels:
+  \PYGZhy{} file://\PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}suite/pkgs
 \end{Verbatim}
 
 \textbf{2.} Mirror the Anaconda packages:
@@ -730,7 +771,7 @@ Depending on the type of installation, this process may take hours.
 
 \end{description}\end{quote}
 
-To verify the local Anaconda Repository repo has been populated, visit
+To verify the local Anaconda Repo repo has been populated, visit
 \textbf{http://your.anaconda.server:8080/anaconda} in a browser.
 
 
@@ -748,8 +789,8 @@ To verify the local Anaconda Repository repo has been populated, visit
 \textbf{2.} Add the following:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{channels}\PYG{p}{:}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{r}\PYG{o}{/}\PYG{n}{pkgs}
+channels:
+  \PYGZhy{} file://\PYGZdl{}INSTALLER\PYGZus{}PATH/r/pkgs
 \end{Verbatim}
 
 \textbf{3.} Mirror the Anaconda Cluster Management packages:
@@ -787,7 +828,7 @@ To verify the local Anaconda Repository repo has been populated, visit
 
 \subsection{Optional: Mirror the Anaconda Enterprise Notebooks Channel}
 \label{AnacondaRepository:optional-mirror-the-anaconda-enterprise-notebooks-channel}
-If the local Anaconda Repository will be used by Anaconda Enterprise Notebooks
+If the local Anaconda Repo will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user.
 To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
 YAML file below:
@@ -804,9 +845,9 @@ YAML file below:
 \textbf{2.} Add the following:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{channels}\PYG{p}{:}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{wakari}\PYG{o}{/}\PYG{n}{pkgs}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{nb}\PYG{o}{\PYGZhy{}}\PYG{n}{extensions}\PYG{o}{/}\PYG{n}{pkgs}
+channels:
+  \PYGZhy{} file://\PYGZdl{}INSTALLER\PYGZus{}PATH/wakari/pkgs
+  \PYGZhy{} file://\PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}nb\PYGZhy{}extensions/pkgs
 \end{Verbatim}
 
 \textbf{3.} Mirror the Anaconda Enteprise Notebooks packages:
@@ -846,12 +887,12 @@ Where \textbf{“TOKEN”} is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
 
-\subsection{Optional: Mirror the Anaconda Cluster Management channel}
-\label{AnacondaRepository:optional-mirror-the-anaconda-cluster-management-channel}
-If the local Anaconda Repository will be used by Anaconda Cluster nodes (head
-or compute), the recommended method is to mirror using an
-“anaconda-cluster” user. To mirror the Anaconda Cluster Management repo,
-create the mirror config YAML file below:
+\subsection{Optional: Mirror the Anaconda Adam channel}
+\label{AnacondaRepository:optional-mirror-the-anaconda-adam-channel}
+If the local Anaconda Repo will be used by Anaconda Adam, the
+recommended method is to mirror using an “anaconda-adam” user.
+To mirror the Anaconda Adam channel, create the mirror config
+YAML file below:
 \begin{itemize}
 \item {} 
 \textbf{Air Gap Installation:}
@@ -859,22 +900,22 @@ create the mirror config YAML file below:
 \textbf{1.} Create a mirror config file:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{vi} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{yaml}
+\PYG{n}{vi} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}\PYG{o}{.}\PYG{n}{yaml}
 \end{Verbatim}
 
 \textbf{2.} Add the following:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{channels}\PYG{p}{:}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{file}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{o}{/}\PYG{n}{installer}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}\PYG{o}{/}\PYG{n}{pkgs}
+channels:
+  \PYGZhy{} file://\PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}adam/pkgs
 \end{Verbatim}
 
 \textbf{3.} Mirror the Anaconda Cluster Management packages:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{sync}\PYG{o}{\PYGZhy{}}\PYG{n}{conda} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{mirror}\PYG{o}{\PYGZhy{}}\PYG{n}{config} \PYGZbs{}
-   \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{yaml} \PYGZbs{}
-   \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{account}\PYG{o}{=}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}
+   \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}\PYG{o}{.}\PYG{n}{yaml} \PYGZbs{}
+   \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{account}\PYG{o}{=}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}
 \end{Verbatim}
 
 \item {} 
@@ -883,32 +924,37 @@ create the mirror config YAML file below:
 \textbf{1.} Create a mirror config file:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{vi} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{yaml}
+\PYG{n}{vi} \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}\PYG{o}{.}\PYG{n}{yaml}
 \end{Verbatim}
 
 \textbf{2.} Add the following:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{channels}\PYG{p}{:}
-  \PYG{o}{\PYGZhy{}} \PYG{n}{https}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{n}{conda}\PYG{o}{.}\PYG{n}{anaconda}\PYG{o}{.}\PYG{n}{org}\PYG{o}{/}\PYG{n}{t}\PYG{o}{/}\PYG{n}{L8pxtQupjz01}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}
+  \PYG{o}{\PYGZhy{}} \PYG{n}{https}\PYG{p}{:}\PYG{o}{/}\PYG{o}{/}\PYG{n}{conda}\PYG{o}{.}\PYG{n}{anaconda}\PYG{o}{.}\PYG{n}{org}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}
 \end{Verbatim}
 
-\textbf{3.} Mirror the Anaconda Cluster Management packages:
+\textbf{3.} Mirror the Anaconda Adam packages:
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{\PYGZhy{}}\PYG{n}{sync}\PYG{o}{\PYGZhy{}}\PYG{n}{conda} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{mirror}\PYG{o}{\PYGZhy{}}\PYG{n}{config} \PYGZbs{}
-   \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}\PYG{o}{.}\PYG{n}{yaml} \PYGZbs{}
-   \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{account}\PYG{o}{=}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{cluster}
+   \PYG{o}{/}\PYG{n}{etc}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{server}\PYG{o}{/}\PYG{n}{mirrors}\PYG{o}{/}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}\PYG{o}{.}\PYG{n}{yaml} \PYGZbs{}
+   \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{account}\PYG{o}{=}\PYG{n}{anaconda}\PYG{o}{\PYGZhy{}}\PYG{n}{adam}
 \end{Verbatim}
 
 \end{itemize}
 
 
+\subsection{Optional: Assemble installer resources manually}
+\label{AnacondaRepository:optional-assemble-installer-resources-manually}
+** Describe the process of adding platform tarballs to an \$INSTALLER\_PATH **
+
+
 \subsection{Optional: Adjust iptables to accept requests on port 80}
 \label{AnacondaRepository:optional-adjust-iptables-to-accept-requests-on-port-80}
-The easiest way to enable clients to access an Anaconda Repository on standard
+The easiest way to enable clients to access an Anaconda Repo on standard
 ports is to configure the server to redirect traffic received on
-standard HTTP port 80 to the standard Anaconda Repository HTTP port 8080.
+standard HTTP port 80 to the standard Anaconda Repo HTTP port 8080.
 
 \textbf{NOTE:} These commands assume the default state of iptables on CentOS
 6.7 which is “on” and allowing inbound SSH access on port 22. Take
@@ -918,23 +964,19 @@ inaccessible.
 \textbf{Allow inbound access to tcp port 80:}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{I} \PYG{n}{INPUT} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{80} \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{ACCEPT} \PYGZbs{}
-              \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repository \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{I} \PYG{n}{INPUT} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{80} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repo \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{ACCEPT}
 \end{Verbatim}
 
 \textbf{Allow inbound access to tcp port 8080:}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{I} \PYG{n}{INPUT} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{8080} \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{ACCEPT} \PYGZbs{}
-              \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repository \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{I} \PYG{n}{INPUT} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{8080} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repo \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{ACCEPT}
 \end{Verbatim}
 
 \textbf{Redirect inbound requests to port 80 to port 8080:}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{A} \PYG{n}{PREROUTING} \PYG{o}{\PYGZhy{}}\PYG{n}{t} \PYG{n}{nat} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{80} \PYGZbs{}
-              \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{REDIRECT} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{to}\PYG{o}{\PYGZhy{}}\PYG{n}{port} \PYG{l+m+mi}{8080} \PYGZbs{}
-              \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repository \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{A} \PYG{n}{PREROUTING} \PYG{o}{\PYGZhy{}}\PYG{n}{t} \PYG{n}{nat} \PYG{o}{\PYGZhy{}}\PYG{n}{i} \PYG{n}{eth0} \PYG{o}{\PYGZhy{}}\PYG{n}{p} \PYG{n}{tcp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{dport} \PYG{l+m+mi}{80} \PYG{o}{\PYGZhy{}}\PYG{n}{m} \PYG{n}{comment} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{comment} \PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{\PYGZsh{} Anaconda Repo \PYGZsh{}}\PYG{l+s+s2}{\PYGZdq{}} \PYG{o}{\PYGZhy{}}\PYG{n}{j} \PYG{n}{REDIRECT} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}\PYG{n}{to}\PYG{o}{\PYGZhy{}}\PYG{n}{port} \PYG{l+m+mi}{8080}
 \end{Verbatim}
 
 \textbf{Display the current iptables rules:}
@@ -942,21 +984,21 @@ inaccessible.
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{L} \PYG{o}{\PYGZhy{}}\PYG{n}{n}
 \PYG{n}{Chain} \PYG{n}{INPUT} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}     \PYG{n}{destination}
-\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{8080} \PYG{c+c1}{\PYGZsh{} Anaconda Repository \PYGZsh{}}
-\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{80} \PYG{c+c1}{\PYGZsh{} Anaconda Repository \PYGZsh{}}
-\PYG{n}{ACCEPT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{state} \PYG{n}{RELATED}\PYG{p}{,}\PYG{n}{ESTABLISHED}
-\PYG{n}{ACCEPT}     \PYG{n}{icmp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}
-\PYG{n}{ACCEPT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}
-\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{state} \PYG{n}{NEW} \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{22}
-\PYG{n}{REJECT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{reject}\PYG{o}{\PYGZhy{}}\PYG{k}{with} \PYG{n}{icmp}\PYG{o}{\PYGZhy{}}\PYG{n}{host}\PYG{o}{\PYGZhy{}}\PYG{n}{prohibited}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
+\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{8080} \PYG{c+c1}{\PYGZsh{} Anaconda Repo \PYGZsh{}}
+\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{80} \PYG{c+c1}{\PYGZsh{} Anaconda Repo \PYGZsh{}}
+\PYG{n}{ACCEPT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{state} \PYG{n}{RELATED}\PYG{p}{,}\PYG{n}{ESTABLISHED}
+\PYG{n}{ACCEPT}     \PYG{n}{icmp} \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}
+\PYG{n}{ACCEPT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}
+\PYG{n}{ACCEPT}     \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{state} \PYG{n}{NEW} \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{22}
+\PYG{n}{REJECT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{reject}\PYG{o}{\PYGZhy{}}\PYG{k}{with} \PYG{n}{icmp}\PYG{o}{\PYGZhy{}}\PYG{n}{host}\PYG{o}{\PYGZhy{}}\PYG{n}{prohibited}
 
 \PYG{n}{Chain} \PYG{n}{FORWARD} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}     \PYG{n}{destination}
-\PYG{n}{REJECT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{reject}\PYG{o}{\PYGZhy{}}\PYG{k}{with} \PYG{n}{icmp}\PYG{o}{\PYGZhy{}}\PYG{n}{host}\PYG{o}{\PYGZhy{}}\PYG{n}{prohibited}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
+\PYG{n}{REJECT}     \PYG{n+nb}{all}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{reject}\PYG{o}{\PYGZhy{}}\PYG{k}{with} \PYG{n}{icmp}\PYG{o}{\PYGZhy{}}\PYG{n}{host}\PYG{o}{\PYGZhy{}}\PYG{n}{prohibited}
 
 \PYG{n}{Chain} \PYG{n}{OUTPUT} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}     \PYG{n}{destination}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
 \end{Verbatim}
 
 \textbf{NOTE:} the PREROUTING (nat) iptables chain is not displayed by
@@ -965,14 +1007,14 @@ default; to show it, use:
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{n}{sudo} \PYG{n}{iptables} \PYG{o}{\PYGZhy{}}\PYG{n}{L} \PYG{o}{\PYGZhy{}}\PYG{n}{n} \PYG{o}{\PYGZhy{}}\PYG{n}{t} \PYG{n}{nat}
 \PYG{n}{Chain} \PYG{n}{PREROUTING} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}        \PYG{n}{destination}
-\PYG{n}{REDIRECT}   \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}     \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{80} \PYG{c+c1}{\PYGZsh{} Anaconda Repository \PYGZsh{} redir ports 8080}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
+\PYG{n}{REDIRECT}   \PYG{n}{tcp}  \PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZhy{}}  \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}            \PYG{l+m+mf}{0.0}\PYG{o}{.}\PYG{l+m+mf}{0.0}\PYG{o}{/}\PYG{l+m+mi}{0}           \PYG{n}{tcp} \PYG{n}{dpt}\PYG{p}{:}\PYG{l+m+mi}{80} \PYG{c+c1}{\PYGZsh{} Anaconda Repo \PYGZsh{} redir ports 8080}
 
 \PYG{n}{Chain} \PYG{n}{POSTROUTING} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}        \PYG{n}{destination}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
 
 \PYG{n}{Chain} \PYG{n}{OUTPUT} \PYG{p}{(}\PYG{n}{policy} \PYG{n}{ACCEPT}\PYG{p}{)}
-\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}        \PYG{n}{destination}
+\PYG{n}{target}     \PYG{n}{prot} \PYG{n}{opt} \PYG{n}{source}               \PYG{n}{destination}
 \end{Verbatim}
 
 Write the running iptables configuration to \textbf{/etc/sysconfig/iptables:}
@@ -982,10 +1024,32 @@ Write the running iptables configuration to \textbf{/etc/sysconfig/iptables:}
 \end{Verbatim}
 
 
+\subsection{Optional: Installing From Platform-based Archives}
+\label{AnacondaRepository:optional-installing-from-platform-based-archives}
+Using the \textbf{64-Bit Linux} platform-based TAR archive to install Anaconda Repo is almost identical to the full install as described above, however there are a few things to note:
+\begin{itemize}
+\item {} 
+The installer contains \textbf{ONLY} 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
+
+\item {} 
+The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+
+\end{itemize}
+
+Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):
+
+\begin{Verbatim}[commandchars=\\\{\}]
+tar xvf linux\PYGZhy{}32\PYGZhy{}2016\PYGZhy{}07\PYGZhy{}06.tar \PYGZhy{}C \PYGZdl{}INSTALLER\PYGZus{}PATH/anaconda\PYGZhy{}suite/pkgs/
+\end{Verbatim}
+
+This creates the \textbf{\$INSTALLER\_PATH/anaconda-suite/pkgs/linux-32} directory containing 32-Bit Linux packages.
+The steps in the ``Mirror Anaconda Repo'' section above will then mirror these packages into the default (anaconda) channel in your local Anaconda Repo.
+
+
 \chapter{Anaconda Enterprise Notebook Runbook}
 \label{AnacondaEnterpriseNotebooks:anaconda-enterprise-notebook-runbook}\label{AnacondaEnterpriseNotebooks::doc}\begin{itemize}
 \item {} 
-Version: 4.0-3 \textbar{} Aug 05, 2016
+Version: 4.0-3 \textbar{} Aug 24, 2016
 
 \end{itemize}
 
@@ -1211,8 +1275,7 @@ Air Gap media contents:
 
 \section{Download the Installers}
 \label{AnacondaEnterpriseNotebooks:download-the-installers}
-Download the installers and copy them to the corresponding servers. The
-Publisher should be installed on the AEN Server machine.
+Download the installers and copy them to the corresponding servers.
 \begin{itemize}
 \item {} 
 \textbf{Air Gap Installation:} Copy installers from the Air Gap media
@@ -1429,7 +1492,7 @@ to write the configuration file:
 \code{/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json}
 
 \begin{Verbatim}[commandchars=\\\{\}]
-/opt/wakari/wakari\PYGZhy{}gateway/bin/wk\PYGZhy{}gateway\PYGZhy{}configure \PYGZbs{}
+sudo /opt/wakari/wakari\PYGZhy{}gateway/bin/wk\PYGZhy{}gateway\PYGZhy{}configure \PYGZbs{}
 \PYGZhy{}\PYGZhy{}server http://\PYGZdl{}AEN\PYGZus{}SERVER \PYGZhy{}\PYGZhy{}host \PYGZdl{}AEN\PYGZus{}GATEWAY \PYGZbs{}
 \PYGZhy{}\PYGZhy{}port \PYGZdl{}AEN\PYGZus{}GATEWAY\PYGZus{}PORT \PYGZhy{}\PYGZhy{}name Gateway \PYGZhy{}\PYGZhy{}protocol http \PYGZbs{}
 \PYGZhy{}\PYGZhy{}summary Gateway \PYGZhy{}\PYGZhy{}username wakari \PYGZbs{}
@@ -1559,8 +1622,8 @@ This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.
 
 
-\subsubsection{Edit the condarc}
-\label{AnacondaEnterpriseNotebooks:edit-the-condarc}\begin{quote}
+\subsubsection{Edit the condarc on the Compute Node}
+\label{AnacondaEnterpriseNotebooks:edit-the-condarc-on-the-compute-node}\begin{quote}
 
 \textbf{NOTE:} If there are some channels below that you haven't mirrored,
 you should remove them from the configuration.

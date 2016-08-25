@@ -134,6 +134,7 @@ epub3:
 .PHONY: latex
 latex:
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) $(BUILDDIR)/latex
+	perl -npi -e 's/chapter{[0-9.]+[^A-Za-z]+/chapter{/g;s/section{[0-9.]+[^A-Za-z]+/section{/g;s/ref{[0-9.]+[^A-Za-z]+/ref{/g' $(BUILDDIR)/latex/*.tex
 	@echo
 	@echo "Build finished; the LaTeX files are in $(BUILDDIR)/latex."
 	@echo "Run \`make' in that directory to run these through (pdf)latex" \

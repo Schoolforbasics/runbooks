@@ -206,9 +206,9 @@ Here's a sample bash script to download all packages for AE-Repo install and lin
   #
   # get_installers.sh - to obtain all components for Linux packages and AE-Repo installation
   PREFIX='https://s3.amazonaws.com/continuum-airgap/2016-08/'
-  DL=('linux-64-2016-08-03.list',
-      'linux-64-2016-08-03.md5',
-      'linux-64-2016-08-03.tar',
+  DL=('linux-64-2016-08-03.list'
+      'linux-64-2016-08-03.md5'
+      'linux-64-2016-08-03.tar'
       'cluster-2016-08-03.list'
       'cluster-2016-08-03.md5'
       'cluster-2016-08-03.tar'

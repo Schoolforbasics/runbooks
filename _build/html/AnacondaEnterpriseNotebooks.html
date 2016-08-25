@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1   Anaconda Enterprise Notebook Runbook &mdash; Anaconda Enterprise Runbooks 4.0-3 documentation</title>
+    <title>1   Anaconda Enterprise Notebook Runbook &mdash; Anaconda Enterprise Runbooks 4.0-3.sandhu/aug-archive-n-mongodb documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.0-3',
+        VERSION:     '4.0-3.sandhu/aug-archive-n-mongodb',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,9 +29,9 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="Anaconda Enterprise Runbooks 4.0-3 documentation" href="index.html" />
+    <link rel="top" title="Anaconda Enterprise Runbooks 4.0-3.sandhu/aug-archive-n-mongodb documentation" href="index.html" />
     <link rel="next" title="1   Anaconda Cluster Runbook" href="AnacondaCluster.html" />
-    <link rel="prev" title="1   Anaconda Repository Runbook" href="AnacondaRepository.html" />
+    <link rel="prev" title="1   Anaconda Repo Runbook" href="AnacondaRepository.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 05, 2016</li>
+<li>Version: 4.0-3.sandhu/aug-archive-n-mongodb | Aug 24, 2016</li>
 </ul>
 <p>Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
@@ -204,8 +204,7 @@ the server where the software is being installed.</p>
 </div>
 <div class="section" id="download-the-installers">
 <h2>1.2&nbsp;&nbsp;&nbsp;Download the Installers<a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
-<p>Download the installers and copy them to the corresponding servers. The
-Publisher should be installed on the AEN Server machine.</p>
+<p>Download the installers and copy them to the corresponding servers.</p>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media</li>
 <li><strong>Regular Installation:</strong></li>
@@ -392,7 +391,7 @@ to be authenticated, so the wakari user’s credentials created during the
 AEN Server install need to be used. <strong>This needs to be run as sudo or root</strong>
 to write the configuration file:
 <code class="docutils literal"><span class="pre">/opt/wakari/wakari-gateway/etc/wakari/wk-gateway-config.json</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>/opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
 --server http://$AEN_SERVER --host $AEN_GATEWAY \
 --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
 --summary Gateway --username wakari \
@@ -496,8 +495,8 @@ value.</p>
 <h3>1.6.4&nbsp;&nbsp;&nbsp;Configure conda to use local on-site Anaconda Enterprise Repo<a class="headerlink" href="#configure-conda-to-use-local-on-site-anaconda-enterprise-repo" title="Permalink to this headline">¶</a></h3>
 <p>This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.</p>
-<div class="section" id="edit-the-condarc">
-<h4>1.6.4.1&nbsp;&nbsp;&nbsp;Edit the condarc<a class="headerlink" href="#edit-the-condarc" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="edit-the-condarc-on-the-compute-node">
+<h4>1.6.4.1&nbsp;&nbsp;&nbsp;Edit the condarc on the Compute Node<a class="headerlink" href="#edit-the-condarc-on-the-compute-node" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><strong>NOTE:</strong> If there are some channels below that you haven&#8217;t mirrored,
 you should remove them from the configuration.</div></blockquote>

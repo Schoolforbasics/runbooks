@@ -929,20 +929,3 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 
     sudo service iptables save
 
-Optional: Installing From Platform-based Archives 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repository is almost identical to the full install as described above, however there are a few things to note:
-
-- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
-- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
-
-Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):
-
-::
-
-    tar xvf linux-32-2016-07-06.tar -C $INSTALLER_PATH/anaconda-suite/pkgs/
-
-This creates the **$INSTALLER_PATH/anaconda-suite/pkgs/linux-32** directory
-containing 32-Bit Linux packages.  The steps in the "Mirror Anaconda
-Repository" section above will then mirror these packages into the default
-(anaconda) channel in your local Anaconda Repository.

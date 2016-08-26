@@ -998,22 +998,6 @@ standard HTTP port 80 to the standard Anaconda Repository HTTP port 8080.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="optional-installing-from-platform-based-archives">
-<h3>1.9.7&nbsp;&nbsp;&nbsp;Optional: Installing From Platform-based Archives<a class="headerlink" href="#optional-installing-from-platform-based-archives" title="Permalink to this headline">¶</a></h3>
-<p>Using the <strong>64-Bit Linux</strong> platform-based TAR archive to install Anaconda Repository is almost identical to the full install as described above, however there are a few things to note:</p>
-<ul class="simple">
-<li>The installer contains <strong>ONLY</strong> 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.</li>
-<li>The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.</li>
-</ul>
-<p>Adding support for additional platforms can be accomplished by downloading the corresponding TAR archives and using the following command (using 32-Bit Linux as an example):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>tar xvf linux-32-2016-07-06.tar -C $INSTALLER_PATH/anaconda-suite/pkgs/
-</pre></div>
-</div>
-<p>This creates the <strong>$INSTALLER_PATH/anaconda-suite/pkgs/linux-32</strong> directory
-containing 32-Bit Linux packages.  The steps in the &#8220;Mirror Anaconda
-Repository&#8221; section above will then mirror these packages into the default
-(anaconda) channel in your local Anaconda Repository.</p>
-</div>
 </div>
 </div>
 

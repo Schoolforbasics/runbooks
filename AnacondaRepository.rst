@@ -637,15 +637,16 @@ Download the installers using curl, see sample below:
         Miniconda3-latest-MacOSX-x86_64.sh \
         Miniconda3-latest-Windows-x86.exe \
         Miniconda3-latest-Windows-x86_64.exe \
-        Miniconda-latest-Linux-x86_64.sh \
-        Miniconda-latest-MacOSX-x86_64.sh \
-        Miniconda-latest-Windows-x86.exe \
-        Miniconda-latest-Windows-x86_64.exe"
-   
+        Miniconda2-latest-Linux-x86_64.sh \
+        Miniconda2-latest-MacOSX-x86_64.sh \
+        Miniconda2-latest-Windows-x86.exe \
+        Miniconda2-latest-Windows-x86_64.exe"
+  
+   TGT=/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/
    for installer in $versions
    do
-       curl -O $URL$installer -C \
-            /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+       curl -o $TGT$installer $URL$installer
+            
    done
    
 

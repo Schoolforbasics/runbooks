@@ -1,9 +1,9 @@
 .. This sets up section numbering
 .. sectnum::
 
-=====================
+============================
 Anaconda Repository Runbook
-=====================
+============================
 
 * Version: |release| | |today|
 
@@ -117,8 +117,7 @@ should follow **Regular Installation** instructions.
 Air Gap
 ~~~~~~~~
 
-This document assumes that the air-gap media is available on
-the target server at ``$INSTALLER_PATH` where the software is being installed. 
+This document assumes that the air-gap media is available on the target server at `$INSTALLER_PATH` where the software is being installed. 
 
 There are two ways to obtain the air-gap installation assets:
 
@@ -175,11 +174,6 @@ platforms (eg. Linux-64); download a component based TAR archive.  Using the
 identical to the full install once we create the same file structure in
 `$INSTALLER_PATH`. A couple of things to note about platform based archives:
 
-Anaconda Repository Installation
---------------------------
-
-The following sections detail the steps required to install Anaconda Repository.
-
 - The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
 - The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
 
@@ -220,7 +214,7 @@ Here's a sample bash script to download all packages for AE-Repo install and lin
 
   #!/bin/bash
   #
-  # get_installers.sh - to obtain all components for Linux packages and AE-Repo installation
+  # get_linux_installers.sh - to obtain all components for Linux packages and AE-Repo installation
   PREFIX='https://s3.amazonaws.com/continuum-airgap/2016-08/'
   DL=('linux-64-2016-08-03.list'
       'linux-64-2016-08-03.md5'
@@ -254,30 +248,47 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
 
 .. code-block:: bash
 
-   #!/bin/bash
-   #
-   # set INSTALLER_PATH for your system
-   INSTALLER_PATH=/installer
+  #!/bin/bash
+  #
+  # get_linux_installers.sh - to obtain all components for Linux packages and AE-Repo installation
+  # set INSTALLER_PATH for your setup
+  INSTALLER_PATH=/installer
+  
+  # strip the top level and expand archive
+  echo "expand default pkgs and AE-Repo installer"
+  tar xf linux-64-2016-08-03.tar -C $INSTALLER_PATH --strip-components 1
+  
+  # fix miniconda-latest location so it is consistent
+  # w/ full install and the remaining docs
+  echo "expand miniconda versions"
+  mkdir $INSTALLER_PATH/anaconda-suite/miniconda
+  ln -s $INSTALLER_PATH/miniconda/Miniconda-latest-Linux-x86_64.sh \
+        $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
+  tar xf miniconda-64bit-2016-08-03.tar -C $INSTALLER_PATH/anaconda-suite/miniconda/
 
-   # strip the top level and expand archive
-   echo "expand default pkgs and AE-Repo installer"
-   tar xf linux-64-2016-08-03.tar -C $INSTALLER_PATH --strip-components 1
+  # expand anaconda-cluster
+  echo "expand anaconda-cluster and R packages"
+  tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03\
+                                            / --strip-components 2
+  mkdir -p $INSTALLER_PATH/R/pkgs/linux-64
+  tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ \
+                                            --strip-components 1
 
-   # fix miniconda-latest location so it is consistent
-   # w/ full install and the remaining docs
-   echo "expand miniconda versions"
-   mkdir $INSTALLER_PATH/anaconda-suite/miniconda
-   ln -s $INSTALLER_PATH/miniconda/Miniconda-latest-Linux-x86_64.sh \
-         $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
-   tar xf miniconda-64bit-2016-08-03.tar -C $INSTALLER_PATH/anaconda-suite/miniconda/
-
-   # exapnd anaconda-cluster
-   echo "expand anaconda-cluster and R packages"
-   tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03\
-                                             / --strip-components 2
-   mkdir -p $INSTALLER_PATH/R/pkgs/linux-64
-   tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ \
-                                             --strip-components 1
+  # let's create sym links to latest miniconda installers since they don't exist in tarball yet
+  echo "create links to latest miniconda versions for each platform"
+  M_INST_PATH=$INSTALLER_PATH/anaconda-suite/miniconda
+  for f in $M_INST_PATH/Miniconda*-4.1.11-*
+  do
+    O_FILE=`basename $f`
+    N_FILE=$M_INST_PATH/${O_FILE//4.1.11/latest}
+    if [ ! -e $N_FILE ]
+    then
+      ln -s $f $N_FILE
+    else
+      echo "$N_FILE Exists"
+    fi
+  done
+  
 
 
 System Wide mongodb Installation - Requires `sudo`
@@ -334,12 +345,12 @@ Verify mongod is running
 
 
 Configure Anaconda Repository
------------------------
+------------------------------
 Prior to installing Anaconda Repository components the following needs to be done by someone with
 `sudo` privileges
 
 Create Anaconda Repository administrator account
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In a terminal window, create a new user account for Anaconda Repo named ``anaconda-server``.
 
@@ -350,7 +361,7 @@ In a terminal window, create a new user account for Anaconda Repo named ``anacon
 .. note:: ``anaconda-server`` can be configured to any other service account name
 
 Create Anaconda Repository directories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -360,7 +371,7 @@ Create Anaconda Repository directories
     sudo mkdir -m 0770 /etc/anaconda-server/mirrors
 
 Give the anaconda-server user ownership of directories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -370,7 +381,7 @@ Give the anaconda-server user ownership of directories
     sudo chown -R anaconda-server. /etc/anaconda-server/mirrors
 
 Switch to the Anaconda Repository administrator account
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -428,7 +439,7 @@ Accept the default location or specify an alternative:
      PREFIX=/home/anaconda-server/miniconda2
 
 Update the anaconda-server user's path
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Do you wish the installer to prepend the Miniconda install location to
 PATH in your /home/anaconda-server/.bashrc ?
@@ -438,19 +449,19 @@ PATH in your /home/anaconda-server/.bashrc ?
     [yes|no] yes
 
 For the new path changes to take effect, “source” your .bashrc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     source ~/.bashrc
 
 Install Anaconda Repository Enterprise Packages
------------------------------------------
+------------------------------------------------
 The following sections detail the steps required to install Anaconda Repo.
 
 
-Add the Binstar and Anaconda-Server Repository channels to Conda:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Add the Binstar and Anaconda-Server Repository channels to Conda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Add the channels from local files.
 
@@ -471,33 +482,33 @@ Add the Binstar and Anaconda-Server Repository channels to Conda:
 
 .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
-Install the Anaconda Repository packages via conda:
----------------------------------------------
+Install the Anaconda Repository packages via conda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     conda install anaconda-client binstar-server binstar-static cas-mirror
 
 Configure Anaconda Repository Server
-------------------------------
+-------------------------------------
 
-Initialize the web server for Anaconda Repository:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initialize the web server for Anaconda Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-config --init --config-file /etc/anaconda-server/config.yaml
 
-Set the Anaconda Repository package storage location:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set the Anaconda Repository package storage location
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-config --set fs_storage_root /opt/anaconda-server/package-storage \
                            --config-file /etc/anaconda-server/config.yaml
 
-Create an initial "superuser" account for Anaconda Repository:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create an initial "superuser" account for Anaconda Repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -509,18 +520,18 @@ Create an initial "superuser" account for Anaconda Repository:
   upper case letters and numbers, with no punctuation. After setup the
   password can be changed with the web interface.
 
-Initialize the Anaconda Repository database:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Initialize the Anaconda Repository database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
     anaconda-server-db-setup --execute
 
 Set up automatic restart on reboot, fail or error
--------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure Supervisord
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -535,8 +546,8 @@ This step:
 -  generates the ``/home/anaconda-server/miniconda/etc/supervisord.conf`` file
 
 
-Verify the server and mongo is running:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Verify the server is running
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -558,7 +569,7 @@ Verify the server and mongo is running:
 Server Configuration - requires `mongo` 
 ----------------------------------------
 
-Create an initial “superuser” account for Anaconda Repo:
+Create an initial “superuser” account for Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -569,7 +580,7 @@ Create an initial “superuser” account for Anaconda Repo:
 .. note:: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
 
 
-Initialize the Anaconda Repo database:
+Initialize the Anaconda Repo database
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -578,7 +589,7 @@ Initialize the Anaconda Repo database:
 
 
 Install Anaconda Repository License
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Visit **http://your.anaconda.server:8080**. Follow the onscreen
 instructions and upload your license file. Log in with the superuser
@@ -590,8 +601,8 @@ login page.
 Setup Mirrors
 --------------
 
-Mirror Installers for Miniconda - SKIP IF FOLLOWING :ref:`comp-install`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Mirror Installers for Miniconda 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: If using component installers - skip this section. It will not work at present.
 
@@ -605,58 +616,39 @@ them to the **extras** directory.
 Users will then be able to download installers at a URL that looks like the
 following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.sh
 
+Set the URL variable correctly for AirGap vs Regular installs:
+
 -  **Air Gap Installation:**
 
    ::
 
-       # miniconda installers
-       mkdir -p /tmp/extras
-       pushd /tmp/extras
        URL="file://$INSTALLER_PATH/anaconda-suite/miniconda/"
-       versions="Miniconda3-latest-Linux-x86_64.sh \
-       Miniconda3-latest-MacOSX-x86_64.sh \
-       Miniconda3-latest-Windows-x86.exe \
-       Miniconda3-latest-Windows-x86_64.exe \
-       Miniconda-latest-Linux-x86_64.sh \
-       Miniconda-latest-MacOSX-x86_64.sh \
-       Miniconda-latest-Windows-x86.exe \
-       Miniconda-latest-Windows-x86_64.exe"
-
-       for installer in $versions
-        do
-         curl -O $URL$installer
-       done
-
-       # Move installers into static directory
-       popd
-       cp -a /tmp/extras \
-         /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 
 -  **Regular Installation:**
 
    ::
 
-       # miniconda installers
-       mkdir -p /tmp/extras
-       pushd /tmp/extras
        URL="https://repo.continuum.io/miniconda/"
-       versions="Miniconda3-latest-Linux-x86_64.sh \
-       Miniconda3-latest-MacOSX-x86_64.sh \
-       Miniconda3-latest-Windows-x86.exe \
-       Miniconda3-latest-Windows-x86_64.exe \
-       Miniconda-latest-Linux-x86_64.sh \
-       Miniconda-latest-MacOSX-x86_64.sh \
-       Miniconda-latest-Windows-x86.exe \
-       Miniconda-latest-Windows-x86_64.exe"
 
-       for installer in $versions
-        do
-         curl -O $URL$installer
-       done
+Download the installers using curl, see sample below:
 
-       # Move installers into static directory
-       popd
-       cp -a /tmp/extras /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+.. code-block:: bash
+
+   versions="Miniconda3-latest-Linux-x86_64.sh \
+        Miniconda3-latest-MacOSX-x86_64.sh \
+        Miniconda3-latest-Windows-x86.exe \
+        Miniconda3-latest-Windows-x86_64.exe \
+        Miniconda-latest-Linux-x86_64.sh \
+        Miniconda-latest-MacOSX-x86_64.sh \
+        Miniconda-latest-Windows-x86.exe \
+        Miniconda-latest-Windows-x86_64.exe"
+   
+   for installer in $versions
+   do
+       curl -O $URL$installer -C \
+            /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
+   done
+   
 
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -706,7 +698,7 @@ To verify the local Anaconda Repository repo has been populated, visit
 **http://your.anaconda.server:8080/anaconda** in a browser.
 
 Optional: Mirror the R channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Air Gap Installation:**
 
@@ -746,7 +738,7 @@ Optional: Mirror the R channel
            /etc/anaconda-server/mirrors/r-channel.yaml --account=r-channel
 
 Mirror the Anaconda Enterprise Notebooks Channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: If AEN is not setup and no packages from wakari channel are needed then this is an **optional** mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.
 
@@ -936,7 +928,7 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
     sudo service iptables save
 
 Optional: Installing From Platform-based Archives 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Using the **64-Bit Linux** platform-based TAR archive to install Anaconda Repository is almost identical to the full install as described above, however there are a few things to note:
 
 - The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.

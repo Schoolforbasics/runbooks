@@ -181,31 +181,31 @@ Each component has an md5 and list file which are both small and included more f
 summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
 
 
-+-----------------------------------+---------------------------------------------+-----------------------------------+
-| Tarball                           | Contents                                    |   Top Level Directory             |  
-+===================================+=============================================+===================================+
-| anaconda-full-2016-07-11.tar      | All AE components and dependencies:         | scratch/anaconda-full-2016-08-06/ |
-|                                   |                                             |                                   |
-|                                   | - default packages (all platforms)          |                                   |
-|                                   | - AE-N installers + dependencies            |                                   |
-|                                   | - cluster packages (all platforms)          |                                   |
-|                                   | - R packages (all platforms)                |                                   |
-|                                   | - various miniconda version (all platforms) |                                   |
-+-----------------------------------+---------------------------------------------+-----------------------------------+
-| linux-64-2016-08-03.tar           | AE-Repo install parts:                      | linux-64-2016-08-03/              |   
-|                                   |                                             |                                   |
-|                                   | - mongodb                                   |                                   |
-|                                   | - latest miniconda                          |                                   |
-|                                   | - linux pkgs for default channel            |                                   |
-+-----------------------------------+---------------------------------------------+-----------------------------------+
-| cluster-2016-08-03.tar            | anaconda-cluster conda packages; mirror on  | scratch/cluster/                  |
-|                                   | R channel (all platforms)                   |                                   |
-+-----------------------------------+---------------------------------------------+-----------------------------------+
-| linux-64-R-Packages-2016-08-03.tar| conda packages for R, mirror on R channel   | linux-64-R-Packages/              |
-+-----------------------------------+---------------------------------------------+-----------------------------------+
-| miniconda-64bit-2016-08-03.tar    | various miniconda version for all 64bit     | ./                                |
-|                                   | platforms                                   |                                   |
-+-----------------------------------+---------------------------------------------+-----------------------------------+
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| Tarball                           | Contents                                    |   Top Level Directory             | Size   |
++===================================+=============================================+===================================+========+
+| anaconda-full-2016-07-11.tar      | All AE components and dependencies:         | scratch/anaconda-full-2016-08-06/ |  198 GB|
+|                                   |                                             |                                   |        |
+|                                   | - default packages (all platforms)          |                                   |        |
+|                                   | - AE-N installers + dependencies            |                                   |        |
+|                                   | - cluster packages (all platforms)          |                                   |        |
+|                                   | - R packages (all platforms)                |                                   |        |
+|                                   | - various miniconda version (all platforms) |                                   |        |
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| linux-64-2016-08-03.tar           | AE-Repo install parts:                      | linux-64-2016-08-03/              |   33 GB|
+|                                   |                                             |                                   |        |
+|                                   | - mongodb                                   |                                   |        |
+|                                   | - latest miniconda                          |                                   |        |
+|                                   | - linux pkgs for default channel            |                                   |        |
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| cluster-2016-08-03.tar            | anaconda-cluster conda packages; mirror on  | scratch/cluster/                  |  239 MB|
+|                                   | R channel (all platforms)                   |                                   |        |
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| linux-64-R-Packages-2016-08-03.tar| conda packages for R, mirror on R channel   | linux-64-R-Packages/              |  3.3 GB|
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| miniconda-64bit-2016-08-03.tar    | various miniconda version for all 64bit     | ./                                |  342 MB|
+|                                   | platforms                                   |                                   |        |
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
  
 
 Here's a sample bash script to download all packages for AE-Repo install and linux-64 only conda packages.

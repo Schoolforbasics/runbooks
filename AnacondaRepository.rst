@@ -268,8 +268,7 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
 
   # expand anaconda-cluster
   echo "expand anaconda-cluster and R packages"
-  tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/linux-64-2016-08-03\
-                                            / --strip-components 2
+  tar xf cluster-2016-08-03.tar -C $INSTALLER_PATH/ --strip-components 2
   mkdir -p $INSTALLER_PATH/R/pkgs/linux-64
   tar xf linux-64-R-Packages-2016-08-03.tar -C $INSTALLER_PATH/R/pkgs/linux-64/ \
                                             --strip-components 1

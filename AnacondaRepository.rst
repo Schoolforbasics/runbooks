@@ -276,11 +276,16 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
   # let's create sym links to latest miniconda installers since they don't exist in tarball yet
   echo "create links to latest miniconda versions for each platform"
   M_INST_PATH=$INSTALLER_PATH/anaconda-suite/miniconda
-  for f in $M_INST_PATH/Miniconda*-4.1.11-*
+  for f in $(ls $M_INST_PATH/Miniconda*-4.1.11-*);
   do
     O_FILE=`basename $f`
-    N_FILE=$M_INST_PATH/${O_FILE//4.1.11/latest}
+    if [[ $O_FILE == Miniconda2* ]]
+    then
+      O_FILE=${O_FILE//Miniconda2/Miniconda}
+    fi
+  
     if [ ! -e $N_FILE ]
+      N_FILE=$M_INST_PATH/${O_FILE//4.1.11/latest}
     then
       ln -s $f $N_FILE
     else
@@ -637,10 +642,10 @@ Download the installers using curl, see sample below:
         Miniconda3-latest-MacOSX-x86_64.sh \
         Miniconda3-latest-Windows-x86.exe \
         Miniconda3-latest-Windows-x86_64.exe \
-        Miniconda2-latest-Linux-x86_64.sh \
-        Miniconda2-latest-MacOSX-x86_64.sh \
-        Miniconda2-latest-Windows-x86.exe \
-        Miniconda2-latest-Windows-x86_64.exe"
+        Miniconda-latest-Linux-x86_64.sh \
+        Miniconda-latest-MacOSX-x86_64.sh \
+        Miniconda-latest-Windows-x86.exe \
+        Miniconda-latest-Windows-x86_64.exe"
   
    TGT=/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/
    for installer in $versions
@@ -686,11 +691,14 @@ packages locally under the "anaconda" user account.
 
        anaconda-server-sync-conda --mirror-config /etc/anaconda-server/mirrors/conda.yaml
 
+
+
 **Regular Installation:** Mirror from Anaconda Cloud.
 
-   ::
+::
 
-       anaconda-server-sync-conda
+    anaconda-server-sync-conda
+
 
 .. note:: Depending on the type of installation, this process may take hours.
 
@@ -797,13 +805,7 @@ Optional: Mirror the Anaconda Cluster channel
 
 To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below: 
 
-If the local Anaconda Repository will be used by Anaconda Adam, the
-recommended method is to mirror using an ``anaconda-adam`` user.
-
-To mirror the Anaconda Adam channel, create the mirror config
-YAML file below:
-
--  **Air Gap Installation:**
+**Air Gap Installation:**
 
 #. Create a mirror config file:
 
@@ -813,8 +815,8 @@ YAML file below:
        echo "  - file://$INSTALLER_PATH/anaconda-cluster/pkgs" >> \
             /etc/anaconda-server/mirrors/anaconda-cluster.yaml
 
-#. (Optional) If mirroring packages for subset of platforms (eg.
-linux-64 only as shown in :ref:`comp-install`), append following:
+
+#. (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
    
    ::
 
@@ -830,7 +832,7 @@ linux-64 only as shown in :ref:`comp-install`), append following:
           /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
           --account=anaconda-cluster
 
--  **Regular Installation:**
+**Regular Installation:**
 
 #. Create a mirror config file:
 

@@ -320,29 +320,29 @@ Download MongoDB packages
 
 -  **Regular Installation:**
 
-::
-
-   RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-   curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
-   curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+   ::
+   
+      RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+      curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 
 Install MongoDB packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **Air Gap Installation:**
+-  **Air Gap Installation:**
 
-::
-
-    sudo yum install -y $INSTALLER_PATH/mongodb-org*
+   ::
+   
+       sudo yum install -y $INSTALLER_PATH/mongodb-org*
 
 -  **Regular Installation:**
 
-::
-
-    sudo yum install -y mongodb-org*
+   ::
+   
+       sudo yum install -y mongodb-org*
 
 
 Start mongodb
@@ -417,23 +417,23 @@ Fetch the download script using curl
 
 -  **Regular Installation:**
 
-::
-
-    curl 'http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh' > Miniconda.sh
+   ::
+   
+       curl 'http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh' > Miniconda.sh
 
 Run the Miniconda.sh installer script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -  **Air Gap Installation:**
 
-::
-
-  bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
+   ::
+   
+     bash $INSTALLER_PATH/anaconda-suite/miniconda/Miniconda2-latest-Linux-x86_64.sh
 
 -  **Regular Installation:**
 
-::
-
-   bash Miniconda.sh
+   ::
+   
+      bash Miniconda.sh
 
 Review and accept the license terms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -484,14 +484,14 @@ Add the Binstar and Anaconda-Server Repository channels to Conda
 
 -  **Air Gap Installation:** Add the channels from local files.
 
-::
+   ::
 
        conda config --add channels  file://$INSTALLER_PATH/anaconda-suite/pkgs/
        conda config --remove channels defaults --force
 
 -  **Regular Installation:** Add the channels from Anaconda Cloud.
 
-::
+   ::
 
        export BINSTAR_TOKEN=<your binstar token>
        export ANACONDA_TOKEN=<your anaconda-server token>

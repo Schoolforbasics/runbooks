@@ -53,12 +53,13 @@
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
 <li><a class="reference internal" href="#requirements" id="id3">1.1&nbsp;&nbsp;&nbsp;Requirements</a></li>
-<li><a class="reference internal" href="#download-the-installers" id="id4">1.2&nbsp;&nbsp;&nbsp;Download the Installers</a></li>
-<li><a class="reference internal" href="#gather-ip-addresses-or-fqdns" id="id5">1.3&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a></li>
-<li><a class="reference internal" href="#install-aen-server" id="id6">1.4&nbsp;&nbsp;&nbsp;Install AEN Server</a></li>
-<li><a class="reference internal" href="#install-aen-gateway" id="id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Gateway</a></li>
-<li><a class="reference internal" href="#install-aen-compute" id="id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Compute</a></li>
-<li><a class="reference internal" href="#pam-authentication-optional" id="id9">1.7&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a></li>
+<li><a class="reference internal" href="#air-gap-vs-regular-installation" id="id4">1.2&nbsp;&nbsp;&nbsp;Air Gap vs. Regular Installation</a></li>
+<li><a class="reference internal" href="#download-the-installers" id="id5">1.3&nbsp;&nbsp;&nbsp;Download the Installers</a></li>
+<li><a class="reference internal" href="#gather-ip-addresses-or-fqdns" id="id6">1.4&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a></li>
+<li><a class="reference internal" href="#install-aen-server" id="id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Server</a></li>
+<li><a class="reference internal" href="#install-aen-gateway" id="id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Gateway</a></li>
+<li><a class="reference internal" href="#install-aen-compute" id="id9">1.7&nbsp;&nbsp;&nbsp;Install AEN Compute</a></li>
+<li><a class="reference internal" href="#pam-authentication-optional" id="id10">1.8&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a></li>
 </ul>
 </div>
 <p>Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
@@ -224,8 +225,9 @@ If your organization requires special actions, here is the list of UIDs:</p>
 <p>Assuming the above requirements are met, there are no additional
 dependencies necessary for AEN.</p>
 </div>
+</div>
 <div class="section" id="air-gap-vs-regular-installation">
-<h3>1.1.8&nbsp;&nbsp;&nbsp;Air Gap vs. Regular Installation<a class="headerlink" href="#air-gap-vs-regular-installation" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id4">1.2&nbsp;&nbsp;&nbsp;Air Gap vs. Regular Installation</a><a class="headerlink" href="#air-gap-vs-regular-installation" title="Permalink to this headline">¶</a></h2>
 <p>As stated previously, this document contains installation instructions
 for two audiences: those with internet access on the destination
 server(s) and those who have no access to internet resources. Many of
@@ -233,12 +235,11 @@ the steps below have two sections: <strong>Air Gap Installation</strong> and
 <strong>Regular Installation</strong>. Those without internet access should follow
 the <strong>Air Gap Installation</strong> instructions and those with internet access
 should follow <strong>Regular Installation</strong> instructions.</p>
-</div>
 <div class="section" id="air-gap">
-<h3>1.1.9&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
-<p>Docs assume the air-gap data is avialable on target server at <cite>$INSTALLER_PATH</cite>. Refer to <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a> for instructions
+<span id="airgap-dl"></span><h3>1.2.1&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
+<p>Docs assume the air-gap data is available on target server at <cite>$INSTALLER_PATH</cite>. Refer to <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a> for instructions
 on obtaining AirGap archive for AE-N installation.</p>
-<p>If the AE-N archive was not downloaded during AE-Repo install (<a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a>), then it can be obtained as follows:</p>
+<p>If the AE-N archive was not downloaded during <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">AE-Repo install</span></a>, it can be obtained as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
 tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
 mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
@@ -263,21 +264,23 @@ wakari/
 </div>
 </div>
 <div class="section" id="download-the-installers">
-<h2><a class="toc-backref" href="#id4">1.2&nbsp;&nbsp;&nbsp;Download the Installers</a><a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">1.3&nbsp;&nbsp;&nbsp;Download the Installers</a><a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
 <p>Download the installers and copy them to the corresponding servers.</p>
-<ul class="simple">
-<li><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media</li>
-<li><strong>Regular Installation:</strong></li>
-</ul>
+<ul>
+<li><p class="first"><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media/download</p>
+</li>
+<li><p class="first"><strong>Regular Installation:</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
 curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
 curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
 curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
 </pre></div>
 </div>
+</li>
+</ul>
 </div>
 <div class="section" id="gather-ip-addresses-or-fqdns">
-<h2><a class="toc-backref" href="#id5">1.3&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a><a class="headerlink" href="#gather-ip-addresses-or-fqdns" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">1.4&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a><a class="headerlink" href="#gather-ip-addresses-or-fqdns" title="Permalink to this headline">¶</a></h2>
 <p>AEN is very sensitive to the IP address or domain name used to
 connect to the Server and Gateway components. If users will be using the
 domain name, you should install thecomponents using the domain name
@@ -306,14 +309,14 @@ installing the AEN Server component.</p>
 </table>
 </div>
 <div class="section" id="install-aen-server">
-<h2><a class="toc-backref" href="#id6">1.4&nbsp;&nbsp;&nbsp;Install AEN Server</a><a class="headerlink" href="#install-aen-server" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Server</a><a class="headerlink" href="#install-aen-server" title="Permalink to this headline">¶</a></h2>
 <p>The AEN server is the administrative front­end to the system. This is
 where users login to the system, where user accounts are stored, and
 where admins can manage the system.</p>
 <div class="section" id="aen-server-preparation-prerequisites">
-<h3>1.4.1&nbsp;&nbsp;&nbsp;AEN Server Preparation ­Prerequisites<a class="headerlink" href="#aen-server-preparation-prerequisites" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.1&nbsp;&nbsp;&nbsp;AEN Server Preparation ­Prerequisites<a class="headerlink" href="#aen-server-preparation-prerequisites" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="download-prerequisite-rpms">
-<h4>1.4.1.1&nbsp;&nbsp;&nbsp;Download Prerequisite RPMs<a class="headerlink" href="#download-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.1.1&nbsp;&nbsp;&nbsp;Download Prerequisite RPMs<a class="headerlink" href="#download-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Copy RPMs from the Air Gap media</li>
 <li><strong>Regular Installation:</strong></li>
@@ -331,7 +334,7 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 </div>
 </div>
 <div class="section" id="install-prerequisite-rpms">
-<h4>1.4.1.2&nbsp;&nbsp;&nbsp;Install Prerequisite RPMs<a class="headerlink" href="#install-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.1.2&nbsp;&nbsp;&nbsp;Install Prerequisite RPMs<a class="headerlink" href="#install-prerequisite-rpms" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="o">*.</span><span class="n">rpm</span>
 <span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">mongod</span> <span class="n">start</span>
 <span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">elasticsearch</span> <span class="n">stop</span>
@@ -341,16 +344,16 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 </div>
 </div>
 <div class="section" id="run-the-aen-server-installer">
-<h3>1.4.2&nbsp;&nbsp;&nbsp;Run the AEN Server Installer<a class="headerlink" href="#run-the-aen-server-installer" title="Permalink to this headline">¶</a></h3>
+<h3>1.5.2&nbsp;&nbsp;&nbsp;Run the AEN Server Installer<a class="headerlink" href="#run-the-aen-server-installer" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="set-variables-and-change-permissions">
-<h4>1.4.2.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#set-variables-and-change-permissions" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.2.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#set-variables-and-change-permissions" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-server-installer">
-<h4>1.4.2.2&nbsp;&nbsp;&nbsp;Run AEN Server Installer<a class="headerlink" href="#run-aen-server-installer" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.2.2&nbsp;&nbsp;&nbsp;Run AEN Server Installer<a class="headerlink" href="#run-aen-server-installer" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
@@ -390,19 +393,19 @@ is also available in the installation log file found at
 <code class="docutils literal"><span class="pre">/tmp/wakari_server.log</span></code></p>
 </div>
 <div class="section" id="start-elasticsearch">
-<h4>1.4.2.3&nbsp;&nbsp;&nbsp;Start ElasticSearch<a class="headerlink" href="#start-elasticsearch" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.2.3&nbsp;&nbsp;&nbsp;Start ElasticSearch<a class="headerlink" href="#start-elasticsearch" title="Permalink to this headline">¶</a></h4>
 <p>Start elasticsearch to read the new config file</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">elasticsearch</span> <span class="n">start</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="test-the-aen-server-install">
-<h4>1.4.2.4&nbsp;&nbsp;&nbsp;Test the AEN Server install<a class="headerlink" href="#test-the-aen-server-install" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.2.4&nbsp;&nbsp;&nbsp;Test the AEN Server install<a class="headerlink" href="#test-the-aen-server-install" title="Permalink to this headline">¶</a></h4>
 <p>Visit <a class="reference external" href="http://$AEN_SERVER">http://$AEN_SERVER</a>. You should be shown the <strong>&#8220;license
 expired&#8221;</strong> page.</p>
 </div>
 <div class="section" id="update-the-license">
-<h4>1.4.2.5&nbsp;&nbsp;&nbsp;Update the License<a class="headerlink" href="#update-the-license" title="Permalink to this headline">¶</a></h4>
+<h4>1.5.2.5&nbsp;&nbsp;&nbsp;Update the License<a class="headerlink" href="#update-the-license" title="Permalink to this headline">¶</a></h4>
 <p>From the <strong>&#8220;license expired&#8221;</strong> page, follow the onscreen instructions to
 upload your license file. After submitting, you should see the login
 page.</p>
@@ -410,13 +413,13 @@ page.</p>
 </div>
 </div>
 <div class="section" id="install-aen-gateway">
-<h2><a class="toc-backref" href="#id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Gateway</a><a class="headerlink" href="#install-aen-gateway" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Gateway</a><a class="headerlink" href="#install-aen-gateway" title="Permalink to this headline">¶</a></h2>
 <p>The gateway is a reverse proxy that authenticates users and
 automatically directs them to the proper AEN Compute machine for
 their project. Users will not notice this component as it automatically
 routes them.</p>
 <div class="section" id="id1">
-<h3>1.5.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8088</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span>  <span class="c1"># will be needed shortly</span>
@@ -425,7 +428,7 @@ routes them.</p>
 </div>
 </div>
 <div class="section" id="run-wakari-gateway-installer">
-<h3>1.5.2&nbsp;&nbsp;&nbsp;Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.2&nbsp;&nbsp;&nbsp;Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
@@ -447,7 +450,7 @@ to connect this Gateway to the AEN Server
 </div>
 </div>
 <div class="section" id="register-the-aen-gateway">
-<h3>1.5.3&nbsp;&nbsp;&nbsp;Register the AEN Gateway<a class="headerlink" href="#register-the-aen-gateway" title="Permalink to this headline">¶</a></h3>
+<h3>1.6.3&nbsp;&nbsp;&nbsp;Register the AEN Gateway<a class="headerlink" href="#register-the-aen-gateway" title="Permalink to this headline">¶</a></h3>
 <p>The AEN Gateway needs to register with the AEN Server. This needs
 to be authenticated, so the wakari user’s credentials created during the
 AEN Server install need to be used. <strong>This needs to be run as sudo or root</strong>
@@ -461,13 +464,13 @@ to write the configuration file:
 </pre></div>
 </div>
 <div class="section" id="ensure-proper-permissions">
-<h4>1.5.3.1&nbsp;&nbsp;&nbsp;Ensure Proper Permissions<a class="headerlink" href="#ensure-proper-permissions" title="Permalink to this headline">¶</a></h4>
+<h4>1.6.3.1&nbsp;&nbsp;&nbsp;Ensure Proper Permissions<a class="headerlink" href="#ensure-proper-permissions" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">chown</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="start-the-gateway">
-<h4>1.5.3.2&nbsp;&nbsp;&nbsp;start the gateway<a class="headerlink" href="#start-the-gateway" title="Permalink to this headline">¶</a></h4>
+<h4>1.6.3.2&nbsp;&nbsp;&nbsp;start the gateway<a class="headerlink" href="#start-the-gateway" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">start</span>
 </pre></div>
 </div>
@@ -477,7 +480,7 @@ to write the configuration file:
 </div>
 </div>
 <div class="section" id="verify-the-aen-gateway-has-registered">
-<h4>1.5.3.3&nbsp;&nbsp;&nbsp;Verify the AEN Gateway has Registered<a class="headerlink" href="#verify-the-aen-gateway-has-registered" title="Permalink to this headline">¶</a></h4>
+<h4>1.6.3.3&nbsp;&nbsp;&nbsp;Verify the AEN Gateway has Registered<a class="headerlink" href="#verify-the-aen-gateway-has-registered" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic">
 <li><p class="first">Login to the AEN Server using Chrome or Firefox browser using the
 wakari user.</p>
@@ -497,20 +500,20 @@ wakari user.</p>
 </div>
 </div>
 <div class="section" id="install-aen-compute">
-<h2><a class="toc-backref" href="#id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Compute</a><a class="headerlink" href="#install-aen-compute" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">1.7&nbsp;&nbsp;&nbsp;Install AEN Compute</a><a class="headerlink" href="#install-aen-compute" title="Permalink to this headline">¶</a></h2>
 <p>This is where projects are stored and run. Adding multiple AEN
 Compute machines allows one to scale-out horizontally to increase
 capacity. Projects can be created on individual compute nodes to spread
 the load.</p>
 <div class="section" id="id2">
-<h3>1.6.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-compute-installer">
-<h3>1.6.2&nbsp;&nbsp;&nbsp;Run AEN Compute Installer<a class="headerlink" href="#run-aen-compute-installer" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.2&nbsp;&nbsp;&nbsp;Run AEN Compute Installer<a class="headerlink" href="#run-aen-compute-installer" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
 ...
 ...
@@ -529,7 +532,7 @@ to PATH in your /root/.bashrc ? [yes|no]
 </div>
 </div>
 <div class="section" id="configure-aen-compute-node">
-<h3>1.6.3&nbsp;&nbsp;&nbsp;Configure AEN Compute Node<a class="headerlink" href="#configure-aen-compute-node" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.3&nbsp;&nbsp;&nbsp;Configure AEN Compute Node<a class="headerlink" href="#configure-aen-compute-node" title="Permalink to this headline">¶</a></h3>
 <p>Once installed, you need to configure the Compute Launcher on AEN Server.</p>
 <ol class="arabic">
 <li><p class="first">Point your browser at the AEN Server</p>
@@ -558,11 +561,11 @@ Compute Node with</p>
 </ol>
 </div>
 <div class="section" id="configure-conda-to-use-local-on-site-anaconda-enterprise-repo">
-<h3>1.6.4&nbsp;&nbsp;&nbsp;Configure conda to use local on-site Anaconda Enterprise Repo<a class="headerlink" href="#configure-conda-to-use-local-on-site-anaconda-enterprise-repo" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.4&nbsp;&nbsp;&nbsp;Configure conda to use local on-site Anaconda Enterprise Repo<a class="headerlink" href="#configure-conda-to-use-local-on-site-anaconda-enterprise-repo" title="Permalink to this headline">¶</a></h3>
 <p>This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.</p>
 <div class="section" id="edit-the-condarc-on-the-compute-node">
-<h4>1.6.4.1&nbsp;&nbsp;&nbsp;Edit the condarc on the Compute Node<a class="headerlink" href="#edit-the-condarc-on-the-compute-node" title="Permalink to this headline">¶</a></h4>
+<h4>1.7.4.1&nbsp;&nbsp;&nbsp;Edit the condarc on the Compute Node<a class="headerlink" href="#edit-the-condarc-on-the-compute-node" title="Permalink to this headline">¶</a></h4>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If there are some channels below that you haven&#8217;t mirrored, you should remove them from the configuration.</p>
@@ -592,7 +595,7 @@ Enterprise Repository server instead of Anaconda.org.</p>
 </div>
 </div>
 <div class="section" id="configure-anaconda-client">
-<h4>1.6.4.2&nbsp;&nbsp;&nbsp;Configure Anaconda Client<a class="headerlink" href="#configure-anaconda-client" title="Permalink to this headline">¶</a></h4>
+<h4>1.7.4.2&nbsp;&nbsp;&nbsp;Configure Anaconda Client<a class="headerlink" href="#configure-anaconda-client" title="Permalink to this headline">¶</a></h4>
 <p>Anaconda client lets users work with the Anaconda Repository from the command-line.
 Things like the following: search for packages, login, upload packages, etc.  The
 command below will set this value globally for all users.</p>
@@ -607,7 +610,7 @@ This sets the default config for <cite>anaconda-client</cite> for all users on c
 </div>
 </div>
 <div class="section" id="pam-authentication-optional">
-<h2><a class="toc-backref" href="#id9">1.7&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a><a class="headerlink" href="#pam-authentication-optional" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">1.8&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a><a class="headerlink" href="#pam-authentication-optional" title="Permalink to this headline">¶</a></h2>
 <p>This documents the process to configure the preliminary PAM authentication mechanism for AEN 4.0.0.</p>
 <ol class="arabic">
 <li><p class="first">remove <cite>wk-server</cite> from the current <cite>supervisord</cite> set:</p>

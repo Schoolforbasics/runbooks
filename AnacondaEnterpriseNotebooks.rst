@@ -148,7 +148,7 @@ Assuming the above requirements are met, there are no additional
 dependencies necessary for AEN.
 
 Air Gap vs. Regular Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 As stated previously, this document contains installation instructions
 for two audiences: those with internet access on the destination
@@ -158,15 +158,17 @@ the steps below have two sections: **Air Gap Installation** and
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
+.. _airgap_dl:
+
 Air Gap 
 ~~~~~~~~
 
 ..  following is cross-reference to AnacondaRepository.rst. Not sure how well it works for making pdf
 
-Docs assume the air-gap data is avialable on target server at `$INSTALLER_PATH`. Refer to :ref:`airgap` for instructions
+Docs assume the air-gap data is available on target server at `$INSTALLER_PATH`. Refer to :ref:`airgap` for instructions
 on obtaining AirGap archive for AE-N installation.
 
-If the AE-N archive was not downloaded during AE-Repo install (:ref:`airgap`), then it can be obtained as follows:
+If the AE-N archive was not downloaded during :ref:`AE-Repo install <airgap>`, it can be obtained as follows:
 
 ::
 
@@ -193,16 +195,17 @@ AE-N archive contents:
     jre-8u65-linux-x64.rpm
     wakari/
 
+
 Download the Installers
 -----------------------
 
 Download the installers and copy them to the corresponding servers.
 
--  **Air Gap Installation:** Copy installers from the Air Gap media
+-  **Air Gap Installation:** Copy installers from the Air Gap media/download
 
 -  **Regular Installation:**
 
-::
+   ::
 
        RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
        curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh

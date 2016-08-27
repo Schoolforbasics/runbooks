@@ -765,8 +765,6 @@ Mirror the Anaconda Enterprise Notebooks Channel
 
 .. note:: If AEN is not setup and no packages from wakari channel are needed then this is an **optional** mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.
 
-.. note:: If using platform based archive, :ref:`comp-install`, **SKIP** this section
-
 If the local Anaconda Repository will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user.
 

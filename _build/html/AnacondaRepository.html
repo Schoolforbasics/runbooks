@@ -238,13 +238,13 @@ to the <code class="docutils literal"><span class="pre">anaconda-suite</span></c
 </div>
 <ol class="arabic">
 <li><p class="first">For air-gap pen drive media mounted on <code class="docutils literal"><span class="pre">/installer</span></code>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer
 </pre></div>
 </div>
 </li>
 <li><p class="first">If the full anaconda installer is downloaded and expanded: <cite>anaconda-full-2016-07-11.tar</cite>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>tar xvf anaconda-full-2016-08-06.tar -C /installer/
-<span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer/scratch/anaconda-full-2016-07-11
+<span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer/scratch/anaconda-full-2016-07-11
 </pre></div>
 </div>
 </li>
@@ -378,8 +378,7 @@ Running the commands from the script below will do this - set the <cite>$INSTALL
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#</span>
 <span class="c1"># get_linux_installers.sh - to obtain all components for Linux packages and AE-Repo installation</span>
-<span class="c1"># set INSTALLER_PATH for your setup</span>
-<span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer
+<span class="c1"># expect INSTALLER_PATH env var is set before script is run</span>
 
 <span class="c1"># strip the top level and expand archive</span>
 <span class="nb">echo</span> <span class="s2">&quot;expand default pkgs and AE-Repo installer&quot;</span>

@@ -142,7 +142,7 @@ There are two ways to obtain the air-gap installation assets:
 
    .. code-block:: bash
    
-       INSTALLER_PATH=/installer
+       export INSTALLER_PATH=/installer
 
 
 #. If the full anaconda installer is downloaded and expanded: `anaconda-full-2016-07-11.tar`:
@@ -150,7 +150,7 @@ There are two ways to obtain the air-gap installation assets:
    .. code-block:: bash
    
        tar xvf anaconda-full-2016-08-06.tar -C /installer/
-       INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+       export INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
 
 The `anaconda-full-2016-07-11.tar` is roughly 200GB. If only a subset of components are required, refer to :ref:`comp-install`.
 
@@ -263,8 +263,7 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
   #!/bin/bash
   #
   # get_linux_installers.sh - to obtain all components for Linux packages and AE-Repo installation
-  # set INSTALLER_PATH for your setup
-  INSTALLER_PATH=/installer
+  # expect INSTALLER_PATH env var is set before script is run
   
   # strip the top level and expand archive
   echo "expand default pkgs and AE-Repo installer"

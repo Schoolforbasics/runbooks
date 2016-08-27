@@ -6,6 +6,10 @@ Anaconda Enterprise Notebook Runbook
 ====================================
 * Version: |release| | |today|
 
+.. contents::
+   :local:
+   :depth: 1
+
 Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
 Notebooks is a ready-to-use, powerful, fully-configured Python analytics
@@ -72,9 +76,10 @@ Configure to meet the needs of the projects. At least:
 
 -  2GB RAM
 -  2 CPU cores
+-  At least 20 GB
 
-OS Requirements
-~~~~~~~~~~~~~~~
+Software Requirements
+~~~~~~~~~~~~~~~~~~~~~~
 
 -  RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
    however this document assumes RHEL or CentOS 6.7)
@@ -84,27 +89,11 @@ OS Requirements
 -  **/projects:** Size depends on number and size of projects. At least
    20GB of storage.
 
-   **NOTE:** This directory needs the filesystem mounted with Posix ACL
+-  **ACL:** This directory needs the filesystem mounted with Posix ACL
    support (Posix.1e). Check with ``mount`` and
    ``tune2fs -l /path/to/filesystem | grep options``
 
-Software Prerequisites
-~~~~~~~~~~~~~~~~~~~~~~
-
-**AEN Server**
-
--  Mongo Version: >= 2.6.8 and < 3.0
--  Nginx version: >= 1.4.0
--  ElasticSearch
--  Oracle JRE 8
-
-**NOTE:** For Air Gap installations, Oracle JRE must already be
-installed
-
-**AEN Compute**
-
--  git
-
+ 
 Linux System Accounts Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -116,6 +105,21 @@ If your organization requires special actions, here is the list of UIDs:
 - nginx: created by RPM or deb package
 - wakari: Created during installation of Anaconda Enterprise Notebooks
 
+Software Prerequisites
+~~~~~~~~~~~~~~~~~~~~~~
+
+**AEN Server**
+
+-  Mongo Version: >= 2.6.8 and < 3.0
+-  Nginx version: >= 1.4.0
+-  ElasticSearch
+-  Oracle JRE 8
+
+**AEN Compute**
+
+-  git
+
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -125,11 +129,17 @@ Security Requirements
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
 
-**TCP Ports**
+* TCP Ports
 
--  Server: 80
--  Gateway: 8088
--  Compute: 5002
+========= ==== ======= ======== ======== ============ ==========
+direction type port    protocol optional configurable comments
+--------- ---- ------- -------- -------- ------------ ----------
+inbound   TCP     80    HTTP     No       No           Server
+in/out    TCP   8088             No       No           Gateway
+in/out    TCP   5002             No       No           Compute
+========= ==== ======= ======== ======== ============ ==========
+
+.. note:: Gateway port is updated from 8088 to 8089 in future versions
 
 Other Requirements
 ~~~~~~~~~~~~~~~~~~
@@ -148,17 +158,28 @@ the steps below have two sections: **Air Gap Installation** and
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
-Air Gap Media
-~~~~~~~~~~~~~
+Air Gap 
+~~~~~~~~
 
-This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.
+..  following is cross-reference to AnacondaRepository.rst. Not sure how well it works for making pdf
 
-Air Gap media contents:
+Docs assume the air-gap data is avialable on target server at `$INSTALLER_PATH`. Refer to :ref:`airgap` for instructions
+on obtaining AirGap archive for AE-N installation.
+
+If the AE-N archive was not downloaded during AE-Repo install (:ref:`airgap`), then it can be obtained as follows:
 
 ::
 
-    /installer
+    nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
+    tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
+    mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
+
+
+AE-N archive contents:
+
+::
+
+    $INSTALLER_PATH
     mongodb-org-tools-2.6.8-1.x86_64.rpm
     mongodb-org-shell-2.6.8-1.x86_64.rpm
     mongodb-org-server-2.6.8-1.x86_64.rpm
@@ -170,6 +191,7 @@ Air Gap media contents:
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
+    wakari/
 
 Download the Installers
 -----------------------
@@ -493,8 +515,8 @@ Enterprise Repository server instead of Anaconda.org.
 Edit the condarc on the Compute Node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    **NOTE:** If there are some channels below that you haven't mirrored,
-    you should remove them from the configuration.
+**NOTE:** If there are some channels below that you haven't mirrored,
+you should remove them from the configuration.
 
 ::
 
@@ -527,12 +549,16 @@ Anaconda client lets users work with the Anaconda Repository from the command-li
 Things like the following: search for packages, login, upload packages, etc.  The
 command below will set this value globally for all users.
 
-Run the following command filling in the proper value::
+Run the following command filling in the proper value.
+Requires `sudo` since config file is written to root file system: `/etc/xdg/binstar/config.yaml`.
+This sets the default config for `anaconda-client` for all users on compute node.
 
-    anaconda config --set url http://<your Anaconda Server>:8080/api -s
+::
 
-**Congratulations!** You've now successfully installed and configured
-Anaconda Enterprise Notebook.
+    sudo /opt/wakari/anaconda/bin/anaconda config --set url http://<your Anaconda Server>:8080/api -s
+
+
+**Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
 
 PAM Authentication (optional)
 -----------------------------

@@ -225,18 +225,18 @@ should follow <strong>Regular Installation</strong> instructions.</p>
 <span id="airgap"></span><h3>1.2.1&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
 <p>This document assumes that the air-gap media is available on the target server at <cite>$INSTALLER_PATH</cite> where the software is being installed.</p>
 <p>There are two ways to obtain the air-gap installation assets:</p>
-<ol class="arabic simple">
-<li>A pen drive is over-nighted to client</li>
-<li>Client downloads the latest archive tarball or component tarballs and expands the archive to
-<code class="docutils literal"><span class="pre">/installer</span></code>.</li>
-</ol>
+<ol class="arabic">
+<li><p class="first">A pen drive is over-nighted to client</p>
+</li>
+<li><p class="first">Client downloads the latest archive tarball or component tarballs and expands the archive to
+<code class="docutils literal"><span class="pre">/installer</span></code>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <code class="docutils literal"><span class="pre">$INSTALLER_PATH</span></code> variable must be set to the location of the
 air-gap media as displayed below. The <code class="docutils literal"><span class="pre">$INSTALLER_PATH</span></code> is the parent directory
 to the <code class="docutils literal"><span class="pre">anaconda-suite</span></code> directory. See examples below:</p>
 </div>
-<ol class="arabic">
+</li>
 <li><p class="first">For air-gap pen drive media mounted on <code class="docutils literal"><span class="pre">/installer</span></code>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer
 </pre></div>
@@ -253,7 +253,7 @@ to the <code class="docutils literal"><span class="pre">anaconda-suite</span></c
 </div>
 <div class="section" id="air-gap-full-installer-contents-anaconda-full-2016-07-11-tar">
 <h3>1.2.2&nbsp;&nbsp;&nbsp;Air Gap Full Installer Contents - <cite>anaconda-full-2016-07-11.tar</cite><a class="headerlink" href="#air-gap-full-installer-contents-anaconda-full-2016-07-11-tar" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">$INSTALLER_PATH</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ls <span class="nv">$INSTALLER_PATH</span>
 anaconda-cluster/
 anaconda-suite/
 mongodb-org-tools-2.6.8-1.x86_64.rpm
@@ -513,7 +513,9 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 </div>
 <div class="section" id="switch-to-the-anaconda-repository-administrator-account">
 <h3>1.4.4&nbsp;&nbsp;&nbsp;Switch to the Anaconda Repository administrator account<a class="headerlink" href="#switch-to-the-anaconda-repository-administrator-account" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="o">-</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
+<p>Switch account, preserving <cite>$INSTALLER_PATH</cite> environment variable; then source default profile script so we pick up any <cite>PATH</cite> updates.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">E</span> <span class="n">su</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
+<span class="n">source</span> <span class="o">.~/.</span><span class="n">bash_profile</span>
 </pre></div>
 </div>
 </div>

@@ -134,9 +134,9 @@ There are two ways to obtain the air-gap installation assets:
 #. Client downloads the latest archive tarball or component tarballs and expands the archive to
    ``/installer``. 
 
-.. note:: The ``$INSTALLER_PATH`` variable must be set to the location of the
-    air-gap media as displayed below. The ``$INSTALLER_PATH`` is the parent directory
-    to the ``anaconda-suite`` directory. See examples below:
+   .. note:: The ``$INSTALLER_PATH`` variable must be set to the location of the
+       air-gap media as displayed below. The ``$INSTALLER_PATH`` is the parent directory
+       to the ``anaconda-suite`` directory. See examples below:
 
 #. For air-gap pen drive media mounted on ``/installer``:
 
@@ -401,9 +401,12 @@ Give the anaconda-server user ownership of directories
 Switch to the Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Switch account, preserving `$INSTALLER_PATH` environment variable; then source default profile script so we pick up any `PATH` updates.
+
 ::
 
-    sudo su - anaconda-server
+    sudo -E su anaconda-server
+    source .~/.bash_profile
 
 
 Install Miniconda bootstrap version

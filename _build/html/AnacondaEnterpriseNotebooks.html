@@ -611,40 +611,31 @@ This sets the default config for <cite>anaconda-client</cite> for all users on c
 <p>This documents the process to configure the preliminary PAM authentication mechanism for AEN 4.0.0.</p>
 <ol class="arabic">
 <li><p class="first">remove <cite>wk-server</cite> from the current <cite>supervisord</cite> set:</p>
-<blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">stop</span> <span class="n">wk</span><span class="o">-</span><span class="n">server</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">stop</span> <span class="n">wk</span><span class="o">-</span><span class="n">server</span>
 <span class="n">mv</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">conf</span>      \
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">server</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">SUSPEND</span> \
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">reload</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">install the new package:</p>
-<blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">miniconda</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">conda</span> <span class="n">install</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">miniconda</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">conda</span> <span class="n">install</span> \
     <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span> \
     <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">1.10</span><span class="o">.</span><span class="mi">9</span><span class="o">-</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">bz2</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">modify the configuration to utilize the new auth method:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>::</dt>
-<dd><p class="first last">vim /opt/wakari/wakari-server/etc/wakari/wk-server-config.json</p>
-</dd>
-</dl>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wk</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
 <p>change the entry for the line <cite>&#8220;accounts&#8221;:</cite> to read instead:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;accounts&quot;</span><span class="p">:</span> <span class="s2">&quot;wk_server.plugins.accounts.pam&quot;</span><span class="p">,</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">connect the new <cite>initd</cite> script:</p>
-<blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span>
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">root</span>
 <span class="n">chkconfig</span> <span class="o">--</span><span class="n">add</span> <span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">root</span>
 <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">root</span> <span class="n">start</span>
@@ -652,15 +643,12 @@ This sets the default config for <cite>anaconda-client</cite> for all users on c
 <span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">wk</span><span class="o">-</span><span class="n">server</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">restart/check the <cite>worker</cite> service is running (and only the <cite>worker</cite>) under the <cite>supervisord</cite> watchdog:</p>
-<blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">start</span> <span class="nb">all</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">start</span> <span class="nb">all</span>
 <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">status</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 </ol>
 </div>

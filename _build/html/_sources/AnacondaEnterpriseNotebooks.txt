@@ -392,8 +392,7 @@ Run Wakari Gateway Installer
         to connect this Gateway to the AEN Server
         ...
 
-**NOTE:** replace **password** with the password of the wakari user that
-was generated during server installation.
+.. note:: replace **password** with the password of the wakari user that was generated during server installation.
 
 Register the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -426,7 +425,7 @@ start the gateway
 
     sudo service wakari-gateway start
 
-**NOTE:** Ignore any errors about missing /lib/lsb/init-functions
+.. note:: Ignore any errors about missing /lib/lsb/init-functions
 
 Verify the AEN Gateway has Registered
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -499,9 +498,7 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
    Compute Node with
 7. For URL, enter **http://$AEN_COMPUTE:5002**.
 
-   **NOTE:** If the Compute Launcher is located on the same box as the
-   Gateway, we recommend using **http://localhost:5002** for the URL
-   value.
+   .. note:: If the Compute Launcher is located on the same box as the Gateway, we recommend using **http://localhost:5002** for the URL value.
 
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes.
@@ -515,8 +512,7 @@ Enterprise Repository server instead of Anaconda.org.
 Edit the condarc on the Compute Node
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**NOTE:** If there are some channels below that you haven't mirrored,
-you should remove them from the configuration.
+.. note:: If there are some channels below that you haven't mirrored, you should remove them from the configuration.
 
 ::
 

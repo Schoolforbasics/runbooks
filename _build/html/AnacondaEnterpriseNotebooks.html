@@ -441,8 +441,10 @@ to connect this Gateway to the AEN Server
 ...
 </pre></div>
 </div>
-<p><strong>NOTE:</strong> replace <strong>password</strong> with the password of the wakari user that
-was generated during server installation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">replace <strong>password</strong> with the password of the wakari user that was generated during server installation.</p>
+</div>
 </div>
 <div class="section" id="register-the-aen-gateway">
 <h3>1.5.3&nbsp;&nbsp;&nbsp;Register the AEN Gateway<a class="headerlink" href="#register-the-aen-gateway" title="Permalink to this headline">¶</a></h3>
@@ -469,7 +471,10 @@ to write the configuration file:
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span> <span class="n">start</span>
 </pre></div>
 </div>
-<p><strong>NOTE:</strong> Ignore any errors about missing /lib/lsb/init-functions</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ignore any errors about missing /lib/lsb/init-functions</p>
+</div>
 </div>
 <div class="section" id="verify-the-aen-gateway-has-registered">
 <h4>1.5.3.3&nbsp;&nbsp;&nbsp;Verify the AEN Gateway has Registered<a class="headerlink" href="#verify-the-aen-gateway-has-registered" title="Permalink to this headline">¶</a></h4>
@@ -541,9 +546,10 @@ to PATH in your /root/.bashrc ? [yes|no]
 Compute Node with</p>
 </li>
 <li><p class="first">For URL, enter <strong>http://$AEN_COMPUTE:5002</strong>.</p>
-<p><strong>NOTE:</strong> If the Compute Launcher is located on the same box as the
-Gateway, we recommend using <strong>http://localhost:5002</strong> for the URL
-value.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the Compute Launcher is located on the same box as the Gateway, we recommend using <strong>http://localhost:5002</strong> for the URL value.</p>
+</div>
 </li>
 <li><p class="first">Add a Name and Description for the compute node</p>
 </li>
@@ -557,8 +563,10 @@ value.</p>
 Enterprise Repository server instead of Anaconda.org.</p>
 <div class="section" id="edit-the-condarc-on-the-compute-node">
 <h4>1.6.4.1&nbsp;&nbsp;&nbsp;Edit the condarc on the Compute Node<a class="headerlink" href="#edit-the-condarc-on-the-compute-node" title="Permalink to this headline">¶</a></h4>
-<p><strong>NOTE:</strong> If there are some channels below that you haven&#8217;t mirrored,
-you should remove them from the configuration.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If there are some channels below that you haven&#8217;t mirrored, you should remove them from the configuration.</p>
+</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#/opt/wakari/anaconda/.condarc</span>
 <span class="n">channels</span><span class="p">:</span>
     <span class="o">-</span> <span class="n">defaults</span>

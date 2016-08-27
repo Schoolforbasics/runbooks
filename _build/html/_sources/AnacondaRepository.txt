@@ -72,6 +72,12 @@ If your organization requires special actions, here is the list of UIDs:
 - ``mongod`` (RHEL) or ``mongodb`` (Ubuntu/Debian) - Created by the RPM or deb package
 - ``anaconda-server``: Created manually during installation, and configurable to other names
 
+Software Prerequisites
+~~~~~~~~~~~~~~~~~~~~~~~
+
+-  Mongo Version: >= 2.6.8 and < 3.0
+
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -113,6 +119,8 @@ the steps below have two sections: **Air Gap Installation** and
 **Regular Installation**. Those without internet access should follow
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
+
+.. _airgap:
 
 Air Gap
 ~~~~~~~~
@@ -206,6 +214,9 @@ summarizes various components required for only installing AE-Repo and mirroring
 | miniconda-64bit-2016-08-03.tar    | various miniconda version for all 64bit     | ./                                |  342 MB|
 |                                   | platforms                                   |                                   |        |
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
+| notebook-2016-08-04.tar           | Installers: AE-N server, gateway, compute   | scratch/notebook/                 |  1.7 GB|
+|                                   | wakari conda packages                       |                                   |        |
++-----------------------------------+---------------------------------------------+-----------------------------------+--------+
  
 
 Here's a sample bash script to download all packages for AE-Repo install and linux-64 only conda packages.
@@ -225,7 +236,8 @@ Here's a sample bash script to download all packages for AE-Repo install and lin
       'linux-64-R-Packages-2016-08-03.list'
       'linux-64-R-Packages-2016-08-03.md5'
       'linux-64-R-Packages-2016-08-03.tar'
-      'miniconda-64bit-2016-08-03.tar')
+      'miniconda-64bit-2016-08-03.tar'
+      'notebook-2016-08-04.tar')
 
   for file_ in "${DL[@]}"
   do
@@ -292,7 +304,10 @@ Running the commands from the script below will do this - set the `$INSTALLER_PA
       echo "$N_FILE Exists"
     fi
   done
-  
+
+  # expand the notebooks tarball - no need to overwrite mongodb
+  tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
+  mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
 
 
 System Wide mongodb Installation - Requires `sudo`
@@ -749,8 +764,6 @@ Mirror the Anaconda Enterprise Notebooks Channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: If AEN is not setup and no packages from wakari channel are needed then this is an **optional** mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.
-
-.. note:: If using platform based archive, :ref:`comp-install`, **SKIP** this section
 
 If the local Anaconda Repository will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user.

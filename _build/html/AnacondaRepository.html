@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 26, 2016</li>
+<li>Version: 4.0-3 | Aug 27, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -120,8 +120,14 @@ If your organization requires special actions, here is the list of UIDs:</p>
 <li><code class="docutils literal"><span class="pre">anaconda-server</span></code>: Created manually during installation, and configurable to other names</li>
 </ul>
 </div>
+<div class="section" id="software-prerequisites">
+<h3>1.1.4&nbsp;&nbsp;&nbsp;Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Mongo Version: &gt;= 2.6.8 and &lt; 3.0</li>
+</ul>
+</div>
 <div class="section" id="security-requirements">
-<h3>1.1.4&nbsp;&nbsp;&nbsp;Security Requirements<a class="headerlink" href="#security-requirements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.5&nbsp;&nbsp;&nbsp;Security Requirements<a class="headerlink" href="#security-requirements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Required: Privileged (<code class="docutils literal"><span class="pre">root</span></code>) access or <code class="docutils literal"><span class="pre">sudo</span></code> capabilities</li>
 <li>Required: Open HTTP(S) port (configurable, default <code class="docutils literal"><span class="pre">8080</span></code>)</li>
@@ -134,7 +140,7 @@ If your organization requires special actions, here is the list of UIDs:</p>
 </div>
 </div>
 <div class="section" id="network-requirements">
-<h3>1.1.5&nbsp;&nbsp;&nbsp;Network Requirements<a class="headerlink" href="#network-requirements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.6&nbsp;&nbsp;&nbsp;Network Requirements<a class="headerlink" href="#network-requirements" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>TCP Ports</li>
 </ul>
@@ -201,7 +207,7 @@ If your organization requires special actions, here is the list of UIDs:</p>
 </table>
 </div>
 <div class="section" id="other-requirements">
-<h3>1.1.6&nbsp;&nbsp;&nbsp;Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.7&nbsp;&nbsp;&nbsp;Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
 <p>Assuming the above requirements are met, there are no additional
 dependencies necessary for Anaconda Repository.</p>
 </div>
@@ -216,7 +222,7 @@ the steps below have two sections: <strong>Air Gap Installation</strong> and
 the <strong>Air Gap Installation</strong> instructions and those with internet access
 should follow <strong>Regular Installation</strong> instructions.</p>
 <div class="section" id="air-gap">
-<h3>1.2.1&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
+<span id="airgap"></span><h3>1.2.1&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
 <p>This document assumes that the air-gap media is available on the target server at <cite>$INSTALLER_PATH</cite> where the software is being installed.</p>
 <p>There are two ways to obtain the air-gap installation assets:</p>
 <ol class="arabic simple">
@@ -329,6 +335,12 @@ platforms</td>
 <td>./</td>
 <td>342 MB</td>
 </tr>
+<tr class="row-odd"><td>notebook-2016-08-04.tar</td>
+<td>Installers: AE-N server, gateway, compute
+wakari conda packages</td>
+<td>scratch/notebook/</td>
+<td>1.7 GB</td>
+</tr>
 </tbody>
 </table>
 <p>Here&#8217;s a sample bash script to download all packages for AE-Repo install and linux-64 only conda packages.</p>
@@ -345,7 +357,8 @@ platforms</td>
     <span class="s1">&#39;linux-64-R-Packages-2016-08-03.list&#39;</span>
     <span class="s1">&#39;linux-64-R-Packages-2016-08-03.md5&#39;</span>
     <span class="s1">&#39;linux-64-R-Packages-2016-08-03.tar&#39;</span>
-    <span class="s1">&#39;miniconda-64bit-2016-08-03.tar&#39;</span><span class="o">)</span>
+    <span class="s1">&#39;miniconda-64bit-2016-08-03.tar&#39;</span>
+    <span class="s1">&#39;notebook-2016-08-04.tar&#39;</span><span class="o">)</span>
 
 <span class="k">for</span> file_ in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DL</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">do</span>
@@ -406,6 +419,10 @@ tar xf linux-64-R-Packages-2016-08-03.tar -C <span class="nv">$INSTALLER_PATH</s
     <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$N_FILE</span><span class="s2"> Exists&quot;</span>
   <span class="k">fi</span>
 <span class="k">done</span>
+
+<span class="c1"># expand the notebooks tarball - no need to overwrite mongodb</span>
+tar xfk notebook-2016-08-04.tar -C <span class="nv">$INSTALLER_PATH</span> --strip-components 2
+mv <span class="nv">$INSTALLER_PATH</span>/anaconda-notebook <span class="nv">$INSTALLER_PATH</span>/wakari
 </pre></div>
 </div>
 </div>
@@ -844,10 +861,6 @@ packages locally under the &#8220;anaconda&#8221; user account.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If AEN is not setup and no packages from wakari channel are needed then this is an <strong>optional</strong> mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If using platform based archive, <a class="reference internal" href="#comp-install"><span class="std std-ref">1.2.3&nbsp;&nbsp;&nbsp;Optional: Air Gap Platform-based Archives (Linux)</span></a>, <strong>SKIP</strong> this section</p>
 </div>
 <p>If the local Anaconda Repository will be used by Anaconda Enterprise Notebooks
 the recommended method is to mirror using the “wakari” user.</p>

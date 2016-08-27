@@ -48,8 +48,19 @@
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 25, 2016</li>
+<li>Version: 4.0-3 | Aug 27, 2016</li>
 </ul>
+<div class="contents local topic" id="contents">
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#requirements" id="id3">1.1&nbsp;&nbsp;&nbsp;Requirements</a></li>
+<li><a class="reference internal" href="#download-the-installers" id="id4">1.2&nbsp;&nbsp;&nbsp;Download the Installers</a></li>
+<li><a class="reference internal" href="#gather-ip-addresses-or-fqdns" id="id5">1.3&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a></li>
+<li><a class="reference internal" href="#install-aen-server" id="id6">1.4&nbsp;&nbsp;&nbsp;Install AEN Server</a></li>
+<li><a class="reference internal" href="#install-aen-gateway" id="id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Gateway</a></li>
+<li><a class="reference internal" href="#install-aen-compute" id="id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Compute</a></li>
+<li><a class="reference internal" href="#pam-authentication-optional" id="id9">1.7&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a></li>
+</ul>
+</div>
 <p>Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
 Notebooks is a ready-to-use, powerful, fully-configured Python analytics
@@ -86,7 +97,7 @@ so they can be completely isolated by a firewall.</p>
 <div><a class="reference internal image-reference" href="_images/wakari.png"><img alt="_images/wakari.png" class="align-center" src="_images/wakari.png" style="width: 816.0px; height: 1056.0px;" /></a>
 </div></blockquote>
 <div class="section" id="requirements">
-<h2>1.1&nbsp;&nbsp;&nbsp;Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id3">1.1&nbsp;&nbsp;&nbsp;Requirements</a><a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="hardware-recommendations">
 <h3>1.1.1&nbsp;&nbsp;&nbsp;Hardware Recommendations<a class="headerlink" href="#hardware-recommendations" title="Permalink to this headline">¶</a></h3>
 <p><strong>AEN Server</strong></p>
@@ -105,42 +116,24 @@ so they can be completely isolated by a firewall.</p>
 <ul class="simple">
 <li>2GB RAM</li>
 <li>2 CPU cores</li>
+<li>At least 20 GB</li>
 </ul>
 </div>
-<div class="section" id="os-requirements">
-<h3>1.1.2&nbsp;&nbsp;&nbsp;OS Requirements<a class="headerlink" href="#os-requirements" title="Permalink to this headline">¶</a></h3>
-<ul>
-<li><p class="first">RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
-however this document assumes RHEL or CentOS 6.7)</p>
-</li>
-<li><p class="first"><strong>/opt/wakari:</strong> Ability to install here and at least 5GB of storage.</p>
-</li>
-<li><p class="first"><strong>/projects:</strong> Size depends on number and size of projects. At least
-20GB of storage.</p>
-<p><strong>NOTE:</strong> This directory needs the filesystem mounted with Posix ACL
+<div class="section" id="software-requirements">
+<h3>1.1.2&nbsp;&nbsp;&nbsp;Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
+however this document assumes RHEL or CentOS 6.7)</li>
+<li><strong>/opt/wakari:</strong> Ability to install here and at least 5GB of storage.</li>
+<li><strong>/projects:</strong> Size depends on number and size of projects. At least
+20GB of storage.</li>
+<li><strong>ACL:</strong> This directory needs the filesystem mounted with Posix ACL
 support (Posix.1e). Check with <code class="docutils literal"><span class="pre">mount</span></code> and
-<code class="docutils literal"><span class="pre">tune2fs</span> <span class="pre">-l</span> <span class="pre">/path/to/filesystem</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">options</span></code></p>
-</li>
-</ul>
-</div>
-<div class="section" id="software-prerequisites">
-<h3>1.1.3&nbsp;&nbsp;&nbsp;Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h3>
-<p><strong>AEN Server</strong></p>
-<ul class="simple">
-<li>Mongo Version: &gt;= 2.6.8 and &lt; 3.0</li>
-<li>Nginx version: &gt;= 1.4.0</li>
-<li>ElasticSearch</li>
-<li>Oracle JRE 8</li>
-</ul>
-<p><strong>NOTE:</strong> For Air Gap installations, Oracle JRE must already be
-installed</p>
-<p><strong>AEN Compute</strong></p>
-<ul class="simple">
-<li>git</li>
+<code class="docutils literal"><span class="pre">tune2fs</span> <span class="pre">-l</span> <span class="pre">/path/to/filesystem</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">options</span></code></li>
 </ul>
 </div>
 <div class="section" id="linux-system-accounts-required">
-<h3>1.1.4&nbsp;&nbsp;&nbsp;Linux System Accounts Required<a class="headerlink" href="#linux-system-accounts-required" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.3&nbsp;&nbsp;&nbsp;Linux System Accounts Required<a class="headerlink" href="#linux-system-accounts-required" title="Permalink to this headline">¶</a></h3>
 <p>Some Linux system accounts (UIDs) are added to the system during installation.
 If your organization requires special actions, here is the list of UIDs:</p>
 <ul class="simple">
@@ -148,6 +141,20 @@ If your organization requires special actions, here is the list of UIDs:</p>
 <li>elasticsearch: created by RPM or deb package</li>
 <li>nginx: created by RPM or deb package</li>
 <li>wakari: Created during installation of Anaconda Enterprise Notebooks</li>
+</ul>
+</div>
+<div class="section" id="software-prerequisites">
+<h3>1.1.4&nbsp;&nbsp;&nbsp;Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h3>
+<p><strong>AEN Server</strong></p>
+<ul class="simple">
+<li>Mongo Version: &gt;= 2.6.8 and &lt; 3.0</li>
+<li>Nginx version: &gt;= 1.4.0</li>
+<li>ElasticSearch</li>
+<li>Oracle JRE 8</li>
+</ul>
+<p><strong>AEN Compute</strong></p>
+<ul class="simple">
+<li>git</li>
 </ul>
 </div>
 <div class="section" id="security-requirements">
@@ -159,12 +166,58 @@ If your organization requires special actions, here is the list of UIDs:</p>
 </div>
 <div class="section" id="network-requirements">
 <h3>1.1.6&nbsp;&nbsp;&nbsp;Network Requirements<a class="headerlink" href="#network-requirements" title="Permalink to this headline">¶</a></h3>
-<p><strong>TCP Ports</strong></p>
 <ul class="simple">
-<li>Server: 80</li>
-<li>Gateway: 8088</li>
-<li>Compute: 5002</li>
+<li>TCP Ports</li>
 </ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="7%" />
+<col width="12%" />
+<col width="14%" />
+<col width="14%" />
+<col width="21%" />
+<col width="17%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>direction</td>
+<td>type</td>
+<td>port</td>
+<td>protocol</td>
+<td>optional</td>
+<td>configurable</td>
+<td>comments</td>
+</tr>
+<tr class="row-even"><td>inbound</td>
+<td>TCP</td>
+<td>80</td>
+<td>HTTP</td>
+<td>No</td>
+<td>No</td>
+<td>Server</td>
+</tr>
+<tr class="row-odd"><td>in/out</td>
+<td>TCP</td>
+<td>8088</td>
+<td>&nbsp;</td>
+<td>No</td>
+<td>No</td>
+<td>Gateway</td>
+</tr>
+<tr class="row-even"><td>in/out</td>
+<td>TCP</td>
+<td>5002</td>
+<td>&nbsp;</td>
+<td>No</td>
+<td>No</td>
+<td>Compute</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Gateway port is updated from 8088 to 8089 in future versions</p>
+</div>
 </div>
 <div class="section" id="other-requirements">
 <h3>1.1.7&nbsp;&nbsp;&nbsp;Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
@@ -181,29 +234,36 @@ the steps below have two sections: <strong>Air Gap Installation</strong> and
 the <strong>Air Gap Installation</strong> instructions and those with internet access
 should follow <strong>Regular Installation</strong> instructions.</p>
 </div>
-<div class="section" id="air-gap-media">
-<h3>1.1.9&nbsp;&nbsp;&nbsp;Air Gap Media<a class="headerlink" href="#air-gap-media" title="Permalink to this headline">¶</a></h3>
-<p>This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.</p>
-<p>Air Gap media contents:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">installer</span>
-<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="n">mongos</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">mongodb</span><span class="o">-</span><span class="n">org</span><span class="o">-</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">1.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">wakari</span><span class="o">-</span><span class="n">compute</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">wakari</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">wakari</span><span class="o">-</span><span class="n">gateway</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="n">Linux</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">sh</span>
-<span class="n">nginx</span><span class="o">-</span><span class="mf">1.6</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">1.</span><span class="n">el6</span><span class="o">.</span><span class="n">ngx</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">elasticsearch</span><span class="o">-</span><span class="mf">1.7</span><span class="o">.</span><span class="mf">2.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
-<span class="n">jre</span><span class="o">-</span><span class="mi">8</span><span class="n">u65</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">x64</span><span class="o">.</span><span class="n">rpm</span>
+<div class="section" id="air-gap">
+<h3>1.1.9&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
+<p>Docs assume the air-gap data is avialable on target server at <cite>$INSTALLER_PATH</cite>. Refer to <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a> for instructions
+on obtaining AirGap archive for AE-N installation.</p>
+<p>If the AE-N archive was not downloaded during AE-Repo install (<a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a>), then it can be obtained as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
+tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
+mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
+</pre></div>
+</div>
+<p>AE-N archive contents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$INSTALLER_PATH
+mongodb-org-tools-2.6.8-1.x86_64.rpm
+mongodb-org-shell-2.6.8-1.x86_64.rpm
+mongodb-org-server-2.6.8-1.x86_64.rpm
+mongodb-org-mongos-2.6.8-1.x86_64.rpm
+mongodb-org-2.6.8-1.x86_64.rpm
+wakari-compute-0.10.0-Linux-x86_64.sh
+wakari-server-0.10.0-Linux-x86_64.sh
+wakari-gateway-0.10.0-Linux-x86_64.sh
+nginx-1.6.2-1.el6.ngx.x86_64.rpm
+elasticsearch-1.7.2.noarch.rpm
+jre-8u65-linux-x64.rpm
+wakari/
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="download-the-installers">
-<h2>1.2&nbsp;&nbsp;&nbsp;Download the Installers<a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id4">1.2&nbsp;&nbsp;&nbsp;Download the Installers</a><a class="headerlink" href="#download-the-installers" title="Permalink to this headline">¶</a></h2>
 <p>Download the installers and copy them to the corresponding servers.</p>
 <ul class="simple">
 <li><strong>Air Gap Installation:</strong> Copy installers from the Air Gap media</li>
@@ -217,7 +277,7 @@ curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
 </div>
 </div>
 <div class="section" id="gather-ip-addresses-or-fqdns">
-<h2>1.3&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs<a class="headerlink" href="#gather-ip-addresses-or-fqdns" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">1.3&nbsp;&nbsp;&nbsp;Gather IP addresses or FQDNs</a><a class="headerlink" href="#gather-ip-addresses-or-fqdns" title="Permalink to this headline">¶</a></h2>
 <p>AEN is very sensitive to the IP address or domain name used to
 connect to the Server and Gateway components. If users will be using the
 domain name, you should install thecomponents using the domain name
@@ -246,7 +306,7 @@ installing the AEN Server component.</p>
 </table>
 </div>
 <div class="section" id="install-aen-server">
-<h2>1.4&nbsp;&nbsp;&nbsp;Install AEN Server<a class="headerlink" href="#install-aen-server" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">1.4&nbsp;&nbsp;&nbsp;Install AEN Server</a><a class="headerlink" href="#install-aen-server" title="Permalink to this headline">¶</a></h2>
 <p>The AEN server is the administrative front­end to the system. This is
 where users login to the system, where user accounts are stored, and
 where admins can manage the system.</p>
@@ -350,7 +410,7 @@ page.</p>
 </div>
 </div>
 <div class="section" id="install-aen-gateway">
-<h2>1.5&nbsp;&nbsp;&nbsp;Install AEN Gateway<a class="headerlink" href="#install-aen-gateway" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">1.5&nbsp;&nbsp;&nbsp;Install AEN Gateway</a><a class="headerlink" href="#install-aen-gateway" title="Permalink to this headline">¶</a></h2>
 <p>The gateway is a reverse proxy that authenticates users and
 automatically directs them to the proper AEN Compute machine for
 their project. Users will not notice this component as it automatically
@@ -432,7 +492,7 @@ wakari user.</p>
 </div>
 </div>
 <div class="section" id="install-aen-compute">
-<h2>1.6&nbsp;&nbsp;&nbsp;Install AEN Compute<a class="headerlink" href="#install-aen-compute" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">1.6&nbsp;&nbsp;&nbsp;Install AEN Compute</a><a class="headerlink" href="#install-aen-compute" title="Permalink to this headline">¶</a></h2>
 <p>This is where projects are stored and run. Adding multiple AEN
 Compute machines allows one to scale-out horizontally to increase
 capacity. Projects can be created on individual compute nodes to spread
@@ -497,9 +557,8 @@ value.</p>
 Enterprise Repository server instead of Anaconda.org.</p>
 <div class="section" id="edit-the-condarc-on-the-compute-node">
 <h4>1.6.4.1&nbsp;&nbsp;&nbsp;Edit the condarc on the Compute Node<a class="headerlink" href="#edit-the-condarc-on-the-compute-node" title="Permalink to this headline">¶</a></h4>
-<blockquote>
-<div><strong>NOTE:</strong> If there are some channels below that you haven&#8217;t mirrored,
-you should remove them from the configuration.</div></blockquote>
+<p><strong>NOTE:</strong> If there are some channels below that you haven&#8217;t mirrored,
+you should remove them from the configuration.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#/opt/wakari/anaconda/.condarc</span>
 <span class="n">channels</span><span class="p">:</span>
     <span class="o">-</span> <span class="n">defaults</span>
@@ -529,17 +588,18 @@ you should remove them from the configuration.</div></blockquote>
 <p>Anaconda client lets users work with the Anaconda Repository from the command-line.
 Things like the following: search for packages, login, upload packages, etc.  The
 command below will set this value globally for all users.</p>
-<p>Run the following command filling in the proper value:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">your</span> <span class="n">Anaconda</span> <span class="n">Server</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">api</span> <span class="o">-</span><span class="n">s</span>
+<p>Run the following command filling in the proper value.
+Requires <cite>sudo</cite> since config file is written to root file system: <cite>/etc/xdg/binstar/config.yaml</cite>.
+This sets the default config for <cite>anaconda-client</cite> for all users on compute node.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">anaconda</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">anaconda</span> <span class="n">config</span> <span class="o">--</span><span class="nb">set</span> <span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">your</span> <span class="n">Anaconda</span> <span class="n">Server</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">api</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
-<p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured
-Anaconda Enterprise Notebook.</p>
+<p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured Anaconda Enterprise Notebook.</p>
 </div>
 </div>
 </div>
 <div class="section" id="pam-authentication-optional">
-<h2>1.7&nbsp;&nbsp;&nbsp;PAM Authentication (optional)<a class="headerlink" href="#pam-authentication-optional" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">1.7&nbsp;&nbsp;&nbsp;PAM Authentication (optional)</a><a class="headerlink" href="#pam-authentication-optional" title="Permalink to this headline">¶</a></h2>
 <p>This documents the process to configure the preliminary PAM authentication mechanism for AEN 4.0.0.</p>
 <ol class="arabic">
 <li><p class="first">remove <cite>wk-server</cite> from the current <cite>supervisord</cite> set:</p>

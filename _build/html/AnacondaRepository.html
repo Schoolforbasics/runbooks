@@ -513,9 +513,9 @@ curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 </div>
 <div class="section" id="switch-to-the-anaconda-repository-administrator-account">
 <h3>1.4.4&nbsp;&nbsp;&nbsp;Switch to the Anaconda Repository administrator account<a class="headerlink" href="#switch-to-the-anaconda-repository-administrator-account" title="Permalink to this headline">¶</a></h3>
-<p>Switch account, preserving <cite>$INSTALLER_PATH</cite> environment variable; then source default profile script so we pick up any <cite>PATH</cite> updates.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">E</span> <span class="n">su</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
-<span class="n">source</span> <span class="o">.~/.</span><span class="n">bash_profile</span>
+<p>Switch account, and set <cite>$INSTALLER_PATH</cite> environment variable.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="o">-</span> <span class="n">anaconda</span><span class="o">-</span><span class="n">server</span>
+<span class="n">INSTALLER_PATH</span><span class="o">=&lt;</span><span class="nb">set</span> <span class="n">to</span> <span class="n">path</span> <span class="n">of</span> <span class="n">air</span> <span class="n">gap</span> <span class="n">data</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>

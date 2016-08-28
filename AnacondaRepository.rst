@@ -401,12 +401,12 @@ Give the anaconda-server user ownership of directories
 Switch to the Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Switch account, preserving `$INSTALLER_PATH` environment variable; then source default profile script so we pick up any `PATH` updates.
+Switch account, and set `$INSTALLER_PATH` environment variable.
 
 ::
 
-    sudo -E su anaconda-server
-    source .~/.bash_profile
+    sudo su - anaconda-server
+    INSTALLER_PATH=<set to path of air gap data>
 
 
 Install Miniconda bootstrap version

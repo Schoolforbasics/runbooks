@@ -242,7 +242,7 @@ Here's a sample bash script to download all packages for AE-Repo install and lin
   for file_ in "${DL[@]}"
   do
     CMD="curl -O -C - $PREFIX$file_"
-    echo $CMD > cout.txt
+    echo $CMD >> cout.txt
     $CMD >> cout.txt
   done  
 

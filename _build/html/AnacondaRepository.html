@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 27, 2016</li>
+<li>Version: 4.0-3 | Aug 29, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -59,8 +59,7 @@
 <li><a class="reference internal" href="#install-miniconda-bootstrap-version" id="id5">1.5&nbsp;&nbsp;&nbsp;Install Miniconda bootstrap version</a></li>
 <li><a class="reference internal" href="#install-anaconda-repository-enterprise-packages" id="id6">1.6&nbsp;&nbsp;&nbsp;Install Anaconda Repository Enterprise Packages</a></li>
 <li><a class="reference internal" href="#configure-anaconda-repository-server" id="id7">1.7&nbsp;&nbsp;&nbsp;Configure Anaconda Repository Server</a></li>
-<li><a class="reference internal" href="#server-configuration-requires-mongo" id="id8">1.8&nbsp;&nbsp;&nbsp;Server Configuration - requires <cite>mongo</cite></a></li>
-<li><a class="reference internal" href="#setup-mirrors" id="id9">1.9&nbsp;&nbsp;&nbsp;Setup Mirrors</a></li>
+<li><a class="reference internal" href="#setup-mirrors" id="id8">1.8&nbsp;&nbsp;&nbsp;Setup Mirrors</a></li>
 </ul>
 </div>
 <p>This following runbook walks through the steps needed to install
@@ -363,7 +362,7 @@ wakari conda packages</td>
 <span class="k">for</span> file_ in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DL</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">do</span>
   <span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;curl -O -C - </span><span class="nv">$PREFIX$file_</span><span class="s2">&quot;</span>
-  <span class="nb">echo</span> <span class="nv">$CMD</span> &gt; cout.txt
+  <span class="nb">echo</span> <span class="nv">$CMD</span> &gt;&gt; cout.txt
   <span class="nv">$CMD</span> &gt;&gt; cout.txt
 <span class="k">done</span>
 </pre></div>
@@ -691,28 +690,8 @@ binstar-worker-low:binstar-worker-low_07   RUNNING   pid 8254, uptime 0:06:39
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="server-configuration-requires-mongo">
-<h2><a class="toc-backref" href="#id8">1.8&nbsp;&nbsp;&nbsp;Server Configuration - requires <cite>mongo</cite></a><a class="headerlink" href="#server-configuration-requires-mongo" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="create-an-initial-superuser-account-for-anaconda-repo">
-<h3>1.8.1&nbsp;&nbsp;&nbsp;Create an initial “superuser” account for Anaconda Repo<a class="headerlink" href="#create-an-initial-superuser-account-for-anaconda-repo" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">create</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">username</span> <span class="s2">&quot;superuser&quot;</span> <span class="o">--</span><span class="n">password</span> <span class="s2">&quot;yourpassword&quot;</span> \
-                            <span class="o">--</span><span class="n">email</span> <span class="s2">&quot;your@email.com&quot;</span> <span class="o">--</span><span class="n">superuser</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.</p>
-</div>
-</div>
-<div class="section" id="initialize-the-anaconda-repo-database">
-<h3>1.8.2&nbsp;&nbsp;&nbsp;Initialize the Anaconda Repo database<a class="headerlink" href="#initialize-the-anaconda-repo-database" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">db</span><span class="o">-</span><span class="n">setup</span> <span class="o">--</span><span class="n">execute</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="install-anaconda-repository-license">
-<h3>1.8.3&nbsp;&nbsp;&nbsp;Install Anaconda Repository License<a class="headerlink" href="#install-anaconda-repository-license" title="Permalink to this headline">¶</a></h3>
+<h3>1.7.6&nbsp;&nbsp;&nbsp;Install Anaconda Repository License<a class="headerlink" href="#install-anaconda-repository-license" title="Permalink to this headline">¶</a></h3>
 <p>Visit <strong>http://your.anaconda.server:8080</strong>. Follow the onscreen
 instructions and upload your license file. Log in with the superuser
 user and password configured above. After submitting, you should see the
@@ -724,9 +703,9 @@ login page.</p>
 </div>
 </div>
 <div class="section" id="setup-mirrors">
-<h2><a class="toc-backref" href="#id9">1.9&nbsp;&nbsp;&nbsp;Setup Mirrors</a><a class="headerlink" href="#setup-mirrors" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">1.8&nbsp;&nbsp;&nbsp;Setup Mirrors</a><a class="headerlink" href="#setup-mirrors" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="mirror-installers-for-miniconda">
-<h3>1.9.1&nbsp;&nbsp;&nbsp;Mirror Installers for Miniconda<a class="headerlink" href="#mirror-installers-for-miniconda" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.1&nbsp;&nbsp;&nbsp;Mirror Installers for Miniconda<a class="headerlink" href="#mirror-installers-for-miniconda" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If using component installers - skip this section. It will not work at present.</p>
@@ -772,7 +751,7 @@ following: <a class="reference external" href="http:/">http:/</a>/&lt;your host&
 </div>
 </div>
 <div class="section" id="mirror-anaconda-repo">
-<h3>1.9.2&nbsp;&nbsp;&nbsp;Mirror Anaconda Repo<a class="headerlink" href="#mirror-anaconda-repo" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.2&nbsp;&nbsp;&nbsp;Mirror Anaconda Repo<a class="headerlink" href="#mirror-anaconda-repo" title="Permalink to this headline">¶</a></h3>
 <p>Now that Anaconda Repository is installed, we want to mirror packages into our
 local repository. If mirroring from Anaconda Cloud, the process will
 take hours or longer, depending on the available internet bandwidth. Use
@@ -818,7 +797,7 @@ packages locally under the &#8220;anaconda&#8221; user account.</p>
 <strong>http://your.anaconda.server:8080/anaconda</strong> in a browser.</p>
 </div>
 <div class="section" id="optional-mirror-the-r-channel">
-<h3>1.9.3&nbsp;&nbsp;&nbsp;Optional: Mirror the R channel<a class="headerlink" href="#optional-mirror-the-r-channel" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.3&nbsp;&nbsp;&nbsp;Optional: Mirror the R channel<a class="headerlink" href="#optional-mirror-the-r-channel" title="Permalink to this headline">¶</a></h3>
 <p><strong>Air Gap Installation:</strong></p>
 <ol class="arabic">
 <li><p class="first">Create a mirror config file:</p>
@@ -862,7 +841,7 @@ packages locally under the &#8220;anaconda&#8221; user account.</p>
 </ol>
 </div>
 <div class="section" id="mirror-the-anaconda-enterprise-notebooks-channel">
-<h3>1.9.4&nbsp;&nbsp;&nbsp;Mirror the Anaconda Enterprise Notebooks Channel<a class="headerlink" href="#mirror-the-anaconda-enterprise-notebooks-channel" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.4&nbsp;&nbsp;&nbsp;Mirror the Anaconda Enterprise Notebooks Channel<a class="headerlink" href="#mirror-the-anaconda-enterprise-notebooks-channel" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If AEN is not setup and no packages from wakari channel are needed then this is an <strong>optional</strong> mirror. If you have an Anaconda Enterprise Notebooks server which will be using this Repo Server, then this channel must be mirrored.</p>
@@ -911,7 +890,7 @@ YAML file below:</p>
 have received from Continuum Support.</p>
 </div>
 <div class="section" id="optional-mirror-the-anaconda-cluster-channel">
-<h3>1.9.5&nbsp;&nbsp;&nbsp;Optional: Mirror the Anaconda Cluster channel<a class="headerlink" href="#optional-mirror-the-anaconda-cluster-channel" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.5&nbsp;&nbsp;&nbsp;Optional: Mirror the Anaconda Cluster channel<a class="headerlink" href="#optional-mirror-the-anaconda-cluster-channel" title="Permalink to this headline">¶</a></h3>
 <p>To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below:</p>
 <p><strong>Air Gap Installation:</strong></p>
 <ol class="arabic">
@@ -959,7 +938,7 @@ have received from Continuum Support.</p>
 </ol>
 </div>
 <div class="section" id="optional-adjust-iptables-to-accept-requests-on-port-80">
-<h3>1.9.6&nbsp;&nbsp;&nbsp;Optional: Adjust iptables to accept requests on port 80<a class="headerlink" href="#optional-adjust-iptables-to-accept-requests-on-port-80" title="Permalink to this headline">¶</a></h3>
+<h3>1.8.6&nbsp;&nbsp;&nbsp;Optional: Adjust iptables to accept requests on port 80<a class="headerlink" href="#optional-adjust-iptables-to-accept-requests-on-port-80" title="Permalink to this headline">¶</a></h3>
 <p>The easiest way to enable clients to access an Anaconda Repository on standard
 ports is to configure the server to redirect traffic received on
 standard HTTP port 80 to the standard Anaconda Repository HTTP port 8080.</p>

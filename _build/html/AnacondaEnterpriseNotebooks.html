@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 27, 2016</li>
+<li>Version: 4.0-3 | Aug 29, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -252,9 +252,9 @@ mongodb-org-shell-2.6.8-1.x86_64.rpm
 mongodb-org-server-2.6.8-1.x86_64.rpm
 mongodb-org-mongos-2.6.8-1.x86_64.rpm
 mongodb-org-2.6.8-1.x86_64.rpm
-wakari-compute-0.10.0-Linux-x86_64.sh
-wakari-server-0.10.0-Linux-x86_64.sh
-wakari-gateway-0.10.0-Linux-x86_64.sh
+wakari-compute-4.0.0-Linux-x86_64.sh
+wakari-server-4.0.0-Linux-x86_64.sh
+wakari-gateway-4.0.0-Linux-x86_64.sh
 nginx-1.6.2-1.el6.ngx.x86_64.rpm
 elasticsearch-1.7.2.noarch.rpm
 jre-8u65-linux-x64.rpm
@@ -271,9 +271,9 @@ wakari/
 </li>
 <li><p class="first"><strong>Regular Installation:</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
-curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
-curl -O $RPM_CDN/wakari-gateway-0.10.0-Linux-x86_64.sh
-curl -O $RPM_CDN/wakari-compute-0.10.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-server-4.0.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-gateway-4.0.0-Linux-x86_64.sh
+curl -O $RPM_CDN/wakari-compute-4.0.0-Linux-x86_64.sh
 </pre></div>
 </div>
 </li>
@@ -354,7 +354,7 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 </div>
 <div class="section" id="run-aen-server-installer">
 <h4>1.5.2.2&nbsp;&nbsp;&nbsp;Run AEN Server Installer<a class="headerlink" href="#run-aen-server-installer" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -429,7 +429,7 @@ routes them.</p>
 </div>
 <div class="section" id="run-wakari-gateway-installer">
 <h3>1.6.2&nbsp;&nbsp;&nbsp;Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -514,7 +514,7 @@ the load.</p>
 </div>
 <div class="section" id="run-aen-compute-installer">
 <h3>1.7.2&nbsp;&nbsp;&nbsp;Run AEN Compute Installer<a class="headerlink" href="#run-aen-compute-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-0.10.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 ...
 ...
 PREFIX=/opt/wakari/wakari-compute

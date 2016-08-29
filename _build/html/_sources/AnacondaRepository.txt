@@ -206,16 +206,16 @@ summarizes various components required for only installing AE-Repo and mirroring
 |                                   | - latest miniconda                          |                                   |        |
 |                                   | - linux pkgs for default channel            |                                   |        |
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
-| cluster-2016-08-03.tar            | anaconda-cluster conda packages; mirror on  | scratch/cluster/                  |  239 MB|
-|                                   | R channel (all platforms)                   |                                   |        |
+| cluster-2016-08-03.tar            | anaconda-cluster conda packages;            | scratch/cluster/                  |  239 MB|
+|                                   | (all platforms)                             |                                   |        |
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
-| linux-64-R-Packages-2016-08-03.tar| conda packages for R, mirror on R channel   | linux-64-R-Packages/              |  3.3 GB|
+| linux-64-R-Packages-2016-08-03.tar| linux-64 'R' conda packages                 | linux-64-R-Packages/              |  3.3 GB|
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
 | miniconda-64bit-2016-08-03.tar    | various miniconda version for all 64bit     | ./                                |  342 MB|
 |                                   | platforms                                   |                                   |        |
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
 | notebook-2016-08-04.tar           | Installers: AE-N server, gateway, compute   | scratch/notebook/                 |  1.7 GB|
-|                                   | wakari conda packages                       |                                   |        |
+|                                   | wakari conda packages (all platforms)       |                                   |        |
 +-----------------------------------+---------------------------------------------+-----------------------------------+--------+
  
 

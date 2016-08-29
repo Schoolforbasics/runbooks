@@ -587,28 +587,6 @@ Verify the server is running
     binstar-worker-low:binstar-worker-low_07   RUNNING   pid 8254, uptime 0:06:39
 
 
-Server Configuration - requires `mongo` 
-----------------------------------------
-
-Create an initial “superuser” account for Anaconda Repo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    anaconda-server-create-user --username "superuser" --password "yourpassword" \
-                                --email "your@email.com" --superuser
-
-.. note:: to ensure the bash shell does not process any of the characters in this password, limit the password to lower case letters, upper case letters and numbers, with no punctuation. After setup the password can be changed with the web interface.
-
-
-Initialize the Anaconda Repo database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    anaconda-server-db-setup --execute
-
-
 Install Anaconda Repository License
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -242,18 +242,28 @@ Here's a sample bash script to download all packages for AE-Repo install and lin
   for file_ in "${DL[@]}"
   do
     CMD="curl -O -C - $PREFIX$file_"
-    echo $CMD >> cout.txt
-    $CMD >> cout.txt
-  done  
+    # output command to stdout
+    echo $CMD
+
+    # redirect stderr to same file and tail cout.txt to see curl progress
+    $CMD >> cout.txt 2>&1
+    echo "Downloaded: "$PREFIX$file_ >> cout.txt
+  done
 
 
-Save it to `get_installers.sh` and run in background. Tail the `cout.txt` to see progress of downloads 
+Save it to `get_installers.sh`. Tail the `cout.txt` to see progress of downloads 
 
 .. code-block:: bash
 
    bash get_installers.sh > cout.txt &
    tail -f cout.txt
 
+To run in background and continue download after logout, use nohup. You can redirect output and append to same file: `cout.txt`. See example below:
+
+.. code-block:: bash
+
+   nohup bash get_installers.sh >> cout.txt 2>&1 &
+   tail -f cout.txt
 
 After downloading, expand the tarballs such that they they are consistent with full archive and the instructions from here on down.
 Running the commands from the script below will do this - set the `$INSTALLER_PATH` correctly for your system. This will take sometime to expand the archives.

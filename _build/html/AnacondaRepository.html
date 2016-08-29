@@ -362,13 +362,22 @@ wakari conda packages</td>
 <span class="k">for</span> file_ in <span class="s2">&quot;</span><span class="si">${</span><span class="nv">DL</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="k">do</span>
   <span class="nv">CMD</span><span class="o">=</span><span class="s2">&quot;curl -O -C - </span><span class="nv">$PREFIX$file_</span><span class="s2">&quot;</span>
-  <span class="nb">echo</span> <span class="nv">$CMD</span> &gt;&gt; cout.txt
-  <span class="nv">$CMD</span> &gt;&gt; cout.txt
+  <span class="c1"># output command to stdout</span>
+  <span class="nb">echo</span> <span class="nv">$CMD</span>
+
+  <span class="c1"># redirect stderr to same file and tail cout.txt to see curl progress</span>
+  <span class="nv">$CMD</span> &gt;&gt; cout.txt 2&gt;<span class="p">&amp;</span>1
+  <span class="nb">echo</span> <span class="s2">&quot;Downloaded: &quot;</span><span class="nv">$PREFIX$file_</span> &gt;&gt; cout.txt
 <span class="k">done</span>
 </pre></div>
 </div>
-<p>Save it to <cite>get_installers.sh</cite> and run in background. Tail the <cite>cout.txt</cite> to see progress of downloads</p>
+<p>Save it to <cite>get_installers.sh</cite>. Tail the <cite>cout.txt</cite> to see progress of downloads</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>bash get_installers.sh &gt; cout.txt <span class="p">&amp;</span>
+tail -f cout.txt
+</pre></div>
+</div>
+<p>To run in background and continue download after logout, use nohup. You can redirect output and append to same file: <cite>cout.txt</cite>. See example below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>nohup bash get_installers.sh &gt;&gt; cout.txt 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">&amp;</span>
 tail -f cout.txt
 </pre></div>
 </div>

@@ -6,6 +6,10 @@ Anaconda Enterprise Notebook Runbook
 ====================================
 * Version: |release| | |today|
 
+.. contents::
+   :local:
+   :depth: 1
+
 Anaconda Enterprise Notebook (AEN) is a Python data analysis environment from
 Continuum Analytics. Accessed through a browser, Anaconda Enterprise
 Notebooks is a ready-to-use, powerful, fully-configured Python analytics
@@ -72,9 +76,10 @@ Configure to meet the needs of the projects. At least:
 
 -  2GB RAM
 -  2 CPU cores
+-  At least 20 GB
 
-OS Requirements
-~~~~~~~~~~~~~~~
+Software Requirements
+~~~~~~~~~~~~~~~~~~~~~~
 
 -  RHEL/CentOS 6.7 on all nodes (Other operating systems are supported,
    however this document assumes RHEL or CentOS 6.7)
@@ -84,27 +89,11 @@ OS Requirements
 -  **/projects:** Size depends on number and size of projects. At least
    20GB of storage.
 
-   **NOTE:** This directory needs the filesystem mounted with Posix ACL
+-  **ACL:** This directory needs the filesystem mounted with Posix ACL
    support (Posix.1e). Check with ``mount`` and
    ``tune2fs -l /path/to/filesystem | grep options``
 
-Software Prerequisites
-~~~~~~~~~~~~~~~~~~~~~~
-
-**AEN Server**
-
--  Mongo Version: >= 2.6.8 and < 3.0
--  Nginx version: >= 1.4.0
--  ElasticSearch
--  Oracle JRE 8
-
-**NOTE:** For Air Gap installations, Oracle JRE must already be
-installed
-
-**AEN Compute**
-
--  git
-
+ 
 Linux System Accounts Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -116,6 +105,21 @@ If your organization requires special actions, here is the list of UIDs:
 - nginx: created by RPM or deb package
 - wakari: Created during installation of Anaconda Enterprise Notebooks
 
+Software Prerequisites
+~~~~~~~~~~~~~~~~~~~~~~
+
+**AEN Server**
+
+-  Mongo Version: >= 2.6.8 and < 3.0
+-  Nginx version: >= 1.4.0
+-  ElasticSearch
+-  Oracle JRE 8
+
+**AEN Compute**
+
+-  git
+
+
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -125,11 +129,17 @@ Security Requirements
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
 
-**TCP Ports**
+* TCP Ports
 
--  Server: 80
--  Gateway: 8088
--  Compute: 5002
+========= ==== ======= ======== ======== ============ ==========
+direction type port    protocol optional configurable comments
+--------- ---- ------- -------- -------- ------------ ----------
+inbound   TCP     80    HTTP     No       No           Server
+in/out    TCP   8088             No       No           Gateway
+in/out    TCP   5002             No       No           Compute
+========= ==== ======= ======== ======== ============ ==========
+
+.. note:: Gateway port is updated from 8088 to 8089 in future versions
 
 Other Requirements
 ~~~~~~~~~~~~~~~~~~
@@ -138,7 +148,7 @@ Assuming the above requirements are met, there are no additional
 dependencies necessary for AEN.
 
 Air Gap vs. Regular Installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 As stated previously, this document contains installation instructions
 for two audiences: those with internet access on the destination
@@ -148,17 +158,30 @@ the steps below have two sections: **Air Gap Installation** and
 the **Air Gap Installation** instructions and those with internet access
 should follow **Regular Installation** instructions.
 
-Air Gap Media
-~~~~~~~~~~~~~
+.. _airgap_dl:
 
-This document assumes that the Air Gap media is located at /installer on
-the server where the software is being installed.
+Air Gap 
+~~~~~~~~
 
-Air Gap media contents:
+..  following is cross-reference to AnacondaRepository.rst. Not sure how well it works for making pdf
+
+Docs assume the air-gap data is available on target server at `$INSTALLER_PATH`. Refer to :ref:`airgap` for instructions
+on obtaining AirGap archive for AE-N installation.
+
+If the AE-N archive was not downloaded during :ref:`AE-Repo install <airgap>`, it can be obtained as follows:
 
 ::
 
-    /installer
+    nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
+    tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
+    mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
+
+
+AE-N archive contents:
+
+::
+
+    $INSTALLER_PATH
     mongodb-org-tools-2.6.8-1.x86_64.rpm
     mongodb-org-shell-2.6.8-1.x86_64.rpm
     mongodb-org-server-2.6.8-1.x86_64.rpm
@@ -170,18 +193,19 @@ Air Gap media contents:
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
+    wakari/
+
 
 Download the Installers
 -----------------------
 
-Download the installers and copy them to the corresponding servers. The
-Publisher should be installed on the AEN Server machine.
+Download the installers and copy them to the corresponding servers.
 
--  **Air Gap Installation:** Copy installers from the Air Gap media
+-  **Air Gap Installation:** Copy installers from the Air Gap media/download
 
 -  **Regular Installation:**
 
-::
+   ::
 
        RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
        curl -O $RPM_CDN/wakari-server-0.10.0-Linux-x86_64.sh
@@ -371,8 +395,7 @@ Run Wakari Gateway Installer
         to connect this Gateway to the AEN Server
         ...
 
-**NOTE:** replace **password** with the password of the wakari user that
-was generated during server installation.
+.. note:: replace **password** with the password of the wakari user that was generated during server installation.
 
 Register the AEN Gateway
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -385,7 +408,7 @@ to write the configuration file:
 
 ::
 
-    /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
+    sudo /opt/wakari/wakari-gateway/bin/wk-gateway-configure \
     --server http://$AEN_SERVER --host $AEN_GATEWAY \
     --port $AEN_GATEWAY_PORT --name Gateway --protocol http \
     --summary Gateway --username wakari \
@@ -405,7 +428,7 @@ start the gateway
 
     sudo service wakari-gateway start
 
-**NOTE:** Ignore any errors about missing /lib/lsb/init-functions
+.. note:: Ignore any errors about missing /lib/lsb/init-functions
 
 Verify the AEN Gateway has Registered
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -478,9 +501,7 @@ Once installed, you need to configure the Compute Launcher on AEN Server.
    Compute Node with
 7. For URL, enter **http://$AEN_COMPUTE:5002**.
 
-   **NOTE:** If the Compute Launcher is located on the same box as the
-   Gateway, we recommend using **http://localhost:5002** for the URL
-   value.
+   .. note:: If the Compute Launcher is located on the same box as the Gateway, we recommend using **http://localhost:5002** for the URL value.
 
 8. Add a Name and Description for the compute node
 9. Click the Add Resource button to save the changes.
@@ -491,11 +512,10 @@ Configure conda to use local on-site Anaconda Enterprise Repo
 This integrates Anaconda Enterprise Notebooks to use a local onsite Anaconda
 Enterprise Repository server instead of Anaconda.org.
 
-Edit the condarc
-^^^^^^^^^^^^^^^^
+Edit the condarc on the Compute Node
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    **NOTE:** If there are some channels below that you haven't mirrored,
-    you should remove them from the configuration.
+.. note:: If there are some channels below that you haven't mirrored, you should remove them from the configuration.
 
 ::
 
@@ -528,60 +548,65 @@ Anaconda client lets users work with the Anaconda Repository from the command-li
 Things like the following: search for packages, login, upload packages, etc.  The
 command below will set this value globally for all users.
 
-Run the following command filling in the proper value::
+Run the following command filling in the proper value.
+Requires `sudo` since config file is written to root file system: `/etc/xdg/binstar/config.yaml`.
+This sets the default config for `anaconda-client` for all users on compute node.
 
-    anaconda config --set url http://<your Anaconda Server>:8080/api -s
+::
 
-**Congratulations!** You've now successfully installed and configured
-Anaconda Enterprise Notebook.
+    sudo /opt/wakari/anaconda/bin/anaconda config --set url http://<your Anaconda Server>:8080/api -s
+
+
+**Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
 
 PAM Authentication (optional)
 -----------------------------
 
 This documents the process to configure the preliminary PAM authentication mechanism for AEN 4.0.0.
 
-1. remove `wk-server` from the current `supervisord` set:
+#. remove `wk-server` from the current `supervisord` set:
 
-    ::
+   ::
 
-        /opt/wakari/wakari-server/bin/supervisorctl stop wk-server
-        mv /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf      \
-        /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf.SUSPEND \
-        /opt/wakari/wakari-server/bin/supervisorctl reload
+       /opt/wakari/wakari-server/bin/supervisorctl stop wk-server
+       mv /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf      \
+       /opt/wakari/wakari-server/etc/supervisord/conf.d/wk-server.conf.SUSPEND \
+       /opt/wakari/wakari-server/bin/supervisorctl reload
 
-2. install the new package:
+#. install the new package:
 
-    ::
+   ::
 
-        /opt/wakari/miniconda/bin/conda install \
-            -p /opt/wakari/wakari-server \
-            /path/to/wakari-server-1.10.9-0.tar.bz2
+       /opt/wakari/miniconda/bin/conda install \
+           -p /opt/wakari/wakari-server \
+           /path/to/wakari-server-1.10.9-0.tar.bz2
 
-3. modify the configuration to utilize the new auth method:
+#. modify the configuration to utilize the new auth method:
 
-    :: 
-        vim /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
+   :: 
 
-    change the entry for the line `"accounts":` to read instead:
+       vim /opt/wakari/wakari-server/etc/wakari/wk-server-config.json
 
-    ::
+   change the entry for the line `"accounts":` to read instead:
 
-        "accounts": "wk_server.plugins.accounts.pam",
+   ::
 
-4. connect the new `initd` script:
+       "accounts": "wk_server.plugins.accounts.pam",
 
-    ::
+#. connect the new `initd` script:
 
-        cd /etc/init.d
-        ln -s /opt/wakari/wakari-server/etc/init.d/wakari-server-root
-        chkconfig --add wakari-server-root
-        service wakari-server-root start
-        service wakari-server-root status
-        ps aux | grep wk-server
+   ::
 
-5. restart/check the `worker` service is running (and only the `worker`) under the `supervisord` watchdog:
+       cd /etc/init.d
+       ln -s /opt/wakari/wakari-server/etc/init.d/wakari-server-root
+       chkconfig --add wakari-server-root
+       service wakari-server-root start
+       service wakari-server-root status
+       ps aux | grep wk-server
 
-    ::
+#. restart/check the `worker` service is running (and only the `worker`) under the `supervisord` watchdog:
 
-        /opt/wakari/wakari-server/bin/supervisorctl start all
-        /opt/wakari/wakari-server/bin/supervisorctl status
+   ::
+
+       /opt/wakari/wakari-server/bin/supervisorctl start all
+       /opt/wakari/wakari-server/bin/supervisorctl status

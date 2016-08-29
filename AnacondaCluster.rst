@@ -170,30 +170,33 @@ Create an SSH keypair as the admin user
 
 **NOTE:** Save the contents of ~admin/.ssh/id\_rsa.pub to a text file.
 
+Download & Install Miniconda
+-----------------------------
+
 Download Miniconda
-------------------
+~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:**
 
-::
-
-  curl 'http://your.anaconda.server:8080/static/extras/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+   ::
+   
+     curl 'http://your.anaconda.server:8080/static/extras/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 -  **Regular Installation:**
 
-::
-
-  curl 'http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
+   ::
+   
+     curl 'http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh' > Miniconda.sh
 
 Install Miniconda
------------------
+~~~~~~~~~~~~~~~~~~~
 
 ::
 
   bash Miniconda.sh
 
-Review and accept the license terms:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Review and accept the license terms
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -204,8 +207,8 @@ Review and accept the license terms:
         Do you approve the license terms?
         [yes|no] yes
 
-Accept the default location or specify an alternative:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Accept the default location or specify an alternative
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -220,8 +223,8 @@ Accept the default location or specify an alternative:
         Python 2.7.10 :: Continuum Analytics, Inc.
         creating default environment... installation finished.
 
-Update the admin user's path (prepending **/home/admin/miniconda2**):
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Update the admin user's path (prepending **/home/admin/miniconda2**)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -229,9 +232,8 @@ Update the admin user's path (prepending **/home/admin/miniconda2**):
         to PATH in your /home/admin/.bashrc ?
         [yes|no] yes
 
-For the new path changes to take effect, “source” your .bashrc or start a new bash shell:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+For the new path changes to take effect, “source” your .bashrc or start a new bash shell
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ::
 
         source ~/.bashrc
@@ -239,13 +241,13 @@ For the new path changes to take effect, “source” your .bashrc or start a ne
 Use conda to download and install Anaconda Cluster
 --------------------------------------------------
 
-Add the anaconda-cluster and anaconda channels:
+Add the anaconda-cluster and anaconda channels
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  **Air Gap Installation:** Install the Anaconda Cluster channel from
    the local Anaconda Repo server.
 
-::
+   ::
 
        conda config --add channels http://your.anaconda.server:8080/conda/anaconda-cluster
        conda config --add default_channels http://your.anaconda.server:8080/conda/anaconda --system
@@ -253,18 +255,18 @@ Add the anaconda-cluster and anaconda channels:
 -  **Regular Installation:** Install the Anaconda Cluster channel from
    Anaconda Cloud.
 
-::
+   ::
 
       conda config --add channels http://conda.anaconda.org/t/L8pxtQupjz01/anaconda-cluster
 
-Install the anaconda-cluster packages:
---------------------------------------
+Install the anaconda-cluster packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
         conda install anaconda-cluster
 
-Initialize Anaconda Cluster:
+Initialize Anaconda Cluster
 ----------------------------
 
 ::
@@ -336,7 +338,7 @@ content:
 
 -  **Air Gap Installation:**
 
-::
+   ::
 
        name: demo-cluster
        provider: bare_metal
@@ -367,7 +369,7 @@ content:
 
 -  **Regular Installation:**
 
-::
+   ::
 
        name: demo-cluster
        provider: bare_metal

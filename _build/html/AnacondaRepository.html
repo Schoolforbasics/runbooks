@@ -741,7 +741,10 @@ following: <a class="reference external" href="http:/">http:/</a>/&lt;your host&
 </li>
 </ul>
 <p>Download the installers using curl, see sample below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">versions</span><span class="o">=</span><span class="s2">&quot;Miniconda3-latest-Linux-x86_64.sh \</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir -p /tmp/extras
+<span class="nb">pushd</span> /tmp/extras
+
+<span class="nv">versions</span><span class="o">=</span><span class="s2">&quot;Miniconda3-latest-Linux-x86_64.sh \</span>
 <span class="s2">     Miniconda3-latest-MacOSX-x86_64.sh \</span>
 <span class="s2">     Miniconda3-latest-Windows-x86.exe \</span>
 <span class="s2">     Miniconda3-latest-Windows-x86_64.exe \</span>
@@ -750,12 +753,15 @@ following: <a class="reference external" href="http:/">http:/</a>/&lt;your host&
 <span class="s2">     Miniconda-latest-Windows-x86.exe \</span>
 <span class="s2">     Miniconda-latest-Windows-x86_64.exe&quot;</span>
 
-<span class="nv">TGT</span><span class="o">=</span>/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/
 <span class="k">for</span> installer in <span class="nv">$versions</span>
 <span class="k">do</span>
-    curl -o <span class="nv">$TGT$installer</span> <span class="nv">$URL$installer</span>
-
+    curl -O <span class="nv">$URL$installer</span>
 <span class="k">done</span>
+
+<span class="c1"># Move installers into static directory</span>
+<span class="nb">popd</span>
+cp -a /tmp/extras <span class="se">\</span>
+  /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
 </pre></div>
 </div>
 </div>

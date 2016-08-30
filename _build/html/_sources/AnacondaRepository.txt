@@ -643,6 +643,9 @@ Download the installers using curl, see sample below:
 
 .. code-block:: bash
 
+   mkdir -p /tmp/extras
+   pushd /tmp/extras
+
    versions="Miniconda3-latest-Linux-x86_64.sh \
         Miniconda3-latest-MacOSX-x86_64.sh \
         Miniconda3-latest-Windows-x86.exe \
@@ -652,13 +655,15 @@ Download the installers using curl, see sample below:
         Miniconda-latest-Windows-x86.exe \
         Miniconda-latest-Windows-x86_64.exe"
   
-   TGT=/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/
    for installer in $versions
    do
-       curl -o $TGT$installer $URL$installer
-            
+       curl -O $URL$installer
    done
    
+   # Move installers into static directory
+   popd
+   cp -a /tmp/extras \
+     /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static 
 
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~

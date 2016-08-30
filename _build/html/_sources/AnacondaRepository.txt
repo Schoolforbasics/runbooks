@@ -652,7 +652,7 @@ Download the installers using curl, see sample below:
         Miniconda-latest-Windows-x86.exe \
         Miniconda-latest-Windows-x86_64.exe"
   
-   TGT=/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/
+   TGT=/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/
    for installer in $versions
    do
        curl -o $TGT$installer $URL$installer

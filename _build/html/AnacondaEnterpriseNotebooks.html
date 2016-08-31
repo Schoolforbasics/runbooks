@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Aug 30, 2016</li>
+<li>Version: 4.0-3 | Aug 31, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -252,9 +252,9 @@ mongodb-org-shell-2.6.8-1.x86_64.rpm
 mongodb-org-server-2.6.8-1.x86_64.rpm
 mongodb-org-mongos-2.6.8-1.x86_64.rpm
 mongodb-org-2.6.8-1.x86_64.rpm
-wakari-compute-4.0.0-Linux-x86_64.sh
-wakari-server-4.0.0-Linux-x86_64.sh
-wakari-gateway-4.0.0-Linux-x86_64.sh
+aen-compute-4.0.0-Linux-x86_64.sh
+aen-server-4.0.0-Linux-x86_64.sh
+aen-gateway-4.0.0-Linux-x86_64.sh
 nginx-1.6.2-1.el6.ngx.x86_64.rpm
 elasticsearch-1.7.2.noarch.rpm
 jre-8u65-linux-x64.rpm
@@ -271,9 +271,9 @@ wakari/
 </li>
 <li><p class="first"><strong>Regular Installation:</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>RPM_CDN=&quot;https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com&quot;
-curl -O $RPM_CDN/wakari-server-4.0.0-Linux-x86_64.sh
-curl -O $RPM_CDN/wakari-gateway-4.0.0-Linux-x86_64.sh
-curl -O $RPM_CDN/wakari-compute-4.0.0-Linux-x86_64.sh
+curl -O $RPM_CDN/aen-server-4.0.0-Linux-x86_64.sh
+curl -O $RPM_CDN/aen-gateway-4.0.0-Linux-x86_64.sh
+curl -O $RPM_CDN/aen-compute-4.0.0-Linux-x86_64.sh
 </pre></div>
 </div>
 </li>
@@ -348,13 +348,13 @@ curl -O $RPM_CDN/jre-8u65-linux-x64.rpm
 <div class="section" id="set-variables-and-change-permissions">
 <h4>1.5.2.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#set-variables-and-change-permissions" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
-<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">aen</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-server-installer">
 <h4>1.5.2.2&nbsp;&nbsp;&nbsp;Run AEN Server Installer<a class="headerlink" href="#run-aen-server-installer" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-server-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./aen-server-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -423,13 +423,13 @@ routes them.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8088</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span>  <span class="c1"># will be needed shortly</span>
-<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">aen</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-wakari-gateway-installer">
 <h3>1.6.2&nbsp;&nbsp;&nbsp;Run Wakari Gateway Installer<a class="headerlink" href="#run-wakari-gateway-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-gateway-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./aen-gateway-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 &lt;license text&gt;
 ...
 ...
@@ -508,13 +508,13 @@ the load.</p>
 <div class="section" id="id2">
 <h3>1.7.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
-<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">wakari</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
+<span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">aen</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="run-aen-compute-installer">
 <h3>1.7.2&nbsp;&nbsp;&nbsp;Run AEN Compute Installer<a class="headerlink" href="#run-aen-compute-installer" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./wakari-compute-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo ./aen-compute-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
 ...
 ...
 PREFIX=/opt/wakari/wakari-compute

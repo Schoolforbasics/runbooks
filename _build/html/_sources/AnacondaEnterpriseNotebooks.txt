@@ -187,9 +187,9 @@ AE-N archive contents:
     mongodb-org-server-2.6.8-1.x86_64.rpm
     mongodb-org-mongos-2.6.8-1.x86_64.rpm
     mongodb-org-2.6.8-1.x86_64.rpm
-    wakari-compute-4.0.0-Linux-x86_64.sh
-    wakari-server-4.0.0-Linux-x86_64.sh
-    wakari-gateway-4.0.0-Linux-x86_64.sh
+    aen-compute-4.0.0-Linux-x86_64.sh
+    aen-server-4.0.0-Linux-x86_64.sh
+    aen-gateway-4.0.0-Linux-x86_64.sh
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
@@ -208,9 +208,9 @@ Download the installers and copy them to the corresponding servers.
    ::
 
        RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
-       curl -O $RPM_CDN/wakari-server-4.0.0-Linux-x86_64.sh
-       curl -O $RPM_CDN/wakari-gateway-4.0.0-Linux-x86_64.sh
-       curl -O $RPM_CDN/wakari-compute-4.0.0-Linux-x86_64.sh
+       curl -O $RPM_CDN/aen-server-4.0.0-Linux-x86_64.sh
+       curl -O $RPM_CDN/aen-gateway-4.0.0-Linux-x86_64.sh
+       curl -O $RPM_CDN/aen-compute-4.0.0-Linux-x86_64.sh
 
 Gather IP addresses or FQDNs
 ----------------------------
@@ -285,7 +285,7 @@ Set Variables and Change Permissions
 ::
 
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        chmod a+x wakari-*.sh                # Set installer to be executable
+        chmod a+x aen-*.sh                # Set installer to be executable
 
 
 Run AEN Server Installer
@@ -293,7 +293,7 @@ Run AEN Server Installer
 
 ::
 
-        sudo ./wakari-server-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+        sudo ./aen-server-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
         <license text>
         ...
         ...
@@ -374,14 +374,14 @@ Set Variables and Change Permissions
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
         export AEN_GATEWAY_PORT=8088
         export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
-        chmod a+x wakari-*.sh                # Set installer to be executable
+        chmod a+x aen-*.sh                # Set installer to be executable
 
 Run Wakari Gateway Installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-        sudo ./wakari-gateway-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+        sudo ./aen-gateway-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
         <license text>
         ...
         ...
@@ -465,14 +465,14 @@ Set Variables and Change Permissions
 ::
 
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        chmod a+x wakari-*.sh                # Set installer to be executable
+        chmod a+x aen-*.sh                # Set installer to be executable
 
 Run AEN Compute Installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-        sudo ./wakari-compute-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
+        sudo ./aen-compute-4.0.0-Linux-x86_64.sh -w $AEN_SERVER
         ...
         ...
         PREFIX=/opt/wakari/wakari-compute

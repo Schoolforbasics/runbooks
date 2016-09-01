@@ -613,8 +613,6 @@ Setup Mirrors
 Mirror Installers for Miniconda 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note:: If using component installers - skip this section. It will not work at present.
-
 Miniconda installers can be served by Anaconda Repository via the **static**
 directory located at
 **/home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras**.

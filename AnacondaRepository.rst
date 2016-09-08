@@ -198,43 +198,20 @@ The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m
 |                                   | - AE-N installers + dependencies            |        |
 |                                   | - latest miniconda version (all platforms)  |        |
 |                                   | - packages for all platforms                |        |
-|                                   |   - default channel                         |        |
-|                                   |   - R channel                               |        |
-|                                   |   - anaconda-cluster channel                |        |
-|                                   |   - anaconda-server channel                 |        |
-|                                   |   - binstar channel                         |        |
-|                                   |   - wakari channel                          |        |
 +-----------------------------------+---------------------------------------------+--------+
 | linux-64-`date +%Y-%m-%d`.tar     | All AE components and dependencies:         |   41 GB|
 |                                   |                                             |        |
 |                                   | - AE-N installers + dependencies            |        |
 |                                   | - latest miniconda version (all platforms)  |        |
 |                                   | - packages for linux-64                     |        |
-|                                   |   - default channel                         |        |
-|                                   |   - R channel                               |        |
-|                                   |   - anaconda-cluster channel                |        |
-|                                   |   - anaconda-server channel                 |        |
-|                                   |   - binstar channel                         |        |
-|                                   |   - wakari channel                          |        |
 +-----------------------------------+---------------------------------------------+--------+
 | win-64-`date +%Y-%m-%d`.tar       | - packages for win-64                       |   27 GB|
-|                                   |   - default channel                         |        |
-|                                   |   - R channel                               |        |
-|                                   |   - anaconda-cluster channel                |        |
-|                                   |   - anaconda-server channel                 |        |
-|                                   |   - binstar channel                         |        |
-|                                   |   - wakari channel                          |        |
 +-----------------------------------+---------------------------------------------+--------+
-| osx-64-`date +%Y-%m-%d`.tar       | - packages for win-64                       |   25 GB|
-|                                   |   - default channel                         |        |
-|                                   |   - R channel                               |        |
-|                                   |   - anaconda-cluster channel                |        |
-|                                   |   - anaconda-server channel                 |        |
-|                                   |   - binstar channel                         |        |
-|                                   |   - wakari channel                          |        |
+| osx-64-`date +%Y-%m-%d`.tar       | - packages for osx-64                       |   25 GB|
 +-----------------------------------+---------------------------------------------+--------+
 
-.. note:: The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.
+.. note::  Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.
+
 
 
 As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 

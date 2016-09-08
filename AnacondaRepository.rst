@@ -853,7 +853,7 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
        channels:
          - https://conda.anaconda.org/anaconda-cluster
 
-#. Mirror the Anaconda Adam packages:
+#. Mirror the Anaconda Cluster packages:
 
    ::
 

@@ -50,7 +50,7 @@ Hardware Requirements
 -  Storage: Recommended minimum of 300GB; Additional space is
    recommended if the repository is will be used to store packages built
    by the customer.  With an empty repository a base install will require 2 GB
-- If downloading air-gap tarball 200GB is needed for the full Anaconda Enterprise installer, plus another 200GB for extracting its contents, preferably to different disk on same machine.
+-  If downloading air-gap tarball 150GB is needed for the full Anaconda Enterprise installer, plus another 150GB for extracting its contents, preferably to different disk on same machine.
 
 Software Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -66,11 +66,9 @@ Software Requirements
 Linux System Accounts Required
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some Linux system accounts (UIDs) are added to the system during installation.
-If your organization requires special actions, here is the list of UIDs:
+One Linux system accounts (UIDs) is added to the system during installation.
 
-- ``mongod`` (RHEL) or ``mongodb`` (Ubuntu/Debian) - Created by the RPM or deb package
-- ``anaconda-server``: Created manually during installation, and configurable to other names
+- ``anaconda-server``: Either make sure it exists before installation or created manually during installation; it is configurable to other names
 
 Software Prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,7 +214,13 @@ The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m
 
 As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
 
-After downloading, expand the tarballs. It will take sometime to expand the archives.
+After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:
+
+.. code-block:: bash
+
+   tar xf *.tar -C /installer
+   export INSTALLER_PATH=/installer/scratch/anaconda-full-`date +%Y-%m-%d`/
+
 
 Configure Anaconda Repository
 ------------------------------
@@ -414,14 +418,12 @@ Install AE-Repository packages via conda And Setup Config Files
 Set up automatic restart on reboot, fail or error
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _conf-supervisord:
-
-Configure Supervisord
-^^^^^^^^^^^^^^^^^^^^^^
+**Configure Supervisord**
 
 ::
 
     anaconda-server-install-supervisord-config.sh
+
 
 This step:
 
@@ -531,45 +533,28 @@ them to the **extras** directory.
 Users will then be able to download installers at a URL that looks like the
 following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.sh
 
-Set the URL variable correctly for AirGap vs Regular installs:
+#. Set the URL variable correctly for AirGap vs Regular installs:
 
--  **Air Gap Installation:**
-
-   ::
-
-       URL="file://$INSTALLER_PATH/anaconda-suite/miniconda/"
-
--  **Regular Installation:**
-
-   ::
-
-       URL="https://repo.continuum.io/miniconda/"
-
-Download the installers using curl, see sample below:
-
-.. code-block:: bash
-
-   mkdir -p /tmp/extras
-   pushd /tmp/extras
-
-   versions="Miniconda3-latest-Linux-x86_64.sh \
-        Miniconda3-latest-MacOSX-x86_64.sh \
-        Miniconda3-latest-Windows-x86.exe \
-        Miniconda3-latest-Windows-x86_64.exe \
-        Miniconda-latest-Linux-x86_64.sh \
-        Miniconda-latest-MacOSX-x86_64.sh \
-        Miniconda-latest-Windows-x86.exe \
-        Miniconda-latest-Windows-x86_64.exe"
-  
-   for installer in $versions
-   do
-       curl -O $URL$installer
-   done
+   **Air Gap Installation:**
    
-   # Move installers into static directory
-   popd
-   cp -a /tmp/extras \
-     /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static 
+   ::
+   
+       URL="file://$INSTALLER_PATH/anaconda-suite/miniconda"
+   
+   **Regular Installation:**
+   
+   ::
+   
+       URL="https://repo.continuum.io/miniconda"
+
+#. Move the latest installers to static directory
+
+   .. code-block:: bash
+   
+      mkdir /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras
+      cp $URL/*latest*.sh \
+           /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/.
+  
 
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Sep 08, 2016</li>
+<li>Version: 4.0-3 | Sep 12, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -93,7 +93,7 @@ Support team, if applicable, for additional assistance.</p>
 <li>Storage: Recommended minimum of 300GB; Additional space is
 recommended if the repository is will be used to store packages built
 by the customer.  With an empty repository a base install will require 2 GB</li>
-<li>If downloading air-gap tarball 200GB is needed for the full Anaconda Enterprise installer, plus another 200GB for extracting its contents, preferably to different disk on same machine.</li>
+<li>If downloading air-gap tarball 150GB is needed for the full Anaconda Enterprise installer, plus another 150GB for extracting its contents, preferably to different disk on same machine.</li>
 </ul>
 </div>
 <div class="section" id="software-requirements">
@@ -110,11 +110,9 @@ cannot find your license.</li>
 </div>
 <div class="section" id="linux-system-accounts-required">
 <h3>1.1.3&nbsp;&nbsp;&nbsp;Linux System Accounts Required<a class="headerlink" href="#linux-system-accounts-required" title="Permalink to this headline">¶</a></h3>
-<p>Some Linux system accounts (UIDs) are added to the system during installation.
-If your organization requires special actions, here is the list of UIDs:</p>
+<p>One Linux system accounts (UIDs) is added to the system during installation.</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">mongod</span></code> (RHEL) or <code class="docutils literal"><span class="pre">mongodb</span></code> (Ubuntu/Debian) - Created by the RPM or deb package</li>
-<li><code class="docutils literal"><span class="pre">anaconda-server</span></code>: Created manually during installation, and configurable to other names</li>
+<li><code class="docutils literal"><span class="pre">anaconda-server</span></code>: Either make sure it exists before installation or created manually during installation; it is configurable to other names</li>
 </ul>
 </div>
 <div class="section" id="software-prerequisites">
@@ -331,7 +329,11 @@ The top-level directory for all archives is: <cite>scratch/anaconda-full-`date +
 <p class="last">Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: <cite>binstar, anaconda-adam, wakari, anaconda-server</cite> on contain linux-64 packages. The <cite>win-64/</cite> and <cite>osx-64/</cite> directories are included for completeness, they are only 16 KB in size and contain no packages.</p>
 </div>
 <p>As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-<cite>date +%Y-%m-%d</cite>.tar and win-64-<cite>date +%Y-%m-%d</cite>.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup.</p>
-<p>After downloading, expand the tarballs. It will take sometime to expand the archives.</p>
+<p>After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>tar xf *.tar -C /installer
+<span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer/scratch/anaconda-full-<span class="sb">`</span>date +%Y-%m-%d<span class="sb">`</span>/
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="configure-anaconda-repository">
@@ -503,8 +505,7 @@ conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anacond
 </div>
 <div class="section" id="set-up-automatic-restart-on-reboot-fail-or-error">
 <h3>1.5.4&nbsp;&nbsp;&nbsp;Set up automatic restart on reboot, fail or error<a class="headerlink" href="#set-up-automatic-restart-on-reboot-fail-or-error" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="configure-supervisord">
-<span id="conf-supervisord"></span><h4>1.5.4.1&nbsp;&nbsp;&nbsp;Configure Supervisord<a class="headerlink" href="#configure-supervisord" title="Permalink to this headline">¶</a></h4>
+<p><strong>Configure Supervisord</strong></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">supervisord</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
@@ -518,7 +519,6 @@ conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anacond
 <li><p class="first">generates the <code class="docutils literal"><span class="pre">/home/anaconda-server/miniconda2/etc/supervisord.conf</span></code> file</p>
 </li>
 </ul>
-</div>
 </div>
 <div class="section" id="configure-supervisord-for-local-mongodb-install">
 <span id="conf-mongo-supervisord"></span><h3>1.5.5&nbsp;&nbsp;&nbsp;Configure Supervisord For Local <cite>mongodb</cite> Install<a class="headerlink" href="#configure-supervisord-for-local-mongodb-install" title="Permalink to this headline">¶</a></h3>
@@ -609,43 +609,25 @@ latest Miniconda installers for each platform, download them and copy
 them to the <strong>extras</strong> directory.</p>
 <p>Users will then be able to download installers at a URL that looks like the
 following: <a class="reference external" href="http:/">http:/</a>/&lt;your host&gt;:8080/static/extras/Miniconda3-latest-Linux-x86_64.sh</p>
-<p>Set the URL variable correctly for AirGap vs Regular installs:</p>
-<ul>
-<li><p class="first"><strong>Air Gap Installation:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">URL</span><span class="o">=</span><span class="s2">&quot;file://$INSTALLER_PATH/anaconda-suite/miniconda/&quot;</span>
+<ol class="arabic">
+<li><p class="first">Set the URL variable correctly for AirGap vs Regular installs:</p>
+<p><strong>Air Gap Installation:</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">URL</span><span class="o">=</span><span class="s2">&quot;file://$INSTALLER_PATH/anaconda-suite/miniconda&quot;</span>
+</pre></div>
+</div>
+<p><strong>Regular Installation:</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">URL</span><span class="o">=</span><span class="s2">&quot;https://repo.continuum.io/miniconda&quot;</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first"><strong>Regular Installation:</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">URL</span><span class="o">=</span><span class="s2">&quot;https://repo.continuum.io/miniconda/&quot;</span>
+<li><p class="first">Move the latest installers to static directory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras
+cp <span class="nv">$URL</span>/*latest*.sh <span class="se">\</span>
+     /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/.
 </pre></div>
 </div>
 </li>
-</ul>
-<p>Download the installers using curl, see sample below:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir -p /tmp/extras
-<span class="nb">pushd</span> /tmp/extras
-
-<span class="nv">versions</span><span class="o">=</span><span class="s2">&quot;Miniconda3-latest-Linux-x86_64.sh \</span>
-<span class="s2">     Miniconda3-latest-MacOSX-x86_64.sh \</span>
-<span class="s2">     Miniconda3-latest-Windows-x86.exe \</span>
-<span class="s2">     Miniconda3-latest-Windows-x86_64.exe \</span>
-<span class="s2">     Miniconda-latest-Linux-x86_64.sh \</span>
-<span class="s2">     Miniconda-latest-MacOSX-x86_64.sh \</span>
-<span class="s2">     Miniconda-latest-Windows-x86.exe \</span>
-<span class="s2">     Miniconda-latest-Windows-x86_64.exe&quot;</span>
-
-<span class="k">for</span> installer in <span class="nv">$versions</span>
-<span class="k">do</span>
-    curl -O <span class="nv">$URL$installer</span>
-<span class="k">done</span>
-
-<span class="c1"># Move installers into static directory</span>
-<span class="nb">popd</span>
-cp -a /tmp/extras <span class="se">\</span>
-  /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static
-</pre></div>
-</div>
+</ol>
 </div>
 <div class="section" id="mirror-anaconda-repo">
 <h3>1.6.2&nbsp;&nbsp;&nbsp;Mirror Anaconda Repo<a class="headerlink" href="#mirror-anaconda-repo" title="Permalink to this headline">¶</a></h3>

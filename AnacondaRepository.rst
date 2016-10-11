@@ -150,7 +150,7 @@ There are two ways to obtain the air-gap installation assets:
        tar xvf anaconda-full-2016-08-06.tar -C /installer/
        export INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
 
-The `anaconda-full-2016-07-11.tar` is roughly 200GB. If only a subset of components are required, refer to :ref:`comp-install`.
+The `anaconda-full-2016-07-11.tar` is roughly 140GB. If only a subset of components are required, refer to :ref:`comp-install`.
 
 
 Air Gap Full Installer Contents - `anaconda-full-2016-07-11.tar`
@@ -165,8 +165,8 @@ Air Gap Full Installer Contents - `anaconda-full-2016-07-11.tar`
   mongodb-org-shell-2.6.8-1.x86_64.rpm
   mongodb-org-server-2.6.8-1.x86_64.rpm
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
-  mongodb-org-2.6.8-1.x86_64.rpm
-  R/
+  mongodb-org-2.6.8-1.x86_64.rp
+  r/
   wakari/
 
 
@@ -191,21 +191,25 @@ The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m
 +-----------------------------------+---------------------------------------------+--------+
 | Tarball                           | Contents                                    | Size   |
 +===================================+=============================================+========+
-| anaconda-full-`date +%Y-%m-%d`.tar| All AE components and dependencies:         |  137 GB|
+| anaconda-full-`date +%Y-%m-%d`.tar| All AE components and dependencies:         |  130 GB|
 |                                   |                                             |        |
 |                                   | - AE-N installers + dependencies            |        |
 |                                   | - latest miniconda version (all platforms)  |        |
 |                                   | - packages for all platforms                |        |
 +-----------------------------------+---------------------------------------------+--------+
-| linux-64-`date +%Y-%m-%d`.tar     | All AE components and dependencies:         |   41 GB|
+| min-ae-repo-`date +%Y-%m-%d`.tar  | Min packages for AE-Repo install (linux-64):|  975 MB|
 |                                   |                                             |        |
-|                                   | - AE-N installers + dependencies            |        |
+|                                   | - anaconda-server, binstar, anaconda-adam   |        |
 |                                   | - latest miniconda version (all platforms)  |        |
-|                                   | - packages for linux-64                     |        |
 +-----------------------------------+---------------------------------------------+--------+
-| win-64-`date +%Y-%m-%d`.tar       | - packages for win-64                       |   27 GB|
+| linux-64-pkg-`date +%Y-%m-%d`.tar | - packages for linux-64                     |   40 GB|
+|                                   | - not including channels:                   |        |
+|                                   |                                             |        |
+|                                   |   - anaconda-server, binstar, anaconda-adam |        |
 +-----------------------------------+---------------------------------------------+--------+
-| osx-64-`date +%Y-%m-%d`.tar       | - packages for osx-64                       |   25 GB|
+| win-64-`date +%Y-%m-%d`.tar       | - packages for win-64                       |   23 GB|
++-----------------------------------+---------------------------------------------+--------+
+| osx-64-`date +%Y-%m-%d`.tar       | - packages for osx-64                       |   21 GB|
 +-----------------------------------+---------------------------------------------+--------+
 
 .. note::  Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.

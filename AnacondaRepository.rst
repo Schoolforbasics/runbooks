@@ -208,11 +208,8 @@ The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
 | osx-64-`date +%Y-%m-%d`.tar           | - packages for osx-64                       |   25 GB|
 +---------------------------------------+---------------------------------------------+--------+
 
-.. note::  Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.
 
-
-
-As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
+As an example, if you only need AE-Repo, linux-64 and win-64 packages, download ae-repo-linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
 
 After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:
 

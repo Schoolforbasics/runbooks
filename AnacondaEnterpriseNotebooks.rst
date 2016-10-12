@@ -135,11 +135,10 @@ Network Requirements
 direction type port    protocol optional configurable comments
 --------- ---- ------- -------- -------- ------------ ----------
 inbound   TCP     80    HTTP     No       No           Server
-in/out    TCP   8088             No       No           Gateway
+in/out    TCP   8089             No       No           Gateway
 in/out    TCP   5002             No       No           Compute
 ========= ==== ======= ======== ======== ============ ==========
 
-.. note:: Gateway port is updated from 8088 to 8089 in future versions
 
 Other Requirements
 ~~~~~~~~~~~~~~~~~~
@@ -166,15 +165,15 @@ Air Gap
 ..  following is cross-reference to AnacondaRepository.rst. Not sure how well it works for making pdf
 
 Docs assume the air-gap data is available on target server at `$INSTALLER_PATH`. Refer to :ref:`airgap` for instructions
-on obtaining AirGap archive for AE-N installation.
+on obtaining full AirGap archive which contains AE-N. 
 
-If the AE-N archive was not downloaded during :ref:`AE-Repo install <airgap>`, it can be obtained as follows:
+If the full archive was not downloaded during :ref:`AE-Repo install <airgap>`, the smaller AE-N archive called:
+`aen-`date +%Y-%m-%d\`.tar` is about 1.5GB. Here's an example using `oct-2016` archive:
 
 ::
 
-    nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
-    tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
-    mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
+    nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-10/aen-2016-09-30.tar
+    tar xf aen-2016-09-30.tar -C $INSTALLER_PATH 
 
 
 AE-N archive contents:
@@ -193,7 +192,6 @@ AE-N archive contents:
     nginx-1.6.2-1.el6.ngx.x86_64.rpm
     elasticsearch-1.7.2.noarch.rpm
     jre-8u65-linux-x64.rpm
-    wakari/
 
 
 Download the Installers
@@ -372,7 +370,7 @@ Set Variables and Change Permissions
 ::
 
         export AEN_SERVER=<FQDN HOSTNAME> # Use the real FQDN
-        export AEN_GATEWAY_PORT=8088
+        export AEN_GATEWAY_PORT=8089
         export AEN_GATEWAY=<FQDN HOSTNAME>  # will be needed shortly
         chmod a+x aen-*.sh                # Set installer to be executable
 
@@ -558,6 +556,18 @@ This sets the default config for `anaconda-client` for all users on compute node
 
 
 **Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
+
+Test config by cloning root environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Test the conda config is correct by ensuring the default environment gets constructed correctly.
+
+:: 
+
+    sudo -u wakari /opt/wakari/anaconda/bin/conda create -p /opt/wakari/test_default --clone root
+    sudo rm -rf /opt/wakari/test_default
+
+
 
 PAM Authentication (optional)
 -----------------------------

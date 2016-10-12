@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-enterprise-notebook-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Enterprise Notebook Runbook<a class="headerlink" href="#anaconda-enterprise-notebook-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Sep 08, 2016</li>
+<li>Version: 4.0-3 | Oct 12, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -199,7 +199,7 @@ If your organization requires special actions, here is the list of UIDs:</p>
 </tr>
 <tr class="row-odd"><td>in/out</td>
 <td>TCP</td>
-<td>8088</td>
+<td>8089</td>
 <td>&nbsp;</td>
 <td>No</td>
 <td>No</td>
@@ -215,10 +215,6 @@ If your organization requires special actions, here is the list of UIDs:</p>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Gateway port is updated from 8088 to 8089 in future versions</p>
-</div>
 </div>
 <div class="section" id="other-requirements">
 <h3>1.1.7&nbsp;&nbsp;&nbsp;Other Requirements<a class="headerlink" href="#other-requirements" title="Permalink to this headline">¶</a></h3>
@@ -238,11 +234,11 @@ should follow <strong>Regular Installation</strong> instructions.</p>
 <div class="section" id="air-gap">
 <span id="airgap-dl"></span><h3>1.2.1&nbsp;&nbsp;&nbsp;Air Gap<a class="headerlink" href="#air-gap" title="Permalink to this headline">¶</a></h3>
 <p>Docs assume the air-gap data is available on target server at <cite>$INSTALLER_PATH</cite>. Refer to <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">1.2.1&nbsp;&nbsp;&nbsp;Air Gap</span></a> for instructions
-on obtaining AirGap archive for AE-N installation.</p>
-<p>If the AE-N archive was not downloaded during <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">AE-Repo install</span></a>, it can be obtained as follows:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-08/notebook-2016-08-04.tar
-tar xfk notebook-2016-08-04.tar -C $INSTALLER_PATH --strip-components 2
-mv $INSTALLER_PATH/anaconda-notebook $INSTALLER_PATH/wakari
+on obtaining full AirGap archive which contains AE-N.</p>
+<p>If the full archive was not downloaded during <a class="reference internal" href="AnacondaRepository.html#airgap"><span class="std std-ref">AE-Repo install</span></a>, the smaller AE-N archive called:
+<cite>aen-`date +%Y-%m-%d`.tar</cite> is about 1.5GB. Here&#8217;s an example using <cite>oct-2016</cite> archive:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>nohup curl -O https://s3.amazonaws.com/continuum-airgap/2016-10/aen-2016-09-30.tar
+tar xf aen-2016-09-30.tar -C $INSTALLER_PATH
 </pre></div>
 </div>
 <p>AE-N archive contents:</p>
@@ -258,7 +254,6 @@ aen-gateway-4.0.0-Linux-x86_64.sh
 nginx-1.6.2-1.el6.ngx.x86_64.rpm
 elasticsearch-1.7.2.noarch.rpm
 jre-8u65-linux-x64.rpm
-wakari/
 </pre></div>
 </div>
 </div>
@@ -421,7 +416,7 @@ routes them.</p>
 <div class="section" id="id1">
 <h3>1.6.1&nbsp;&nbsp;&nbsp;Set Variables and Change Permissions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">AEN_SERVER</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span> <span class="c1"># Use the real FQDN</span>
-<span class="n">export</span> <span class="n">AEN_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8088</span>
+<span class="n">export</span> <span class="n">AEN_GATEWAY_PORT</span><span class="o">=</span><span class="mi">8089</span>
 <span class="n">export</span> <span class="n">AEN_GATEWAY</span><span class="o">=&lt;</span><span class="n">FQDN</span> <span class="n">HOSTNAME</span><span class="o">&gt;</span>  <span class="c1"># will be needed shortly</span>
 <span class="n">chmod</span> <span class="n">a</span><span class="o">+</span><span class="n">x</span> <span class="n">aen</span><span class="o">-*.</span><span class="n">sh</span>                <span class="c1"># Set installer to be executable</span>
 </pre></div>
@@ -606,6 +601,14 @@ This sets the default config for <cite>anaconda-client</cite> for all users on c
 </pre></div>
 </div>
 <p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured Anaconda Enterprise Notebook.</p>
+</div>
+<div class="section" id="test-config-by-cloning-root-environment">
+<h4>1.7.4.3&nbsp;&nbsp;&nbsp;Test config by cloning root environment<a class="headerlink" href="#test-config-by-cloning-root-environment" title="Permalink to this headline">¶</a></h4>
+<p>Test the conda config is correct by ensuring the default environment gets constructed correctly.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">anaconda</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">test_default</span> <span class="o">--</span><span class="n">clone</span> <span class="n">root</span>
+<span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">test_default</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

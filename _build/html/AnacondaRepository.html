@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Oct 11, 2016</li>
+<li>Version: 4.0-3 | Oct 12, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -120,7 +120,7 @@ cannot find your license.</li>
 <div class="section" id="software-prerequisites">
 <h3>1.1.4&nbsp;&nbsp;&nbsp;Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>Assume there isn&#8217;t an instance of mongo running on port 27017. During the install, mongodb-2.6 will be installed locally.</li>
+<li>Mongo Version: &gt;= 2.6.8 and &lt; 3.0</li>
 </ul>
 </div>
 <div class="section" id="security-requirements">
@@ -279,7 +279,7 @@ identical to the full install once we create the same file structure in
 </ul>
 <p>Each component has an md5 and list file which are both small and included more for convenience. Table below
 summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
-The top-level directory for all archives is: <cite>scratch/anaconda-full-`date +%Y-%m-%d</cite>/`</p>
+The top-level directory for all archives is: <cite>anaconda-full-`date +%Y-%m-%d</cite>/`</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="42%" />
@@ -327,14 +327,10 @@ The top-level directory for all archives is: <cite>scratch/anaconda-full-`date +
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: <cite>binstar, anaconda-adam, wakari, anaconda-server</cite> on contain linux-64 packages. The <cite>win-64/</cite> and <cite>osx-64/</cite> directories are included for completeness, they are only 16 KB in size and contain no packages.</p>
-</div>
-<p>As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-<cite>date +%Y-%m-%d</cite>.tar and win-64-<cite>date +%Y-%m-%d</cite>.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup.</p>
+<p>As an example, if you only need AE-Repo, linux-64 and win-64 packages, download ae-repo-linux-64-<cite>date +%Y-%m-%d</cite>.tar and win-64-<cite>date +%Y-%m-%d</cite>.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup.</p>
 <p>After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>tar xf *.tar -C /installer
-<span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer/scratch/anaconda-full-<span class="sb">`</span>date +%Y-%m-%d<span class="sb">`</span>/
+<span class="nb">export</span> <span class="nv">INSTALLER_PATH</span><span class="o">=</span>/installer/anaconda-full-<span class="sb">`</span>date +%Y-%m-%d<span class="sb">`</span>/
 </pre></div>
 </div>
 </div>
@@ -498,7 +494,7 @@ PATH in your /home/anaconda-server/.bashrc ?</p>
 </div>
 </div>
 <div class="section" id="install-anaconda-repository-enterprise-packages">
-<span id="install-ae-packages"></span><h2><a class="toc-backref" href="#id6">1.6&nbsp;&nbsp;&nbsp;Install Anaconda Repository Enterprise Packages</a><a class="headerlink" href="#install-anaconda-repository-enterprise-packages" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">1.6&nbsp;&nbsp;&nbsp;Install Anaconda Repository Enterprise Packages</a><a class="headerlink" href="#install-anaconda-repository-enterprise-packages" title="Permalink to this headline">¶</a></h2>
 <p>The following sections detail the steps required to install Anaconda Repo.</p>
 <div class="section" id="add-the-defaults-binstar-anaconda-server-channels-to-conda">
 <h3>1.6.1&nbsp;&nbsp;&nbsp;Add the defaults, binstar anaconda-server channels to Conda<a class="headerlink" href="#add-the-defaults-binstar-anaconda-server-channels-to-conda" title="Permalink to this headline">¶</a></h3>

@@ -74,7 +74,7 @@ One Linux system accounts (UIDs) is added to the system during installation.
 Software Prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-- Assume there isn't an instance of mongo running on port 27017. During the install, mongodb-2.6 will be installed locally.
+- Mongo Version: >= 2.6.8 and < 3.0
 
 
 Security Requirements
@@ -188,7 +188,7 @@ identical to the full install once we create the same file structure in
 
 Each component has an md5 and list file which are both small and included more for convenience. Table below
 summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
-The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m-%d`/`
+The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
 
 
 +---------------------------------------+---------------------------------------------+--------+
@@ -208,18 +208,15 @@ The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m
 | osx-64-`date +%Y-%m-%d`.tar           | - packages for osx-64                       |   25 GB|
 +---------------------------------------+---------------------------------------------+--------+
 
-.. note::  Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.
 
-
-
-As an example, if you only need AE-Repo, AE-N and linux-64 and win-64 packages, download linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
+As an example, if you only need AE-Repo, linux-64 and win-64 packages, download ae-repo-linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
 
 After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:
 
 .. code-block:: bash
 
    tar xf *.tar -C /installer
-   export INSTALLER_PATH=/installer/scratch/anaconda-full-`date +%Y-%m-%d`/
+   export INSTALLER_PATH=/installer/anaconda-full-`date +%Y-%m-%d`/
 
 
 System Wide mongodb Installation - Requires `sudo`
@@ -389,9 +386,6 @@ For the new path changes to take effect, “source” your .bashrc
 ::
 
     source ~/.bashrc
-
-
-.. _install-ae-packages:
 
 
 Install Anaconda Repository Enterprise Packages

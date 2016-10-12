@@ -388,9 +388,6 @@ For the new path changes to take effect, “source” your .bashrc
     source ~/.bashrc
 
 
-.. _install-ae-packages:
-
-
 Install Anaconda Repository Enterprise Packages
 ------------------------------------------------
 The following sections detail the steps required to install Anaconda Repo.

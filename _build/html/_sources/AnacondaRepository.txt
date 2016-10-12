@@ -68,6 +68,7 @@ Linux System Accounts Required
 
 One Linux system accounts (UIDs) is added to the system during installation.
 
+- ``mongod`` (RHEL) or ``mongodb`` (Ubuntu/Debian) - Created by the RPM or deb package
 - ``anaconda-server``: Either make sure it exists before installation or created manually during installation; it is configurable to other names
 
 Software Prerequisites
@@ -143,32 +144,34 @@ There are two ways to obtain the air-gap installation assets:
        export INSTALLER_PATH=/installer
 
 
-#. If the full anaconda installer is downloaded and expanded: `anaconda-full-2016-07-11.tar`:
+#. If the full anaconda installer is downloaded and expanded, say the `oct-2016` archive: `anaconda-full-2016-09-30.tar`:
 
    .. code-block:: bash
    
-       tar xvf anaconda-full-2016-08-06.tar -C /installer/
-       export INSTALLER_PATH=/installer/scratch/anaconda-full-2016-07-11
+       tar xvf anaconda-full-2016-09-30.tar -C /installer/
+       export INSTALLER_PATH=/installer/anaconda-full-2016-09-30
 
-The `anaconda-full-2016-07-11.tar` is roughly 140GB. If only a subset of components are required, refer to :ref:`comp-install`.
+The `anaconda-full-2016-09-30.tar` is roughly 140GB. If only a subset of components are required, refer to :ref:`comp-install`.
 
 
-Air Gap Full Installer Contents - `anaconda-full-2016-07-11.tar`
+Air Gap Full Installer Contents - `anaconda-full-2016-%m-%d.tar`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
   ls $INSTALLER_PATH
+  anaconda-adam/
   anaconda-cluster/
+  anaconda-server/
   anaconda-suite/
-  mongodb-org-tools-2.6.8-1.x86_64.rpm
-  mongodb-org-shell-2.6.8-1.x86_64.rpm
-  mongodb-org-server-2.6.8-1.x86_64.rpm
+  binstar/
+  mongodb-org-2.6.8-1.x86_64.rpm
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
-  mongodb-org-2.6.8-1.x86_64.rp
+  mongodb-org-server-2.6.8-1.x86_64.rpm
+  mongodb-org-shell-2.6.8-1.x86_64.rpm
+  mongodb-org-tools-2.6.8-1.x86_64.rpm
   r/
   wakari/
-
 
 .. _comp-install:
 
@@ -188,29 +191,22 @@ summarizes various components required for only installing AE-Repo and mirroring
 The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m-%d`/`
 
 
-+-----------------------------------+---------------------------------------------+--------+
-| Tarball                           | Contents                                    | Size   |
-+===================================+=============================================+========+
-| anaconda-full-`date +%Y-%m-%d`.tar| All AE components and dependencies:         |  130 GB|
-|                                   |                                             |        |
-|                                   | - AE-N installers + dependencies            |        |
-|                                   | - latest miniconda version (all platforms)  |        |
-|                                   | - packages for all platforms                |        |
-+-----------------------------------+---------------------------------------------+--------+
-| min-ae-repo-`date +%Y-%m-%d`.tar  | Min packages for AE-Repo install (linux-64):|  975 MB|
-|                                   |                                             |        |
-|                                   | - anaconda-server, binstar, anaconda-adam   |        |
-|                                   | - latest miniconda version (all platforms)  |        |
-+-----------------------------------+---------------------------------------------+--------+
-| linux-64-pkg-`date +%Y-%m-%d`.tar | - packages for linux-64                     |   40 GB|
-|                                   | - not including channels:                   |        |
-|                                   |                                             |        |
-|                                   |   - anaconda-server, binstar, anaconda-adam |        |
-+-----------------------------------+---------------------------------------------+--------+
-| win-64-`date +%Y-%m-%d`.tar       | - packages for win-64                       |   23 GB|
-+-----------------------------------+---------------------------------------------+--------+
-| osx-64-`date +%Y-%m-%d`.tar       | - packages for osx-64                       |   21 GB|
-+-----------------------------------+---------------------------------------------+--------+
++---------------------------------------+---------------------------------------------+--------+
+| Tarball                               | Contents                                    | Size   |
++=======================================+=============================================+========+
+| anaconda-full-`date +%Y-%m-%d`.tar    | All AE components and dependencies:         |  140 GB|
+|                                       |                                             |        |
+|                                       | - AE-N installers + dependencies            |        |
+|                                       | - latest miniconda version (all platforms)  |        |
+|                                       | - packages for all platforms                |        |
++---------------------------------------+---------------------------------------------+--------+
+| ae-repo-linux-64-`date +%Y-%m-%d`.tar | - packages for linux-64                     |   40 GB|
+|                                       | - including channels for AE-Repo packages   |        |
++---------------------------------------+---------------------------------------------+--------+
+| win-64-`date +%Y-%m-%d`.tar           | - packages for win-64                       |   24 GB|
++---------------------------------------+---------------------------------------------+--------+
+| osx-64-`date +%Y-%m-%d`.tar           | - packages for osx-64                       |   25 GB|
++---------------------------------------+---------------------------------------------+--------+
 
 .. note::  Currently, the archives contain packages for channels: default, R, anaconda-cluster, anaconda-server, binstar, wakari. The channels: `binstar, anaconda-adam, wakari, anaconda-server` on contain linux-64 packages. The `win-64/` and `osx-64/` directories are included for completeness, they are only 16 KB in size and contain no packages.
 
@@ -224,6 +220,59 @@ After downloading, expand the tarballs. It will take sometime to expand the arch
 
    tar xf *.tar -C /installer
    export INSTALLER_PATH=/installer/scratch/anaconda-full-`date +%Y-%m-%d`/
+
+
+System Wide mongodb Installation - Requires `sudo`
+---------------------------------------------------
+
+Download MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  **Air Gap Installation:** Skip this step.
+
+-  **Regular Installation:**
+
+   ::
+   
+      RPM_CDN="https://820451f3d8380952ce65-4cc6343b423784e82fd202bb87cf87cf.ssl.cf1.rackcdn.com"
+      curl -O $RPM_CDN/mongodb-org-tools-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-shell-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-server-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-mongos-2.6.8-1.x86_64.rpm
+      curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
+
+Install MongoDB packages
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  **Air Gap Installation:**
+
+   ::
+   
+       sudo yum install -y $INSTALLER_PATH/mongodb-org*
+
+-  **Regular Installation:**
+
+   ::
+   
+       sudo yum install -y mongodb-org*
+
+
+Start mongodb
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+::
+
+    sudo service mongod start
+
+Verify mongod is running
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    sudo service mongod status
+    mongod (pid 1234) is running...
+
+.. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
 
 
 Configure Anaconda Repository
@@ -375,26 +424,6 @@ Add the defaults, binstar anaconda-server channels to Conda
 .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
 
-.. _local-mongo-install-no-sudo:
-
-Local mongodb Installation - `sudo` Not Required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use conda to install mongodb locally for user: `anaconda-server`. 
-
-::
-
-  conda install mongodb=2.6.12
-
-
-This will install mongodb in root conda environment of user: `anaconda-server`
-
-::
-
-    which mongod
-    ~/miniconda2/bin/mongod
-
-
 Install AE-Repository packages via conda And Setup Config Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -431,43 +460,15 @@ Set up automatic restart on reboot, fail or error
 
 This step:
 
--  writes a config file for supervisord in `~/miniconda2/etc/supervisord.conf`
+#. writes a config file for supervisord in `~/miniconda2/etc/supervisord.conf`
 
--  creates the following entry in the anaconda-server user’s crontab:
+#. creates the following entry in the anaconda-server user’s crontab:
 
    ``@reboot /home/anaconda-server/miniconda2/bin/supervisord``
 
--  generates the ``/home/anaconda-server/miniconda2/etc/supervisord.conf`` file
+#. generates the ``/home/anaconda-server/miniconda2/etc/supervisord.conf`` file
 
-.. _conf-mongo-supervisord:
-
-Configure Supervisord For Local `mongodb` Install
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Create a local directory for mongo to use for writing out its databases and logs.
-
-   ::
-
-      $ mkdir -p ~/mongo/data && mkdir ~/mongo/log 
-
-#. Append following lines for mongo to `~/miniconda2/etc/supervisord.conf`:
-
-   ::
-
-      [program:mongo]
-      command=/home/anaconda-server/miniconda2/bin/mongod --dbpath /home/anaconda-server/mongo/data --logpath /home/anaconda-server/mongo/log/mongod.log --logappend --port 27017
-      stdout_logfile=syslog
-      stderr_logfile=syslog
-
-#. Update the Supervisor process so it picks up the new config and runs the mongo process.
-
-   ::
-   
-       $ supervisorctl update
-       mongo: added process group
-
-
-#. Verify the server and mongo is running:
+#. verify the server is running:
 
    ::
 
@@ -484,8 +485,6 @@ Configure Supervisord For Local `mongodb` Install
       binstar-worker-low:binstar-worker-low_05   RUNNING   pid 8256, uptime 0:06:39
       binstar-worker-low:binstar-worker-low_06   RUNNING   pid 8255, uptime 0:06:39
       binstar-worker-low:binstar-worker-low_07   RUNNING   pid 8254, uptime 0:06:39
-      mongo                                      RUNNING   pid 8451, uptime 0:00:05
-
 
 
 Continue Server Configuration - requires `mongo` 
@@ -554,11 +553,29 @@ following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.
 #. Move the latest installers to static directory
 
    .. code-block:: bash
-   
-      mkdir /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras
-      cp $URL/*latest*.sh \
-           /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static/extras/.
+
+       mkdir -p /tmp/extras
+       pushd /tmp/extras
+
+       versions="Miniconda3-latest-Linux-x86_64.sh \
+            Miniconda3-latest-MacOSX-x86_64.sh \
+            Miniconda3-latest-Windows-x86.exe \
+            Miniconda3-latest-Windows-x86_64.exe \
+            Miniconda-latest-Linux-x86_64.sh \
+            Miniconda-latest-MacOSX-x86_64.sh \
+            Miniconda-latest-Windows-x86.exe \
+            Miniconda-latest-Windows-x86_64.exe"
   
+       for installer in $versions
+       do
+           curl -O $URL/$installer
+       done
+       
+       # Move installers into static directory
+       popd
+       cp -a /tmp/extras \
+         /home/anaconda-server/miniconda2/lib/python2.7/site-packages/binstar/static 
+
 
 Mirror Anaconda Repo
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -619,7 +636,7 @@ Optional: Mirror the R channel
    ::
 
         echo "channels:" > /etc/anaconda-server/mirrors/r-channel.yaml
-        echo "  - file://$INSTALLER_PATH/R/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
+        echo "  - file://$INSTALLER_PATH/r/pkgs" >> /etc/anaconda-server/mirrors/r-channel.yaml
 
 #. (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
    

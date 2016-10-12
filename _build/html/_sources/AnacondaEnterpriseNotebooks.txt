@@ -18,21 +18,17 @@ should spend their time analyzing data, not working to set up a system.
 Data should be shareable, and analysis should be repeatable.
 Reproducibility should extend beyond just code to include the runtime
 environment, configuration, and input data.
+Anaconda Enterprise Notebooks makes it easy to start your analysis immediately.
 
-Anaconda Enterprise Notebooks makes it easy to start your analysis
-immediately.
+
+.. image:: _static/wakari.png
+   :scale: 60 %
+   :align: center
+
 
 This runbook walks through the steps needed to install a basic Anaconda
 Enterprise Notebook system comprised of the front-end server, gateway,
-and two compute machines. The runbook is designed for two audiences:
-those who have direct access to the internet for installation and those
-where such access is not available or restricted for security reasons.
-For these restricted a.k.a. "Air Gap" environments, Continuum ships the
-entire Anaconda product suite on portable storage medium or as a
-downloadable TAR archive. Where necessary, additional instructions for
-Air Gap environments are noted. If you have any questions about the
-instructions, please contact your sales representative or Priority
-Support team, if applicable, for additional assistance.
+and two compute machines. 
 
 **AEN Server:** The administrative front-end to the system. This is
 where users login to the system, where user accounts are stored, and
@@ -49,9 +45,16 @@ AEN Compute machines only need to be reachable by the AEN Gateway,
 so they can be completely isolated by a firewall.
 
 
-   .. image:: _static/wakari.png
-      :scale: 60 %
-      :align: center
+The runbook is designed for two audiences:
+those who have direct access to the internet for installation and those
+where such access is not available or restricted for security reasons.
+For these restricted a.k.a. "Air Gap" environments, Continuum ships the
+entire Anaconda product suite on portable storage medium or as a
+downloadable TAR archive. Where necessary, additional instructions for
+Air Gap environments are noted. If you have any questions about the
+instructions, please contact your sales representative or Priority
+Support team, if applicable, for additional assistance.
+
 
 Requirements
 ------------

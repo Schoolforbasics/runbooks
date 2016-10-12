@@ -74,7 +74,7 @@ One Linux system accounts (UIDs) is added to the system during installation.
 Software Prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-- Assume there isn't an instance of mongo running on port 27017. During the install, mongodb-2.6 will be installed locally.
+- Mongo Version: >= 2.6.8 and < 3.0
 
 
 Security Requirements

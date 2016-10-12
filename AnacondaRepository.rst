@@ -188,7 +188,7 @@ identical to the full install once we create the same file structure in
 
 Each component has an md5 and list file which are both small and included more for convenience. Table below
 summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
-The top-level directory for all archives is: `scratch/anaconda-full-`date +%Y-%m-%d`/`
+The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
 
 
 +---------------------------------------+---------------------------------------------+--------+
@@ -219,7 +219,7 @@ After downloading, expand the tarballs. It will take sometime to expand the arch
 .. code-block:: bash
 
    tar xf *.tar -C /installer
-   export INSTALLER_PATH=/installer/scratch/anaconda-full-`date +%Y-%m-%d`/
+   export INSTALLER_PATH=/installer/anaconda-full-`date +%Y-%m-%d`/
 
 
 System Wide mongodb Installation - Requires `sudo`

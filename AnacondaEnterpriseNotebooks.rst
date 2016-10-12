@@ -557,8 +557,8 @@ This sets the default config for `anaconda-client` for all users on compute node
 
 **Congratulations!** You've now successfully installed and configured Anaconda Enterprise Notebook.
 
-Test config by cloning root environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Test AEN Compute conda config
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Test the conda config is correct by ensuring the default environment gets constructed correctly.
 

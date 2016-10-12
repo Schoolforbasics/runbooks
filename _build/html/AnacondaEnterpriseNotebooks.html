@@ -602,8 +602,8 @@ This sets the default config for <cite>anaconda-client</cite> for all users on c
 </div>
 <p><strong>Congratulations!</strong> You&#8217;ve now successfully installed and configured Anaconda Enterprise Notebook.</p>
 </div>
-<div class="section" id="test-config-by-cloning-root-environment">
-<h4>1.7.4.3&nbsp;&nbsp;&nbsp;Test config by cloning root environment<a class="headerlink" href="#test-config-by-cloning-root-environment" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="test-aen-compute-conda-config">
+<h4>1.7.4.3&nbsp;&nbsp;&nbsp;Test AEN Compute conda config<a class="headerlink" href="#test-aen-compute-conda-config" title="Permalink to this headline">¶</a></h4>
 <p>Test the conda config is correct by ensuring the default environment gets constructed correctly.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">wakari</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">anaconda</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">conda</span> <span class="n">create</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">test_default</span> <span class="o">--</span><span class="n">clone</span> <span class="n">root</span>
 <span class="n">sudo</span> <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">wakari</span><span class="o">/</span><span class="n">test_default</span>

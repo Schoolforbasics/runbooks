@@ -164,7 +164,6 @@ Air Gap Full Installer Contents - `anaconda-full-2016-%m-%d.tar`
   anaconda-cluster/
   anaconda-server/
   anaconda-suite/
-  binstar/
   mongodb-org-2.6.8-1.x86_64.rpm
   mongodb-org-mongos-2.6.8-1.x86_64.rpm
   mongodb-org-server-2.6.8-1.x86_64.rpm
@@ -402,8 +401,10 @@ Add the defaults, binstar anaconda-server channels to Conda
 
        conda config --add channels  file://$INSTALLER_PATH/anaconda-suite/pkgs/
        conda config --add channels  file://$INSTALLER_PATH/anaconda-server/pkgs/
-       conda config --add channels  file://$INSTALLER_PATH/binstar/pkgs/
        conda config --remove channels defaults --force
+
+   .. note:: The packages from `binstar` channel are included with the `anaconda-server` channel.
+
 
 -  **Regular Installation:** Add the channels from Anaconda Cloud.
 
@@ -414,8 +415,7 @@ Add the defaults, binstar anaconda-server channels to Conda
        conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
-
-.. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
+   .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
 
 
 Install AE-Repository packages via conda And Setup Config Files

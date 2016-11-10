@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Oct 12, 2016</li>
+<li>Version: 4.0-3 | Nov 10, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -255,7 +255,6 @@ anaconda-adam/
 anaconda-cluster/
 anaconda-server/
 anaconda-suite/
-binstar/
 mongodb-org-2.6.8-1.x86_64.rpm
 mongodb-org-mongos-2.6.8-1.x86_64.rpm
 mongodb-org-server-2.6.8-1.x86_64.rpm
@@ -502,9 +501,12 @@ PATH in your /home/anaconda-server/.bashrc ?</p>
 <li><p class="first"><strong>Air Gap Installation:</strong> Add the channels from local files.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>conda config --add channels  file://$INSTALLER_PATH/anaconda-suite/pkgs/
 conda config --add channels  file://$INSTALLER_PATH/anaconda-server/pkgs/
-conda config --add channels  file://$INSTALLER_PATH/binstar/pkgs/
 conda config --remove channels defaults --force
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The packages from <cite>binstar</cite> channel are included with the <cite>anaconda-server</cite> channel.</p>
 </div>
 </li>
 <li><p class="first"><strong>Regular Installation:</strong> Add the channels from Anaconda Cloud.</p>
@@ -514,12 +516,12 @@ conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
 conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 </pre></div>
 </div>
-</li>
-</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You should have received <strong>two</strong> tokens from Continuum Support, one for each channel. If you haven&#8217;t, please contact <a class="reference external" href="mailto:support&#37;&#52;&#48;continuum&#46;io">support<span>&#64;</span>continuum<span>&#46;</span>io</a>. Tokens are not required for Air Gap installs.</p>
 </div>
+</li>
+</ul>
 </div>
 <div class="section" id="install-ae-repository-packages-via-conda-and-setup-config-files">
 <h3>1.6.2&nbsp;&nbsp;&nbsp;Install AE-Repository packages via conda And Setup Config Files<a class="headerlink" href="#install-ae-repository-packages-via-conda-and-setup-config-files" title="Permalink to this headline">¶</a></h3>

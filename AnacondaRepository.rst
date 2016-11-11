@@ -1,91 +1,72 @@
 .. This sets up section numbering
 .. sectnum::
 
-============================
-Anaconda Repository Runbook
-============================
+====================================
+Anaconda Repository Install Method A
+====================================
 
-* Version: |release| | |today|
+* Version: |Release| | |Today|
 
 .. contents::
    :local:
    :depth: 1
 
-This following runbook walks through the steps needed to install
-Anaconda Repository. The runbook is designed for two audiences: those who have
-direct access to the internet for installation and those where such
-access is not available or restricted for security reasons. For these
-restricted a.k.a. "Air Gap" environments, Continuum ships the entire
-Anaconda product suite on portable storage medium or as a downloadable
-TAR archive. Additionally, Continuum provides a set of Air Gap TAR archives for
-those environments only needing certain platform architectures,
-such as 64-Bit Linux, 32-Bit Linux, etc. 
-With the exception of 64-Bit Linux, these platform-based archives include
-all of the available packages for that platform.
-The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
-neecessary to install Anaconda Repository.
+This install method A walks through the steps needed to install
+Anaconda Repository. This document is written for two audiences: 
 
-Additional platforms can be added by downloading the corresponding TAR archive
-and importing it to the local Anaconda Repository. See the section titled "Optional:
-Installing from Platform-based Archives" below to prepare your environment
-before starting the Anaconda Repository Installation. 
+* Those with access to the internet for installation, and 
+* Those without internet access for security 
+  reasons, referred to as "air gapped" environments. 
+  Where necessary, additional instructions for air gapped
+  environments are noted throughout this document. 
 
-Where necessary, additional instructions for Air Gap
-environments are noted throughout this document. If you have any questions about the
-instructions, please contact your sales representative or Priority
-Support team, if applicable, for additional assistance.
+If you have any questions about these installation instructions, please contact your sales representative or Priority Support team for additional assistance.
 
 .. image:: _static/repo.png
 
 
-Requirements
-------------
+System requirements
+-------------------
 
-Hardware Requirements
+Hardware requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
 -  Physical server or VM
 -  CPU: 2 x 64-bit 2 2.8GHz 8.00GT/s CPUs or better
 -  Memory: 32GB RAM (per 50 users), minimum 4 GB
--  Storage: Recommended minimum of 300GB; Additional space is
-   recommended if the repository is will be used to store packages built
-   by the customer.  With an empty repository a base install will require 2 GB
--  If downloading air-gap tarball 150GB is needed for the full Anaconda Enterprise installer, plus another 150GB for extracting its contents, preferably to different disk on same machine.
+-  Storage: 300GB. (1TB for air gapped deployments) Additional space recommended if the repository will be used to store packages built by the customer.  With an empty repository, a base install requires 2 GB.
 
-Software Requirements
+Software requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
--  RHEL/CentOS 6.5 or later (Other operating systems are supported, however this
-   document assumes RHEL or CentOS 6.5)
--  MongoDB version 2.6
--  Anaconda Repository license file - given as part of the welcome packet -
-   contact your sales representative or support representative if you
-   cannot find your license.
--  cron: The anaconda-server user needs to add an entry to cron to start the server on reboot
+-  RHEL/CentOS 6.5 or later, Ubuntu 12.04+ 
+-  Ubuntu users may need to install cURL.
+-  Client environments may be Windows, Mac OS X or Linux
+-  MongoDB version 2.6 (provided)
+-  Anaconda Repository license file - included as part of the welcome packet 
+-  cron: The anaconda-server user needs to add an entry to cron to start the server on reboot.
 
-Linux System Accounts Required
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Linux system accounts
+~~~~~~~~~~~~~~~~~~~~~
 
-One Linux system accounts (UIDs) is added to the system during installation.
+One Linux system account (UID) is added to the system during installation.
 
-- ``mongod`` (RHEL) or ``mongodb`` (Ubuntu/Debian) - Created by the RPM or deb package
-- ``anaconda-server``: Either make sure it exists before installation or created manually during installation; it is configurable to other names
+- ``mongod`` (RHEL) or ``mongodb`` (Ubuntu) created by the RPM or deb package
+- ``anaconda-server``: create before installation or manually during installation; it is configurable to other names.
 
-Software Prerequisites
+Software prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-- Mongo Version: >= 2.6.8 and < 3.0
-
+- Mongo version: >= 2.6.8 and < 3.0
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
--  Required: Privileged (``root``) access or ``sudo`` capabilities
--  Required: Open HTTP(S) port (configurable, default ``8080``)
+-  Privileged (``root``) access OR ``sudo`` capabilities
+-  Open HTTP(S) port (configurable, default ``8080``)
+-  SELinux policy edit privileges (SELinux does not have to be disabled for Anaconda Repository operation)
 -  Optional: Ability to make ``iptables`` modifications
 -  Optional: SSL certificate
-
-.. note:: SELinux does not have to be disabled for Anaconda Repo operation
 
 Network Requirements
 ~~~~~~~~~~~~~~~~~~~~
@@ -93,69 +74,83 @@ Network Requirements
 * TCP Ports
 
 ========= ==== ======= ======== ======== ============ ========
-direction type port    protocol optional configurable comments
+Direction Type Port    Protocol Optional Configurable Comments
 --------- ---- ------- -------- -------- ------------ --------
-inbound   TCP  8080    HTTP              yes          Anaconda Repository
-inbound   TCP    22    SSH      yes
-outbound  TCP   443    HTTPS    yes                   to Anaconda Cloud or secondary local Anaconda Repo
-outbound  TCP    25    SMTP     yes                   email notifications
-outbound  TCP  389/636 LDAP(S)  yes      yes          authentication integration
+Inbound   TCP  8080    HTTP              yes          Anaconda Repository
+Inbound   TCP    22    SSH      yes
+Outbound  TCP   443    HTTPS    yes                   to Anaconda Cloud or secondary local Anaconda Repo
+Outbound  TCP    25    SMTP     yes                   email notifications
+Outbound  TCP  389/636 LDAP(S)  yes      yes          authentication integration
 ========= ==== ======= ======== ======== ============ ========
 
-Other Requirements
+Other requirements
 ~~~~~~~~~~~~~~~~~~
 
-Assuming the above requirements are met, there are no additional
-dependencies necessary for Anaconda Repository.
-
-Air Gap vs. Regular Installation
-----------------------------------
-
-As stated previously, this document contains installation instructions
-for two audiences: those with internet access on the destination
-server(s) and those who have no access to internet resources. Many of
-the steps below have two sections: **Air Gap Installation** and
-**Regular Installation**. Those without internet access should follow
-the **Air Gap Installation** instructions and those with internet access
-should follow **Regular Installation** instructions.
+- License file provided to you by Continuum at the time of purchase
+- Installation tokens for binstar and anaconda-server channels provided by Continuum at the time of purchase. Not applicable for air gapped installs.
+- Optional: Your Anaconda Cloud (anaconda.org) account credentials. Not applicable for air gapped installs.
 
 .. _airgap:
 
-Air Gap
-~~~~~~~~
+Air gapped installation
+~~~~~~~~~~~~~~~~~~~~~~~
 
-This document assumes that the air-gap media is available on the target server at `$INSTALLER_PATH` where the software is being installed. 
+For air gapped environments, Continuum ships the entire Anaconda 
+product suite on portable storage medium or as a downloadable TAR archive. 
 
-There are two ways to obtain the air-gap installation assets:
+Continuum also provides a set of air gapped TAR archives for
+those environments needing only certain platform architectures,
+such as 64-Bit Linux, 32-Bit Linux, etc. 
 
-#. A pen drive is over-nighted to client
+These platform-based archives include all of the available packages for that platform. The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages necessary to install Anaconda Repository.
 
-#. Client downloads the latest archive tarball or component tarballs and expands the archive to
-   ``/installer``. 
+Additional platforms may be added by downloading the corresponding TAR archive
+and importing it to the local Anaconda Repository. To prepare your environment before starting the Anaconda Repository Installation, see the section below entitled "Optional: Installing from Platform-based Archives."  
 
-   .. note:: The ``$INSTALLER_PATH`` variable must be set to the location of the
-       air-gap media as displayed below. The ``$INSTALLER_PATH`` is the parent directory
-       to the ``anaconda-suite`` directory. See examples below:
+The air gap media must be available on the target server at `$INSTALLER_PATH` where the software is being installed. 
 
-#. For air-gap pen drive media mounted on ``/installer``:
+The air gap installation assets may be obtained two different ways:
+
+#. Via USB drive sent to client via express delivery, or
+
+#. Client may download the latest archive tarball or component tarballs and expands the archive to ``/installer``. 
+
+.. _installer_path:
+
+Set installer path
+^^^^^^^^^^^^^^^^^^^
+
+After obtaining the assets, the air gap media must be available on the target server at `$INSTALLER_PATH` where the software is being installed. The ``$INSTALLER_PATH`` variable must be set to the location of the air-gap media as displayed below. 
+
+#. For air-gap USB drive media mounted on ``/installer``:
 
    .. code-block:: bash
    
        export INSTALLER_PATH=/installer
 
+NOTE: Change the ``$INSTALLER_PATH`` to the parent directory to the ``anaconda-suite`` directory. 
 
-#. If the full anaconda installer is downloaded and expanded, say the `oct-2016` archive: `anaconda-full-2016-09-30.tar`:
+Expand installer
+^^^^^^^^^^^^^^^^
+
+If the full anaconda installer is downloaded and expanded, say the `oct-2016` archive: `anaconda-full-2016-09-30.tar`:
 
    .. code-block:: bash
    
        tar xvf anaconda-full-2016-09-30.tar -C /installer/
        export INSTALLER_PATH=/installer/anaconda-full-2016-09-30
 
-The `anaconda-full-2016-09-30.tar` is roughly 140GB. If only a subset of components are required, refer to :ref:`comp-install`.
+The `anaconda-full-2016-09-30.tar` is roughly 140GB. 
+
+NOTE: If only a subset of components are required, please refer to :ref:`comp-install`.
 
 
-Air Gap Full Installer Contents - `anaconda-full-2016-%m-%d.tar`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Air gapped full installer contents 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+File `anaconda-full-2016-%m-%d.tar`
+
+NOTE: Substitute ``anaconda-full-2016`` with the exact name of the file you receive.
 
 .. code-block:: bash
 
@@ -174,20 +169,21 @@ Air Gap Full Installer Contents - `anaconda-full-2016-%m-%d.tar`
 
 .. _comp-install:
 
-Optional: Air Gap Platform-based Archives (Linux)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To install Anaconda Repository and only mirror packages for a subset of
-platforms (eg. Linux-64); download a component based TAR archive.  Using the
+Optional: Air gapped platform based archives (Linux)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To install Anaconda Repository and mirror only packages for a subset of
+platforms such as Linux-64, download a component based TAR archive.  Using the
 **64-Bit Linux** platform-based TAR archive to install Anaconda Repo is almost
-identical to the full install once we create the same file structure in
-`$INSTALLER_PATH`. A couple of things to note about platform based archives:
+identical to the full install, after we have created the same file structure in
+`$INSTALLER_PATH`. Some notes about platform based archives:
 
-- The installer contains **ONLY** 64-Bit Linux packages. If support for additional platfoms is necessary, archives for those platforms should be downloaded as well.
-- The installer does not contain packages for Anaconda Notebook, Anaconda Cluster or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+- The installer contains 64-Bit Linux packages **ONLY**. If support for additional platforms is necessary, archives for those platforms should be requested or downloaded as well.
+- The installer does NOT contain packages for Anaconda Notebook, Anaconda Scale or R for 64-Bit Linux. The full TAR archive is required if these packages are needed.
+- Each component has an MD5 value and list file which are small and included for convenience. 
 
-Each component has an md5 and list file which are both small and included more for convenience. Table below
-summarizes various components required for only installing AE-Repo and mirroring linux-64 packages.
-The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
+The following table summarizes various components required for installing only AE-Repo and mirroring linux-64 packages. 
+
+NOTE: The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
 
 
 +---------------------------------------+---------------------------------------------+--------+
@@ -207,10 +203,11 @@ The top-level directory for all archives is: `anaconda-full-`date +%Y-%m-%d`/`
 | osx-64-`date +%Y-%m-%d`.tar           | - packages for osx-64                       |   25 GB|
 +---------------------------------------+---------------------------------------------+--------+
 
+As an example, if you need only AE-Repo, linux-64 and win-64 packages, download ae-repo-linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. 
 
-As an example, if you only need AE-Repo, linux-64 and win-64 packages, download ae-repo-linux-64-`date +%Y-%m-%d`.tar and win-64-`date +%Y-%m-%d`.tar. Also download the associated md5 files to check integrity of downloaded data. To run in background and continue download after logout, use nohup. 
+TIP: To run in background and continue download after logout, use nohup. 
 
-After downloading, expand the tarballs. It will take sometime to expand the archives. See example below:
+After downloading, expand the tarballs. It will take some time to expand the archives. See example below:
 
 .. code-block:: bash
 
@@ -218,15 +215,17 @@ After downloading, expand the tarballs. It will take sometime to expand the arch
    export INSTALLER_PATH=/installer/anaconda-full-`date +%Y-%m-%d`/
 
 
-System Wide mongodb Installation - Requires `sudo`
----------------------------------------------------
+System-wide MongoDB installation 
+--------------------------------
+
+NOTE: This step requires ``sudo``
 
 Download MongoDB packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Air Gap Installation:** Skip this step.
+-  **Air gapped installation:** Skip this step.
 
--  **Regular Installation:**
+-  **Regular installation:**
 
    ::
    
@@ -238,29 +237,29 @@ Download MongoDB packages
       curl -O $RPM_CDN/mongodb-org-2.6.8-1.x86_64.rpm
 
 Install MongoDB packages
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Air Gap Installation:**
+-  **Air gapped installation:**
 
    ::
    
        sudo yum install -y $INSTALLER_PATH/mongodb-org*
 
--  **Regular Installation:**
+-  **Regular installation:**
 
    ::
    
        sudo yum install -y mongodb-org*
 
 
-Start mongodb
+Start MongoDB
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
     sudo service mongod start
 
-Verify mongod is running
+Verify Mongod is running
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -268,25 +267,24 @@ Verify mongod is running
     sudo service mongod status
     mongod (pid 1234) is running...
 
-.. note:: Additional mongodb installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
+NOTE: Additional MongoDB installation information can be found `here <https://docs.mongodb.org/manual/tutorial/install-mongodb-on-red-hat/>`__.
 
 
 Configure Anaconda Repository
 ------------------------------
 
-Prior to installing Anaconda Repository components the following needs to be done by someone with
-`sudo` privileges
+Before installing Anaconda Repository components, the following must be done by someone with `sudo` privileges.
 
 Create Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a terminal window, create a new user account for Anaconda Repo named ``anaconda-server``.
+In a terminal window, create a new user account named ``anaconda-server`` for the administrator of Anaconda Repo:
 
 ::
 
     sudo useradd -m anaconda-server
 
-.. note:: ``anaconda-server`` can be configured to any other service account name
+NOTE: The account named ``anaconda-server`` may be configured to any other service account name.
 
 Create Anaconda Repository directories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -311,13 +309,14 @@ Give the anaconda-server user ownership of directories
 Switch to the Anaconda Repository administrator account
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Switch account, and set `$INSTALLER_PATH` environment variable correctly for your system. 
+Switch account, and set `$INSTALLER_PATH` environment variable correctly for your system as described above in installer_path_.
 
 ::
 
     sudo su - anaconda-server
-    INSTALLER_PATH=<set to path of air gap data>
+    INSTALLER_PATH=<set-to-path>
 
+NOTE: Substitute <set-to-path> for the actual path.
 
 Install Miniconda bootstrap version
 -----------------------------------
@@ -325,9 +324,9 @@ Install Miniconda bootstrap version
 Fetch the download script using curl
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Air Gap Installation:** Skip this step.
+-  **Air gapped installation:** Skip this step.
 
--  **Regular Installation:**
+-  **Regular installation:**
 
    ::
    
@@ -335,7 +334,7 @@ Fetch the download script using curl
 
 Run the Miniconda.sh installer script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--  **Air Gap Installation:**
+-  **Air gapped Installation:**
 
    ::
    
@@ -395,7 +394,7 @@ The following sections detail the steps required to install Anaconda Repo.
 Add the defaults, binstar anaconda-server channels to Conda
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **Air Gap Installation:** Add the channels from local files.
+-  **Air gapped Installation:** Add the channels from local files.
 
    ::
 
@@ -415,7 +414,7 @@ Add the defaults, binstar anaconda-server channels to Conda
        conda config --add channels https://conda.anaconda.org/t/$BINSTAR_TOKEN/binstar/
        conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anaconda-server/
 
-   .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for Air Gap installs.
+   .. note:: You should have received **two** tokens from Continuum Support, one for each channel. If you haven't, please contact support@continuum.io. Tokens are not required for air gapped installs.
 
 
 Install AE-Repository packages via conda And Setup Config Files
@@ -532,7 +531,7 @@ following: http://<your host>:8080/static/extras/Miniconda3-latest-Linux-x86_64.
 
 #. Set the URL variable correctly for AirGap vs Regular installs:
 
-   **Air Gap Installation:**
+   **Air gapped Installation:**
    
    ::
    
@@ -582,7 +581,7 @@ packages locally under the "anaconda" user account.
 
 .. note:: Ignore any license warnings. Additional mirror filtering/whitelisting/blacklisting options can be found `here <https://docs.continuum.io/anaconda-repository/mirrors-sync-configuration>`_.
 
-**Air Gap Installation:** Since we're mirroring from a local filesystem, some additional configuration is necessary.
+**Air gapped installation:** Since we're mirroring from a local filesystem, some additional configuration is necessary.
 
 #. Create a mirror config file:
 
@@ -624,7 +623,7 @@ To verify the local Anaconda Repository repo has been populated, visit
 Optional: Mirror the R channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Air Gap Installation:**
+**Air gapped installation:**
 
 #. Create a mirror config file:
    ::
@@ -672,7 +671,7 @@ the recommended method is to mirror using the “wakari” user.
 To mirror the Anaconda Enterprise Notebooks repo, create the mirror config
 YAML file below:
 
-**Air Gap Installation:**
+**Air gapped installation:**
 
 #. Create a mirror config file
    ::
@@ -719,7 +718,7 @@ Optional: Mirror the Anaconda Cluster channel
 
 To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below: 
 
-**Air Gap Installation:**
+**Air gapped installation:**
 
 #. Create a mirror config file:
 

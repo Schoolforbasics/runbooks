@@ -331,7 +331,7 @@ Fetch the download script using curl
 
    ::
    
-       curl 'http://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh' > Miniconda.sh
+       curl 'https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh' > Miniconda.sh
 
 Run the Miniconda.sh installer script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

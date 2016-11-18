@@ -536,11 +536,12 @@ Edit the condarc on the Compute Node
     default_channels:
         - http://<your Anaconda Server name:8080/conda/anaconda
         - http://<your Anaconda Server name:8080/conda/wakari
-        - http://<your Anaconda Server name:8080/conda/anaconda-cluster
         - http://<your Anaconda Server name:8080/conda/r-channel
 
     # Note:  You must add the "conda" subdirectory to the end
     channel_alias: http://<your Anaconda Server name:8080/conda
+
+.. note:: Check all the above channels are mirrored on the internal repository.
 
 Configure Anaconda Client
 ^^^^^^^^^^^^^^^^^^^^^^^^^

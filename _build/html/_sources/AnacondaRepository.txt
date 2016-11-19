@@ -434,6 +434,8 @@ Install AE-Repository packages via conda And Setup Config Files
 
       anaconda-server-config --init --config-file /etc/anaconda-server/config.yaml
 
+   .. note:: Use `--logdir` option if logfie should be written to non-standard location. By default logfile is written to `/var/log/anaconda-server`
+
 #. Set the Anaconda Repository package storage location
 
    ::

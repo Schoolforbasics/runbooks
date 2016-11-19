@@ -48,7 +48,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Nov 18, 2016</li>
+<li>Version: 4.0-3 | Nov 19, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -534,6 +534,10 @@ conda config --add channels https://conda.anaconda.org/t/$ANACONDA_TOKEN/anacond
 <li><p class="first">Initialize the web server for Anaconda Repository</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">config</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Use <cite>&#8211;logdir</cite> option if logfie should be written to non-standard location. By default logfile is written to <cite>/var/log/anaconda-server</cite></p>
 </div>
 </li>
 <li><p class="first">Set the Anaconda Repository package storage location</p>

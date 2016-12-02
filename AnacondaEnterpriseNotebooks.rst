@@ -121,7 +121,7 @@ Software Prerequisites
 **AEN Compute**
 
 -  git
-
+-  X Window System
 
 Security Requirements
 ~~~~~~~~~~~~~~~~~~~~~

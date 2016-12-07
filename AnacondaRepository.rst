@@ -23,7 +23,7 @@ such as 64-Bit Linux, 32-Bit Linux, etc.
 With the exception of 64-Bit Linux, these platform-based archives include
 all of the available packages for that platform.
 The 64-Bit Linux archive contains 64-Bit Linux packages PLUS packages
-neecessary to install Anaconda Repository.
+necessary to install Anaconda Repository.
 
 Additional platforms can be added by downloading the corresponding TAR archive
 and importing it to the local Anaconda Repository. See the section titled "Optional:
@@ -683,7 +683,7 @@ YAML file below:
         echo "  - file://$INSTALLER_PATH/wakari/pkgs" >> /etc/anaconda-server/mirrors/wakari.yaml
 
 
-#. Mirror the Anaconda Enteprise Notebooks packages:
+#. Mirror the Anaconda Enterprise Notebooks packages:
 
    ::
 
@@ -716,10 +716,10 @@ YAML file below:
 Where ``TOKEN`` is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
-(Cluster Mangement): Mirror the Anaconda Adam channel
+(Cluster Management): Mirror the Anaconda Adam channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Anaconda-adam is used to manage the environments on a cluster. If you plan to use Adam, mirror the anaconda-adam pacakges as
+Anaconda-adam is used to manage the environments on a cluster. If you plan to use Adam, mirror the anaconda-adam packages as
 instructed below:
 
 **Air Gap Installation:**
@@ -842,4 +842,3 @@ Write the running iptables configuration to **/etc/sysconfig/iptables:**
 ::
 
     sudo service iptables save
-

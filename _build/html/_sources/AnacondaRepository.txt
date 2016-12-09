@@ -716,10 +716,11 @@ YAML file below:
 Where ``TOKEN`` is the Anaconda NB Extensions token you should
 have received from Continuum Support.
 
-Optional: Mirror the Anaconda Cluster channel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(Cluster Mangement): Mirror the Anaconda Adam channel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below: 
+Anaconda-adam is used to manage the environments on a cluster. If you plan to use Adam, mirror the anaconda-adam pacakges as
+instructed below:
 
 **Air Gap Installation:**
 
@@ -727,26 +728,26 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
 
    ::
 
-       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-cluster.yaml
-       echo "  - file://$INSTALLER_PATH/anaconda-cluster/pkgs" >> \
-            /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       echo "  - file://$INSTALLER_PATH/anaconda-adam/pkgs" >> \
+            /etc/anaconda-server/mirrors/anaconda-adam.yaml
 
 
-#. (Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
+#. (Optional) If tarball is for subset of platforms (eg. linux-64 only as shown in :ref:`comp-install`), append following:
    
    ::
 
-        echo "platforms:" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
-        echo "  - linux-64" >> /etc/anaconda-server/mirrors/anaconda-cluster.yaml
+        echo "platforms:" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
+        echo "  - linux-64" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
 
 
-#. Mirror the Anaconda Cluster Management packages:
+#. Mirror the Anaconda Adam Management packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
-          --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
+          --account=anaconda-adam
 
 **Regular Installation:**
 
@@ -754,22 +755,19 @@ To mirror the anaconda-cluster packages for managing a cluster, create the mirro
 
    ::
 
-       vi /etc/anaconda-server/mirrors/anaconda-cluster.yaml
-
-#. Add the following:
-
-   ::
-
-       channels:
-         - https://conda.anaconda.org/anaconda-cluster
-
-#. Mirror the Anaconda Cluster packages:
+       echo "channels:" > /etc/anaconda-server/mirrors/anaconda-adam.yaml
+       echo "  - https://conda.anaconda.org/anaconda-adam" >> /etc/anaconda-server/mirrors/anaconda-adam.yaml
+         
+#. Mirror the Anaconda Adam packages:
 
    ::
 
        anaconda-server-sync-conda --mirror-config \
-          /etc/anaconda-server/mirrors/anaconda-cluster.yaml \
-          --account=anaconda-cluster
+          /etc/anaconda-server/mirrors/anaconda-adam.yaml \
+          --account=anaconda-adam
+
+
+.. note:: `anaconda-adam` replaces the deprecated `anaconda-cluster` package for remote conda operations. If a mirror of `anaconda-cluster` is required, do the steps above but replace `anaconda-adam` with `anaconda-cluster`. The packages must be present in the airgap archive.
 
 
 Optional: Adjust iptables to accept requests on port 80

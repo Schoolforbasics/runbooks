@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>1   Anaconda Repository Runbook &mdash; Anaconda Enterprise Runbooks 4.0-3 documentation</title>
+    <title>1   Anaconda Repository Runbook &#8212; Anaconda Enterprise Runbooks 4.0-3 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -29,6 +29,8 @@
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Anaconda Enterprise Runbooks 4.0-3 documentation" href="index.html" />
     <link rel="next" title="1   Anaconda Enterprise Notebook Runbook" href="AnacondaEnterpriseNotebooks.html" />
     <link rel="prev" title="Continuum Analytics: Anaconda Enterprise Deployment Runbooks" href="index.html" />
@@ -48,7 +50,7 @@
   <div class="section" id="anaconda-repository-runbook">
 <h1>1&nbsp;&nbsp;&nbsp;Anaconda Repository Runbook<a class="headerlink" href="#anaconda-repository-runbook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Version: 4.0-3 | Nov 19, 2016</li>
+<li>Version: 4.0-3 | Dec 02, 2016</li>
 </ul>
 <div class="contents local topic" id="contents">
 <ul class="auto-toc simple">
@@ -804,28 +806,29 @@ YAML file below:</p>
 <p>Where <code class="docutils literal"><span class="pre">TOKEN</span></code> is the Anaconda NB Extensions token you should
 have received from Continuum Support.</p>
 </div>
-<div class="section" id="optional-mirror-the-anaconda-cluster-channel">
-<h3>1.7.5&nbsp;&nbsp;&nbsp;Optional: Mirror the Anaconda Cluster channel<a class="headerlink" href="#optional-mirror-the-anaconda-cluster-channel" title="Permalink to this headline">¶</a></h3>
-<p>To mirror the anaconda-cluster packages for managing a cluster, create the mirror config YAML file as below:</p>
+<div class="section" id="cluster-mangement-mirror-the-anaconda-adam-channel">
+<h3>1.7.5&nbsp;&nbsp;&nbsp;(Cluster Mangement): Mirror the Anaconda Adam channel<a class="headerlink" href="#cluster-mangement-mirror-the-anaconda-adam-channel" title="Permalink to this headline">¶</a></h3>
+<p>Anaconda-adam is used to manage the environments on a cluster. If you plan to use Adam, mirror the anaconda-adam pacakges as
+instructed below:</p>
 <p><strong>Air Gap Installation:</strong></p>
 <ol class="arabic">
 <li><p class="first">Create a mirror config file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;channels:&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">echo</span> <span class="s2">&quot;  - file://$INSTALLER_PATH/anaconda-cluster/pkgs&quot;</span> <span class="o">&gt;&gt;</span> \
-     <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;channels:&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">echo</span> <span class="s2">&quot;  - file://$INSTALLER_PATH/anaconda-adam/pkgs&quot;</span> <span class="o">&gt;&gt;</span> \
+     <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">(Optional) If mirroring packages for subset of platforms (eg. linux-64 only as shown in <a class="reference internal" href="#comp-install"><span class="std std-ref">1.2.3&nbsp;&nbsp;&nbsp;Optional: Air Gap Platform-based Archives (Linux)</span></a>), append following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;platforms:&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
-<span class="n">echo</span> <span class="s2">&quot;  - linux-64&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
+<li><p class="first">(Optional) If tarball is for subset of platforms (eg. linux-64 only as shown in <a class="reference internal" href="#comp-install"><span class="std std-ref">1.2.3&nbsp;&nbsp;&nbsp;Optional: Air Gap Platform-based Archives (Linux)</span></a>), append following:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;platforms:&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">echo</span> <span class="s2">&quot;  - linux-64&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Mirror the Anaconda Cluster Management packages:</p>
+<li><p class="first">Mirror the Anaconda Adam Management packages:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> \
-   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> \
-   <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span> \
+   <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span>
 </pre></div>
 </div>
 </li>
@@ -833,24 +836,23 @@ have received from Continuum Support.</p>
 <p><strong>Regular Installation:</strong></p>
 <ol class="arabic">
 <li><p class="first">Create a mirror config file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;channels:&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
+<span class="n">echo</span> <span class="s2">&quot;  - https://conda.anaconda.org/anaconda-adam&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Add the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
-  <span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">conda</span><span class="o">.</span><span class="n">anaconda</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Mirror the Anaconda Cluster packages:</p>
+<li><p class="first">Mirror the Anaconda Adam packages:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">sync</span><span class="o">-</span><span class="n">conda</span> <span class="o">--</span><span class="n">mirror</span><span class="o">-</span><span class="n">config</span> \
-   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span><span class="o">.</span><span class="n">yaml</span> \
-   <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">cluster</span>
+   <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">server</span><span class="o">/</span><span class="n">mirrors</span><span class="o">/</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span><span class="o">.</span><span class="n">yaml</span> \
+   <span class="o">--</span><span class="n">account</span><span class="o">=</span><span class="n">anaconda</span><span class="o">-</span><span class="n">adam</span>
 </pre></div>
 </div>
 </li>
 </ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><cite>anaconda-adam</cite> replaces the deprecated <cite>anaconda-cluster</cite> package for remote conda operations. If a mirror of <cite>anaconda-cluster</cite> is required, do the steps above but replace <cite>anaconda-adam</cite> with <cite>anaconda-cluster</cite>. The packages must be present in the airgap archive.</p>
+</div>
 </div>
 <div class="section" id="optional-adjust-iptables-to-accept-requests-on-port-80">
 <h3>1.7.6&nbsp;&nbsp;&nbsp;Optional: Adjust iptables to accept requests on port 80<a class="headerlink" href="#optional-adjust-iptables-to-accept-requests-on-port-80" title="Permalink to this headline">¶</a></h3>
